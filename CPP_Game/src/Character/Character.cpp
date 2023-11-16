@@ -25,9 +25,20 @@ std::string Character::GetName()
 		return m_name;
 }
 
+std::string Character::GetLogMsg()
+{
+	if (m_name != "")
+		return m_logMsg;
+}
+
 int2 Character::GetPosition()
 {
 	return m_position;
+}
+
+int Character::GetMaxHP()
+{
+	return m_maxHp;
 }
 
 bool Character::Defeated()

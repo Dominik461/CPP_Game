@@ -99,12 +99,12 @@ bool Grid::LocationInBounds(int2 location)
 	return false;
 }
 
-void Grid::Print()
+void Grid::Print(bool manual)
 {
 	std::cout << "Grid:" << std::endl;
-	for (size_t y = 0; y < m_Height; y++)
+	for (int y = m_Height - 1; y >= 0; --y)
 	{
-		for (size_t x = 0; x < m_Width; x++)
+		for (size_t x = 0; x < m_Width; ++x)
 		{
 			int2 currentLocation(x, y);
 			bool value = GetValueAtLocation(currentLocation);
@@ -123,5 +123,6 @@ void Grid::Print()
 		}
 		std::cout << std::endl;
 	}
-	std::cout << "Move with w, a, s ,d!" << std::endl;
+	if(manual)
+		std::cout << "Move with w, a, s ,d!" << std::endl;
 }

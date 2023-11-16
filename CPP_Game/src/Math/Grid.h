@@ -31,7 +31,7 @@ public:
 	0 1 0 0 0
 	0 1 1 1 1
 	*/
-	void Print();
+	void Print(bool manual);
 private:
 	unsigned int m_Width;
 	unsigned int m_Height;

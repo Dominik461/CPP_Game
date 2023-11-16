@@ -14,7 +14,7 @@ Player::Player(int hp, int dmg, int heal, int2 position)
 
 void Player::AttackEnemy(Enemy& enemy)
 {
-	std::cout << "Player dealt " << m_dmg << " damage to Enemy!" << std::endl;;
+	m_logMsg = "Player dealt " + std::to_string(m_dmg) + " damage to Enemy!";
 	enemy.m_curHp -= m_dmg;
 }
 
@@ -48,9 +48,12 @@ void Player::HealSelf()
 			m_curHp += m_heal;
 			healAmount = m_heal;
 		}
-		std::cout << m_name <<" heald for " << healAmount << " and has now " << m_curHp << "!" << std::endl;
+		m_logMsg = m_name +" heald for " + std::to_string(healAmount) + " and now has " + std::to_string(m_curHp) + "!";
 	}
-	std::cout << "You'r HP are already full!" << std::endl;
+	else
+		m_logMsg = "You'r HP are already full!";
+
+	
 }
 
 void Player::Move(char moveInput, Grid& playArea)
