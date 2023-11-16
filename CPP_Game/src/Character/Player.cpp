@@ -58,25 +58,53 @@ void Player::Move(char moveInput, Grid& playArea)
 	std::cout << m_name <<" Input was " << moveInput << "!" << std::endl;
 	switch (moveInput)
 	{
-	case 'w':
-		playArea.SetValueAtLocation(m_position, false);
-		m_position += int2(0 , 1);
-		playArea.SetCharacterAtLocation(*this);
+	case 'w':		
+		if (playArea.LocationInBounds(m_position + int2(0, 1)))
+		{
+			playArea.SetValueAtLocation(m_position, false);
+			m_position += int2(0, 1);
+			playArea.SetCharacterAtLocation(*this);
+		}
+		else
+		{
+			std::cout << "You are at the edge of the map!" << std::endl;
+		}
 		break;
 	case 'a':
-		playArea.SetValueAtLocation(m_position, false);
-		m_position += int2(-1 , 0);
-		playArea.SetCharacterAtLocation(*this);
+		if (playArea.LocationInBounds(m_position + int2(-1, 0)))
+		{
+			playArea.SetValueAtLocation(m_position, false);
+			m_position += int2(-1, 0);
+			playArea.SetCharacterAtLocation(*this);
+		}
+		else
+		{
+			std::cout << "You are at the edge of the map!" << std::endl;
+		}
 		break;
 	case 's':
-		playArea.SetValueAtLocation(m_position, false);
-		m_position += int2(0 , -1);
-		playArea.SetCharacterAtLocation(*this);
+		if (playArea.LocationInBounds(m_position + int2(0, -1)))
+		{
+			playArea.SetValueAtLocation(m_position, false);
+			m_position += int2(0, -1);
+			playArea.SetCharacterAtLocation(*this);
+		}
+		else
+		{
+			std::cout << "You are at the edge of the map!" << std::endl;
+		}
 		break;
 	case 'd':
-		playArea.SetValueAtLocation(m_position, false);
-		m_position += int2(1 , 0);
-		playArea.SetCharacterAtLocation(*this);
+		if (playArea.LocationInBounds(m_position + int2(1, 0)))
+		{
+			playArea.SetValueAtLocation(m_position, false);
+			m_position += int2(1, 0);
+			playArea.SetCharacterAtLocation(*this);
+		}
+		else
+		{
+			std::cout << "You are at the edge of the map!" << std::endl;
+		}
 		break;
 	}
 }

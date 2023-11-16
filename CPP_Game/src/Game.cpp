@@ -20,7 +20,7 @@ bool RunGame(const GameParameters& params)
 	Enemy enemy(params.enemyHealth, params.enemyDamage, params.enemyPosition);
 	Player player(params.playerHealth, params.playerDamage, params.playerHeal, params.playerStart);
 	player.SetName(playerNames.at(distribution(gen)));
-	enemy.SetName("Goblin");
+	enemy.SetName("Visual Studio");
 	playArea.SetCharacterAtLocation(player);
 	playArea.SetCharacterAtLocation(enemy);
 	playArea.Print();
@@ -35,7 +35,7 @@ bool RunGame(const GameParameters& params)
 bool Combat(std::vector<char>& playerInputs, bool manual, Player& player, Enemy& enemy)
 {
 	int playerActionFlags, enemyActionFlags;
-	if (!manual)
+	if ((!manual) && (playerInputs.size() > 0))
 	{
 		for (char action : playerInputs)
 		{
@@ -69,7 +69,7 @@ bool Combat(std::vector<char>& playerInputs, bool manual, Player& player, Enemy&
 
 		}
 	}
-	else
+	else if(manual)
 	{
 		while (!player.Defeated() && !enemy.Defeated())
 		{
@@ -110,7 +110,7 @@ bool Combat(std::vector<char>& playerInputs, bool manual, Player& player, Enemy&
 void OpenWorld(std::vector<char>& playerInputs, bool manual ,Player& player, Enemy& enemy, Grid playArea)
 {
 	if (!manual) {
-		for (size_t i = 0; i < playerInputs.size(); i++)
+		while(playerInputs.size() > 0)
 		{
 			char input = playerInputs.at(0);
 			playerInputs.erase(playerInputs.begin());
