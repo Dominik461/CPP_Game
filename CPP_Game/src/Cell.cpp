@@ -14,7 +14,7 @@ void Cell::SetCharacterPosition(Character& character)
 	if (m_pCharacter == NULL)
 		m_pCharacter = &character;
 	else
-		m_pCharacter == NULL;
+		m_pCharacter = NULL;
 }
 
 void Cell::ClearCharacterPointer()

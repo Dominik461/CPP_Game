@@ -1,6 +1,4 @@
 #include "Header/Player.h"
-#include "Header/Enemy.h"
-
 
 Player::Player()
 	:Character(), m_heal(0)
@@ -16,7 +14,7 @@ Player::Player(int hp, int dmg, int heal, int2 position)
 
 void Player::AttackEnemy(Enemy& enemy)
 {
-	//std::cout << "Player dealt " << m_dmg << " damage to Enemy!" << std::endl;;
+	std::cout << "Player dealt " << m_dmg << " damage to Enemy!" << std::endl;;
 	enemy.m_curHp -= m_dmg;
 }
 
@@ -50,6 +48,34 @@ void Player::HealSelf()
 			m_curHp += m_heal;
 			healAmount = m_heal;
 		}
-		//std::cout << "Player heald for " << healAmount << " and has now " << m_curHp << "!" << std::endl;
+		std::cout << "Player heald for " << healAmount << " and has now " << m_curHp << "!" << std::endl;
+	}
+}
+
+void Player::Move(char moveInput, Grid& playArea)
+{
+	std::cout << "Player Input was " << moveInput << "!" << std::endl;
+	switch (moveInput)
+	{
+	case 'w':
+		playArea.SetValueAtLocation(m_position, false);
+		m_position += int2(0 , 1);
+		playArea.SetCharacterAtLocation(*this);
+		break;
+	case 'a':
+		playArea.SetValueAtLocation(m_position, false);
+		m_position += int2(-1 , 0);
+		playArea.SetCharacterAtLocation(*this);
+		break;
+	case 's':
+		playArea.SetValueAtLocation(m_position, false);
+		m_position += int2(0 , -1);
+		playArea.SetCharacterAtLocation(*this);
+		break;
+	case 'd':
+		playArea.SetValueAtLocation(m_position, false);
+		m_position += int2(1 , 0);
+		playArea.SetCharacterAtLocation(*this);
+		break;
 	}
 }

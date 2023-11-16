@@ -1,5 +1,5 @@
 #include "Math/Grid.h"
-#include <iostream>
+
 
 Grid::Grid(unsigned int width, unsigned int height)
 	:m_Height(height), m_Width(width)
@@ -50,7 +50,7 @@ void Grid::SetValueAtLocation(int2 location, bool value)
 	}
 }
 
-void Grid::SetValueAtLocation(Character& character)
+void Grid::SetCharacterAtLocation(Character& character)
 {
 	if (LocationInBounds(character.GetPosition()))
 	{
@@ -62,7 +62,7 @@ void Grid::SetValueAtLocation(Character& character)
 unsigned int Grid::GetIndexFromLocation(int2 location)
 {
 	if (LocationInBounds(location))
-		return m_Width * location.y + location.x;;
+		return m_Width * location.y + location.x;
 }
 
 int2 Grid::GetLocationFromIndex(unsigned int index)
@@ -92,7 +92,7 @@ bool Grid::IndexInBounds(unsigned int index)
 
 bool Grid::LocationInBounds(int2 location)
 {
-	if (location.x <= m_Width && location.y <= m_Height)
+	if ((location.x <= m_Width) && (location.y <= m_Height))
 		return true;
 		
 	std::cout << "This location (" << location.x << "|" << location.y << ") is out of bounds" << std::endl;

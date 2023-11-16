@@ -1,7 +1,9 @@
 #pragma once
 #include "Character.h"
+#include "../../Math/Grid.h"
+#include "Enemy.h"
 
-class Enemy;
+class Grid;
 
 class Player : public Character
 {
@@ -18,4 +20,6 @@ class Player : public Character
 		int TakeTurn(char action) override;
 
 		void HealSelf();
+
+		void Move(char moveInput, Grid& playArea);
 };

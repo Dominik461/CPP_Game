@@ -21,50 +21,93 @@ bool RunGame(const GameParameters& params)
 	Player player(params.playerHealth, params.playerDamage, params.playerHeal, params.playerStart);
 	player.SetName(playerNames.at(distribution(gen)));
 	enemy.SetName("Goblin");
-
-	
-	//Open World
-	playArea.SetValueAtLocation(player);
-	playArea.SetValueAtLocation(enemy);
+	playArea.SetCharacterAtLocation(player);
+	playArea.SetCharacterAtLocation(enemy);
 	playArea.Print();
+	
+
+	OpenWorld(playerInputs, params.manual, player, enemy, playArea);
 
 	//Comabt
-	return Combat(params, player, enemy);
+	return Combat(playerInputs, params.manual ,player, enemy);
 }
 
-bool Combat(const GameParameters& params, Player& player, Enemy& enemy)
+bool Combat(std::vector<char>& playerInputs, bool manual, Player& player, Enemy& enemy)
 {
-	int playerActionFlags, enemyActionFlags;
-	for (char action : params.playerInputs)
+	if (!manual)
 	{
-		playerActionFlags = 0;
-		playerActionFlags = player.TakeTurn(action);
-		if (playerActionFlags & ATTACKFLAG)
+		int playerActionFlags, enemyActionFlags;
+		for (char action : playerInputs)
 		{
-			player.AttackEnemy(enemy);
-			if (enemy.Defeated())
+			playerActionFlags = 0;
+			playerActionFlags = player.TakeTurn(action);
+			if (playerActionFlags & ATTACKFLAG)
 			{
-				std::cout << enemy.GetName() << " was defeated!" << std::endl;
-				return true;
+				player.AttackEnemy(enemy);
+				if (enemy.Defeated())
+				{
+					std::cout << enemy.GetName() << " was defeated!" << std::endl;
+					return true;
+				}
 			}
-		}
-		else if (playerActionFlags & HEALFLAG)
-		{
-			player.HealSelf();
-		}
-
-		enemyActionFlags = 0;
-		enemyActionFlags = enemy.TakeTurn('a');
-		if (enemyActionFlags & ATTACKFLAG)
-		{
-			enemy.AttackPlayer(player);
-			if (player.Defeated())
+			else if (playerActionFlags & HEALFLAG)
 			{
-				std::cout << player.GetName() << " was defeated!" << std::endl;
-				return false;
+				player.HealSelf();
 			}
-		}
 
+			enemyActionFlags = 0;
+			enemyActionFlags = enemy.TakeTurn('a');
+			if (enemyActionFlags & ATTACKFLAG)
+			{
+				enemy.AttackPlayer(player);
+				if (player.Defeated())
+				{
+					std::cout << player.GetName() << " was defeated!" << std::endl;
+					return false;
+				}
+			}
+
+		}
+		return true;
 	}
-	return true;
+	//TO DO MANUAL MODE IMPLEMENT
+	return false;
+}
+
+void OpenWorld(std::vector<char>& playerInputs, bool manual ,Player& player, Enemy& enemy, Grid playArea)
+{
+	if (!manual) {
+		for (size_t i = 0; i < playerInputs.size(); i++)
+		{
+			char input = playerInputs.at(0);
+			playerInputs.erase(playerInputs.begin());
+
+			std::cout << std::endl;
+			std::cout << std::endl;
+			std::cout << std::endl;
+			std::cout << std::endl;
+			std::cout << std::endl;
+			std::cout << std::endl;
+			std::cout << std::endl;
+			std::cout << std::endl;
+			std::cout << std::endl;
+			std::cout << std::endl;
+			player.Move(input, playArea);
+
+			if (player.GetPosition() == enemy.GetPosition())
+			{	
+				ClearConsole();
+				std::cout << player.GetName() << " encountered a wild " << enemy.GetName() << "!" << std::endl;
+				break;
+			}
+
+			playArea.Print();
+		}
+	}
+
+}
+
+void ClearConsole()
+{
+	system("cls");
 }
