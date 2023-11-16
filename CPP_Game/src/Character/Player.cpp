@@ -48,13 +48,14 @@ void Player::HealSelf()
 			m_curHp += m_heal;
 			healAmount = m_heal;
 		}
-		std::cout << "Player heald for " << healAmount << " and has now " << m_curHp << "!" << std::endl;
+		std::cout << m_name <<" heald for " << healAmount << " and has now " << m_curHp << "!" << std::endl;
 	}
+	std::cout << "You'r HP are already full!" << std::endl;
 }
 
 void Player::Move(char moveInput, Grid& playArea)
 {
-	std::cout << "Player Input was " << moveInput << "!" << std::endl;
+	std::cout << m_name <<" Input was " << moveInput << "!" << std::endl;
 	switch (moveInput)
 	{
 	case 'w':

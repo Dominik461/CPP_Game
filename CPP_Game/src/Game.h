@@ -6,6 +6,7 @@
 #include <random>
 #include <Windows.h>
 #include <conio.h>
+#include <iostream>
 
 bool RunGame(const GameParameters& params);
 bool Combat(std::vector<char>& playerInputs, bool manual, Player& player, Enemy& enemy);

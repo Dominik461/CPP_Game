@@ -35,6 +35,7 @@ public:
 	int2& operator/=(const int val);
 
 	friend bool operator==(const int2& lhs, const int2& rhs);
+	friend bool operator!=(const int2& lhs, const int2& rhs);
 
 	friend std::ostream& operator<<(std::ostream& os, const int2& a);
 };

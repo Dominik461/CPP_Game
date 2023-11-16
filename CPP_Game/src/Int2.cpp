@@ -86,6 +86,11 @@ bool operator==(const int2& lhs, const int2& rhs)
 	return (lhs.x == rhs.x) && (lhs.y == rhs.y);
 }
 
+bool operator!=(const int2& lhs, const int2& rhs)
+{
+	return !(lhs == rhs);
+}
+
 std::ostream& operator<<(std::ostream& os, const int2& a)
 {
 	os << "(" << a.x << "|" << a.y << ")";

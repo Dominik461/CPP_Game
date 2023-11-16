@@ -1,5 +1,5 @@
 #include "Game.h"
-#include <iostream>
+
 
 bool RunGame(const GameParameters& params)
 {
@@ -34,9 +34,9 @@ bool RunGame(const GameParameters& params)
 
 bool Combat(std::vector<char>& playerInputs, bool manual, Player& player, Enemy& enemy)
 {
+	int playerActionFlags, enemyActionFlags;
 	if (!manual)
 	{
-		int playerActionFlags, enemyActionFlags;
 		for (char action : playerInputs)
 		{
 			playerActionFlags = 0;
@@ -68,10 +68,43 @@ bool Combat(std::vector<char>& playerInputs, bool manual, Player& player, Enemy&
 			}
 
 		}
-		return true;
 	}
-	//TO DO MANUAL MODE IMPLEMENT
-	return false;
+	else
+	{
+		while (!player.Defeated() && !enemy.Defeated())
+		{
+			playerActionFlags = 0;
+			std::cout << "Use a to attack the enemy or h to heal your self!" << std::endl;
+			char action = _getch();
+			playerActionFlags = player.TakeTurn(action);
+			if (playerActionFlags & ATTACKFLAG)
+			{
+				player.AttackEnemy(enemy);
+				if (enemy.Defeated())
+				{
+					std::cout << enemy.GetName() << " was defeated!" << std::endl;
+					return true;
+				}
+			}
+			else if (playerActionFlags & HEALFLAG)
+			{
+				player.HealSelf();
+			}
+
+			enemyActionFlags = 0;
+			enemyActionFlags = enemy.TakeTurn('a');
+			if (enemyActionFlags & ATTACKFLAG)
+			{
+				enemy.AttackPlayer(player);
+				if (player.Defeated())
+				{
+					std::cout << player.GetName() << " was defeated!" << std::endl;
+					return false;
+				}
+			}
+		}
+	}
+	return true;
 }
 
 void OpenWorld(std::vector<char>& playerInputs, bool manual ,Player& player, Enemy& enemy, Grid playArea)
@@ -104,7 +137,23 @@ void OpenWorld(std::vector<char>& playerInputs, bool manual ,Player& player, Ene
 			playArea.Print();
 		}
 	}
+	else
+	{
+		while (player.GetPosition() != enemy.GetPosition())
+		{
+			char input = _getch();
 
+			ClearConsole();
+			player.Move(input, playArea);
+			if (player.GetPosition() == enemy.GetPosition())
+			{
+				break;
+			}
+			playArea.Print();
+		}
+		ClearConsole();
+		std::cout << player.GetName() << " encountered a wild " << enemy.GetName() << "!" << std::endl;
+	}
 }
 
 void ClearConsole()

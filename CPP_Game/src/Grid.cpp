@@ -123,4 +123,5 @@ void Grid::Print()
 		}
 		std::cout << std::endl;
 	}
+	std::cout << "Move with w, a, s ,d!" << std::endl;
 }
