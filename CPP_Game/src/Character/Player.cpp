@@ -39,7 +39,7 @@ void Player::HealSelf()
 	{
 		int healAmount;
 		if (m_curHp + m_heal >= m_maxHp)
-		{ 
+		{
 			healAmount = m_maxHp - m_curHp;
 			m_curHp = m_maxHp;
 		}
@@ -48,7 +48,7 @@ void Player::HealSelf()
 			m_curHp += m_heal;
 			healAmount = m_heal;
 		}
-		m_logMsg = m_name +" heald for " + std::to_string(healAmount) + " and now has " + std::to_string(m_curHp) + "!";
+		m_logMsg = m_name + " heald for " + std::to_string(healAmount) + " and now has " + std::to_string(m_curHp) + "!";
 	}
 	else
 		m_logMsg = "You'r HP are already full!";
