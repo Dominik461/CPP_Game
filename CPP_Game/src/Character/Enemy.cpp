@@ -1,5 +1,5 @@
 #include "Header/Enemy.h"
-#include "Header/Player.h"
+
 
 Enemy::Enemy()
 	:Character()
@@ -11,21 +11,40 @@ Enemy::Enemy(int hp, int dmg)
 
 Enemy::Enemy(int hp, int dmg, int2 position)
 	:Character(hp, dmg, position)
-{}
-
-void Enemy::AttackPlayer(Player& player)
 {
-	m_logMsg = "Enemy dealt " + std::to_string(m_dmg) + " damage to Player!";
-	player.m_curHp -= m_dmg;
+	/*
+	MeteorStrike* pMeteorStrike();
+	LearnAbility(pMeteorStrike);
+	*/
 }
 
-int Enemy::TakeTurn(char action)
+void Enemy::AttackPlayer(Character* player)
 {
-	m_actionFlags = 0;
+	m_logMsg = "Enemy dealt " + std::to_string(m_dmg) + " damage to Player!";
+	player->m_curHp -= m_dmg;
+}
+
+void Enemy::TakeTurn(char action, Character* target)
+{
 	switch (action)
 	{
 	case 'a':
-		m_actionFlags |= ATTACKFLAG;
+		AttackPlayer(target);
+		break;
+	/*
+	case '1':
+		if(m_pAbilities.at(0) != nullptr)
+			m_pAbilities.at(0)->UseAbility(target);
+		break;
+	case '2':
+		if (m_pAbilities.at(1) != nullptr)
+			m_pAbilities.at(1)->UseAbility(target);
+		break;
+	case '3':
+		if (m_pAbilities.at(2) != nullptr)
+			m_pAbilities.at(2)->UseAbility(target);
+		break;
+	*/
 	}
-	return m_actionFlags;
+	ReduceAllCooldowns();
 }

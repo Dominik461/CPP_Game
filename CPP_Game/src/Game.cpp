@@ -19,149 +19,83 @@ bool RunGame(const GameParameters& params)
 	Grid playArea(params.gridWidth, params.gridHeight);
 	Enemy enemy(params.enemyHealth, params.enemyDamage, params.enemyPosition);
 	Player player(params.playerHealth, params.playerDamage, params.playerHeal, params.playerStart);
-	player.SetName(playerNames.at(distribution(gen)));
-	enemy.SetName("Visual Studio");
-	playArea.SetCharacterAtLocation(player);
-	playArea.SetCharacterAtLocation(enemy);
-	playArea.Print(params.manual);
+	Enemy* pEnemy = &enemy;
+	Player* pPlayer = &player;
+	pPlayer->SetName(playerNames.at(distribution(gen)));
+	pEnemy->SetName("Visual Studio");
+	playArea.SetCharacterAtLocation(pPlayer);
+	playArea.SetCharacterAtLocation(pEnemy);
+	playArea.Print();
 	
 
-	OpenWorld(playerInputs, params.manual, player, enemy, playArea);
+	OpenWorld(playerInputs, pPlayer, pEnemy, playArea);
 
 	//Comabt
-	return Combat(playerInputs, params.manual ,player, enemy);
+	return Combat(playerInputs, pPlayer, pEnemy);
 }
 
-bool Combat(std::vector<char>& playerInputs, bool manual, Player& player, Enemy& enemy)
+bool Combat(std::vector<char>& playerInputs, Player* player, Enemy* enemy)
 {
-	int playerActionFlags, enemyActionFlags;
-	if ((!manual) && (playerInputs.size() > 0))
+	const std::vector<char> validInputs = { 'a', '1', '2' };
+	int turnNumber = 0;
+	while (!player->Defeated() && !enemy->Defeated())
 	{
-		for (char action : playerInputs)
+		char action;
+		bool vaildInput = false;
+		ClearConsole();
+		PrintCombat(player, enemy, turnNumber);
+		do
 		{
-			playerActionFlags = 0;
-			playerActionFlags = player.TakeTurn(action);
-			if (playerActionFlags & ATTACKFLAG)
-			{
-				player.AttackEnemy(enemy);
-				if (enemy.Defeated())
-				{
-					std::cout << enemy.GetName() << " was defeated!" << std::endl;
-					return true;
-				}
-			}
-			else if (playerActionFlags & HEALFLAG)
-			{
-				player.HealSelf();
-			}
-			std::cout << player.GetLogMsg() << std::endl;
-
-			enemyActionFlags = 0;
-			enemyActionFlags = enemy.TakeTurn('a');
-			if (enemyActionFlags & ATTACKFLAG)
-			{
-				enemy.AttackPlayer(player);
-				if (player.Defeated())
-				{
-					std::cout << player.GetName() << " was defeated!" << std::endl;
-					return false;
-				}
-			}
-			std::cout << enemy.GetLogMsg() << std::endl;
-		}
-	}
-	else if(manual)
-	{
-		int turnNumber = 0;
-		while (!player.Defeated() && !enemy.Defeated())
-		{
-			char action;
-			playerActionFlags = 0;
-			ClearConsole();
-			PrintCombat(player, enemy, turnNumber);
-			do
-			{
-				action = _getch();
-				if (action != 'h' && action != 'a')
-					std::cout << "Not a valid input!" << std::endl;
-			} while (action != 'h' && action != 'a');
+			action = _getch();
+			auto it = std::find(validInputs.begin(), validInputs.end(), action);
+			vaildInput = (it != validInputs.end());
+			if (!vaildInput)
+				std::cout << "Not a valid input!" << std::endl;
+		} while (!vaildInput);
 			
 			
- 			playerActionFlags = player.TakeTurn(action);
-			if (playerActionFlags & ATTACKFLAG)
-			{
-				player.AttackEnemy(enemy);
-				if (enemy.Defeated())
-				{
-					std::cout << enemy.GetName() << " was defeated!" << std::endl;
-					return true;
-				}
-			}
-			else if (playerActionFlags & HEALFLAG)
-			{
-				player.HealSelf();
-			}
+ 		player->TakeTurn(action, enemy);
 
-			enemyActionFlags = 0;
-			enemyActionFlags = enemy.TakeTurn('a');
-			if (enemyActionFlags & ATTACKFLAG)
-			{
-				enemy.AttackPlayer(player);
-				if (player.Defeated())
-				{
-					std::cout << player.GetName() << " was defeated!" << std::endl;
-					return false;
-				}
-			}
-			turnNumber++;
+		if (enemy->Defeated())
+		{
+			std::cout << enemy->GetName() << " was defeated!" << std::endl;
+			return true;
 		}
+
+		enemy->TakeTurn('a', player);
+
+		if (player->Defeated())
+		{
+			std::cout << player->GetName() << " was defeated!" << std::endl;
+			return false;
+		}
+
+		turnNumber++;
 	}
+
 	return true;
 }
 
-void OpenWorld(std::vector<char>& playerInputs, bool manual ,Player& player, Enemy& enemy, Grid playArea)
+void OpenWorld(std::vector<char>& playerInputs, Player* player, Enemy* enemy, Grid playArea)
 {
-	if (!manual) {
-		while(playerInputs.size() > 0)
-		{
-			char input = playerInputs.at(0);
-			playerInputs.erase(playerInputs.begin());
-
-			ClearConsole();
-			player.Move(input, playArea);
-
-			if (player.GetPosition() == enemy.GetPosition())
-			{	
-				ClearConsole();
-				std::cout << player.GetName() << " encountered a wild " << enemy.GetName() << "!" << std::endl;
-				break;
-			}
-
-			playArea.Print(manual);
-		}
-	}
-	else
+	while (player->GetPosition() != enemy->GetPosition())
 	{
-		while (player.GetPosition() != enemy.GetPosition())
-		{
-			char input = _getch();
+		char input = _getch();
 
-			ClearConsole();
-			player.Move(input, playArea);
-			if (player.GetPosition() == enemy.GetPosition())
-			{
-				break;
-			}
-			playArea.Print(manual);
-		}
 		ClearConsole();
-		
+		player->Move(input, playArea);
+		if (player->GetPosition() == enemy->GetPosition())
+		{
+			break;
+		}
+		playArea.Print();
 	}
+	ClearConsole();		
 }
 
-void PrintCombat(Player& player, Enemy& enemy, int turnNumber)
+void PrintCombat(Player* player, Enemy* enemy, int turnNumber)
 {
-	std::cout << player.GetName() << " encountered a wild " << enemy.GetName() << "!" << std::endl;
+	std::cout << player->GetName() << " encountered a wild " << enemy->GetName() << "!" << std::endl;
 	std::cout <<  std::endl;
 	std::cout << "Use 'a' to attack the enemy or 'h' to heal your self!" << std::endl;
 	std::cout << "Turn: " << turnNumber << std::endl;
@@ -179,14 +113,14 @@ void PrintCombat(Player& player, Enemy& enemy, int turnNumber)
 	std::cout << " / \\";
 	moveTo(41, 9);
 	std::cout << "/ \\  " << std::endl;
-	std::cout << player.GetName();
+	std::cout << player->GetName();
 	moveTo(40, 10);
-	std::cout << enemy.GetName() << std::endl;
-	std::cout << player.m_curHp << "/" << player.GetMaxHP();
+	std::cout << enemy->GetName() << std::endl;
+	std::cout << player->m_curHp << "/" << player->GetMaxHP();
 	moveTo(40, 11);
-	std::cout << enemy.m_curHp << "/" << enemy.GetMaxHP() << std::endl;
-	std::cout << player.GetLogMsg() << std::endl;
-	std::cout << enemy.GetLogMsg() << std::endl;
+	std::cout << enemy->m_curHp << "/" << enemy->GetMaxHP() << std::endl;
+	//std::cout << player.GetLogMsg() << std::endl;
+	//std::cout << enemy.GetLogMsg() << std::endl;
 }
 
 void ClearConsole()

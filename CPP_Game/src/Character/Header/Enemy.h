@@ -1,5 +1,6 @@
 #pragma once
 #include "Character.h"
+#include "Player.h"
 
 class Player;
 
@@ -10,7 +11,7 @@ public:
 	Enemy(int hp, int dmg);
 	Enemy(int hp, int dmg, int2 position);
 
-	void AttackPlayer(Player& player);
+	void AttackPlayer(Character* player);
 	
-	int TakeTurn(char action) override;
+	void TakeTurn(char action, Character* target) override;
 };

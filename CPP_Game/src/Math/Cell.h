@@ -13,7 +13,7 @@ public:
 
 	int2 GetPosition();
 	Character* GetCharacter();
-	void SetCharacterPosition(Character& character);
+	void SetCharacterPosition(Character* character);
 	void ClearCharacterPointer();
 	bool blocked = false;
 }; 

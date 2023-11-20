@@ -10,27 +10,39 @@ Player::Player(int hp, int dmg, int heal)
 
 Player::Player(int hp, int dmg, int heal, int2 position)
 	:Character(hp, dmg, position), m_heal(heal)
-{}
-
-void Player::AttackEnemy(Enemy& enemy)
 {
-	m_logMsg = "Player dealt " + std::to_string(m_dmg) + " damage to Enemy!";
-	enemy.m_curHp -= m_dmg;
+	/*
+	LearnAbility(Fireball);
+	LearnAbility(SelfHeal);
+	*/
 }
 
-int Player::TakeTurn(char action)
+void Player::AttackEnemy(Character* enemy)
 {
-	m_actionFlags = 0;
+	m_logMsg = m_name + " dealt " + std::to_string(m_dmg) + " damage to " + enemy->GetName() + " !";
+	enemy->m_curHp -= m_dmg;
+}
+
+void Player::TakeTurn(char action, Character* target)
+{
 	switch (action)
 	{
-	case 'h':
-		m_actionFlags |= HEALFLAG;
-		break;
-	
 	case 'a':
-		m_actionFlags |= ATTACKFLAG;
+		AttackEnemy(target);
+		break;
+	/*
+	case '1':
+		m_pAbilities.at(0)->UseAbility(target);
+		break;
+	case '2':
+		m_pAbilities.at(1)->UseAbility(this);
+		break;
+	case '3':
+		
+		break;
+	*/
 	}
-	return m_actionFlags;
+	ReduceAllCooldowns();
 }
 
 void Player::HealSelf()
@@ -66,7 +78,7 @@ void Player::Move(char moveInput, Grid& playArea)
 		{
 			playArea.SetValueAtLocation(m_position, false);
 			m_position += int2(0, 1);
-			playArea.SetCharacterAtLocation(*this);
+			playArea.SetCharacterAtLocation(this);
 		}
 		else
 		{
@@ -78,7 +90,7 @@ void Player::Move(char moveInput, Grid& playArea)
 		{
 			playArea.SetValueAtLocation(m_position, false);
 			m_position += int2(-1, 0);
-			playArea.SetCharacterAtLocation(*this);
+			playArea.SetCharacterAtLocation(this);
 		}
 		else
 		{
@@ -90,7 +102,7 @@ void Player::Move(char moveInput, Grid& playArea)
 		{
 			playArea.SetValueAtLocation(m_position, false);
 			m_position += int2(0, -1);
-			playArea.SetCharacterAtLocation(*this);
+			playArea.SetCharacterAtLocation(this);
 		}
 		else
 		{
@@ -102,7 +114,7 @@ void Player::Move(char moveInput, Grid& playArea)
 		{
 			playArea.SetValueAtLocation(m_position, false);
 			m_position += int2(1, 0);
-			playArea.SetCharacterAtLocation(*this);
+			playArea.SetCharacterAtLocation(this);
 		}
 		else
 		{

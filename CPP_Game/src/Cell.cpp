@@ -9,10 +9,10 @@ int2 Cell::GetPosition()
 	return m_Position;
 }
 
-void Cell::SetCharacterPosition(Character& character)
+void Cell::SetCharacterPosition(Character* character)
 {
 	if (m_pCharacter == NULL)
-		m_pCharacter = &character;
+		m_pCharacter = character;
 	else
 		m_pCharacter = NULL;
 }

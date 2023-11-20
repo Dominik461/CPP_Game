@@ -50,12 +50,12 @@ void Grid::SetValueAtLocation(int2 location, bool value)
 	}
 }
 
-void Grid::SetCharacterAtLocation(Character& character)
+void Grid::SetCharacterAtLocation(Character* character)
 {
-	if (LocationInBounds(character.GetPosition()))
+	if (LocationInBounds(character->GetPosition()))
 	{
-		m_Values.at(GetIndexFromLocation(character.GetPosition())).blocked = true;
-		m_Values.at(GetIndexFromLocation(character.GetPosition())).SetCharacterPosition(character);
+		m_Values.at(GetIndexFromLocation(character->GetPosition())).blocked = true;
+		m_Values.at(GetIndexFromLocation(character->GetPosition())).SetCharacterPosition(character);
 	}
 }
 
@@ -99,7 +99,7 @@ bool Grid::LocationInBounds(int2 location)
 	return false;
 }
 
-void Grid::Print(bool manual)
+void Grid::Print()
 {
 	std::cout << "Grid:" << std::endl;
 	for (int y = m_Height - 1; y >= 0; --y)
@@ -123,6 +123,5 @@ void Grid::Print(bool manual)
 		}
 		std::cout << std::endl;
 	}
-	if(manual)
-		std::cout << "Move with w, a, s ,d!" << std::endl;
+	std::cout << "Move with w, a, s ,d!" << std::endl;
 }

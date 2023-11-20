@@ -15,9 +15,9 @@ class Player : public Character
 		Player(int hp, int dmg, int heal);
 		Player(int hp, int dmg, int heal, int2 position);
 
-		void AttackEnemy(Enemy& enemy);
+		void AttackEnemy(Character* enemy);
 
-		int TakeTurn(char action) override;
+		void TakeTurn(char action, Character* target) override;
 
 		void HealSelf();
 

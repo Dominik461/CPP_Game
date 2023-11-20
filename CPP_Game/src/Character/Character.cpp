@@ -13,6 +13,28 @@ Character::Character(int hp, int dmg, int2 position)
 	:m_maxHp(hp), m_curHp(hp), m_dmg(dmg), m_actionFlags(0), m_position(position)
 {}
 
+void Character::LearnAbility(Ability * pAbility)
+{
+	if (m_newAbilityIndex < 3)
+		m_pAbilities.at(m_newAbilityIndex) = pAbility;
+	else
+	{
+		m_newAbilityIndex = 0;
+		m_pAbilities.at(m_newAbilityIndex) = pAbility;
+	}
+	m_newAbilityIndex++;
+		
+}
+
+void Character::ReduceAllCooldowns()
+{
+	for (Ability* pAbility : m_pAbilities)
+	{
+		if (pAbility != nullptr)
+			pAbility->ReduceCooldown();
+	}
+}
+
 void Character::SetName(std::string name)
 {
 	if (m_name == "")

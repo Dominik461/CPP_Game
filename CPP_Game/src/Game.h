@@ -9,8 +9,8 @@
 #include <iostream>
 
 bool RunGame(const GameParameters& params);
-bool Combat(std::vector<char>& playerInputs, bool manual, Player& player, Enemy& enemy);
-void PrintCombat(Player& player, Enemy& enemy, int turnNumber);
-void OpenWorld(std::vector<char>& playerInputs, bool manual, Player& player, Enemy& enemy, Grid playArea);
+bool Combat(std::vector<char>& playerInputs, Player* player, Enemy* enemy);
+void PrintCombat(Player* player, Enemy* enemy, int turnNumber);
+void OpenWorld(std::vector<char>& playerInputs, Player* player, Enemy* enemy, Grid playArea);
 void ClearConsole();
 void moveTo(int x, int y);
