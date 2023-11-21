@@ -11,12 +11,7 @@ Enemy::Enemy(int hp, int dmg)
 
 Enemy::Enemy(int hp, int dmg, int2 position)
 	:Character(hp, dmg, position)
-{
-	/*
-	MeteorStrike* pMeteorStrike();
-	LearnAbility(pMeteorStrike);
-	*/
-}
+{}
 
 void Enemy::AttackPlayer(Character* player)
 {
@@ -31,20 +26,15 @@ void Enemy::TakeTurn(char action, Character* target)
 	case 'a':
 		AttackPlayer(target);
 		break;
-	/*
 	case '1':
-		if(m_pAbilities.at(0) != nullptr)
-			m_pAbilities.at(0)->UseAbility(target);
+		m_logMsg = m_abilities.at(0).UseAbility(target, m_name);
 		break;
 	case '2':
-		if (m_pAbilities.at(1) != nullptr)
-			m_pAbilities.at(1)->UseAbility(target);
+		m_logMsg = m_abilities.at(1).UseAbility(target, m_name);
 		break;
 	case '3':
-		if (m_pAbilities.at(2) != nullptr)
-			m_pAbilities.at(2)->UseAbility(target);
+		m_logMsg = m_abilities.at(2).UseAbility(target, m_name);
 		break;
-	*/
 	}
 	ReduceAllCooldowns();
 }

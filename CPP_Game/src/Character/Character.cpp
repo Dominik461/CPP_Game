@@ -11,16 +11,20 @@ Character::Character(int hp, int dmg)
 
 Character::Character(int hp, int dmg, int2 position)
 	:m_maxHp(hp), m_curHp(hp), m_dmg(dmg), m_actionFlags(0), m_position(position)
-{}
+{
+	m_abilities.push_back(Ability());
+	m_abilities.push_back(Ability());
+	m_abilities.push_back(Ability());
+}
 
-void Character::LearnAbility(Ability * pAbility)
+void Character::LearnAbility(Ability ability)
 {
 	if (m_newAbilityIndex < 3)
-		m_pAbilities.at(m_newAbilityIndex) = pAbility;
+		m_abilities.at(m_newAbilityIndex) = ability;
 	else
 	{
 		m_newAbilityIndex = 0;
-		m_pAbilities.at(m_newAbilityIndex) = pAbility;
+		m_abilities.at(m_newAbilityIndex) = ability;
 	}
 	m_newAbilityIndex++;
 		
@@ -28,10 +32,9 @@ void Character::LearnAbility(Ability * pAbility)
 
 void Character::ReduceAllCooldowns()
 {
-	for (Ability* pAbility : m_pAbilities)
+	for (Ability ability : m_abilities)
 	{
-		if (pAbility != nullptr)
-			pAbility->ReduceCooldown();
+		ability.ReduceCooldown();
 	}
 }
 
@@ -68,4 +71,9 @@ bool Character::Defeated()
 	if (m_curHp <= 0)
 		return true;
 	return false;
+}
+
+Ability Character::GetAbilityAtIndex(int index)
+{
+	return m_abilities.at(index);
 }

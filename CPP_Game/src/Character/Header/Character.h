@@ -18,14 +18,14 @@ class Character
 		int2 m_position;
 		std::string m_name = "";
 		std::string m_logMsg = "";
-		std::vector<Ability*>m_pAbilities = { nullptr, nullptr, nullptr };
+		std::vector<Ability>m_abilities;
 
 	public:
 		int m_curHp;
 		Character();
 		Character(int hp, int dmg);
 		Character(int hp, int dmg, int2 position);
-		void LearnAbility(Ability* pAbility);
+		void LearnAbility(Ability ability);
 		void ReduceAllCooldowns();
 		void SetName(std::string name);
 		std::string GetName();
@@ -34,4 +34,5 @@ class Character
 		int2 GetPosition();
 		int GetMaxHP();
 		bool Defeated();
+		Ability GetAbilityAtIndex(int index);
 };

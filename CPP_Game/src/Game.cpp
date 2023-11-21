@@ -3,6 +3,7 @@
 
 bool RunGame(const GameParameters& params)
 {
+	std::cout << "C++ game by Dominik Mueller (dm126)" << std::endl;
 	//init gameworld
 	std::vector<std::string> playerNames = { "Olaf", "Gaben", "Günter", "Otto", "Marcel Davis", "Steve Jobs" };
 	std::vector<char> playerInputs = params.playerInputs;
@@ -15,6 +16,9 @@ bool RunGame(const GameParameters& params)
 	// Define a distribution for the random numbers (here, integers between 1 and 100)
 	std::uniform_int_distribution<int> distribution(0, playerNames.size() - 1);
 
+	Ability fireball(3, 10, false, "Fireball");
+	Ability heal(3, 12, true, "Heal");
+	Ability meteorStrike(4, 15, false, "Meteor Strike");
 
 	Grid playArea(params.gridWidth, params.gridHeight);
 	Enemy enemy(params.enemyHealth, params.enemyDamage, params.enemyPosition);
@@ -23,6 +27,10 @@ bool RunGame(const GameParameters& params)
 	Player* pPlayer = &player;
 	pPlayer->SetName(playerNames.at(distribution(gen)));
 	pEnemy->SetName("Visual Studio");
+	pPlayer->LearnAbility(fireball);
+	pPlayer->LearnAbility(heal);
+	pEnemy->LearnAbility(meteorStrike);
+
 	playArea.SetCharacterAtLocation(pPlayer);
 	playArea.SetCharacterAtLocation(pEnemy);
 	playArea.Print();
@@ -36,10 +44,16 @@ bool RunGame(const GameParameters& params)
 
 bool Combat(std::vector<char>& playerInputs, Player* player, Enemy* enemy)
 {
-	const std::vector<char> validInputs = { 'a', '1', '2' };
+	std::vector<char> validInputs = { 'a' };
 	int turnNumber = 0;
 	while (!player->Defeated() && !enemy->Defeated())
 	{
+		if (player->GetAbilityAtIndex(0).IsReady())
+			validInputs.push_back('1');
+		if (player->GetAbilityAtIndex(1).IsReady())
+			validInputs.push_back('2');
+		if (player->GetAbilityAtIndex(2).IsReady())
+			validInputs.push_back('3');
 		char action;
 		bool vaildInput = false;
 		ClearConsole();
@@ -51,9 +65,8 @@ bool Combat(std::vector<char>& playerInputs, Player* player, Enemy* enemy)
 			vaildInput = (it != validInputs.end());
 			if (!vaildInput)
 				std::cout << "Not a valid input!" << std::endl;
-		} while (!vaildInput);
-			
-			
+		} while (!vaildInput);	
+
  		player->TakeTurn(action, enemy);
 
 		if (enemy->Defeated())
@@ -62,7 +75,15 @@ bool Combat(std::vector<char>& playerInputs, Player* player, Enemy* enemy)
 			return true;
 		}
 
-		enemy->TakeTurn('a', player);
+		if (enemy->GetAbilityAtIndex(0).IsReady())
+			action = '1';
+		else if (enemy->GetAbilityAtIndex(1).IsReady())
+			action = '2';
+		else if (enemy->GetAbilityAtIndex(2).IsReady())
+			action = '3';
+		else
+			action = 'a';
+		enemy->TakeTurn(action, player);
 
 		if (player->Defeated())
 		{
@@ -119,8 +140,8 @@ void PrintCombat(Player* player, Enemy* enemy, int turnNumber)
 	std::cout << player->m_curHp << "/" << player->GetMaxHP();
 	moveTo(40, 11);
 	std::cout << enemy->m_curHp << "/" << enemy->GetMaxHP() << std::endl;
-	//std::cout << player.GetLogMsg() << std::endl;
-	//std::cout << enemy.GetLogMsg() << std::endl;
+	std::cout << player->GetLogMsg() << std::endl;
+	std::cout << enemy->GetLogMsg() << std::endl;
 }
 
 void ClearConsole()

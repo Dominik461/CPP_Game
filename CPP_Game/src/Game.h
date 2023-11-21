@@ -2,6 +2,7 @@
 #include "../GameParameters.h"
 #include "Character/Header/Enemy.h"
 #include "Character/Header/Player.h"
+#include "Abilities/Header/Ability.h"
 #include "Math/Grid.h"
 #include <random>
 #include <Windows.h>

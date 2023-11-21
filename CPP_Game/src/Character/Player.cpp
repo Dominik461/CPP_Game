@@ -10,9 +10,8 @@ Player::Player(int hp, int dmg, int heal)
 
 Player::Player(int hp, int dmg, int heal, int2 position)
 	:Character(hp, dmg, position), m_heal(heal)
-{
+{	
 	/*
-	LearnAbility(Fireball);
 	LearnAbility(SelfHeal);
 	*/
 }
@@ -30,17 +29,17 @@ void Player::TakeTurn(char action, Character* target)
 	case 'a':
 		AttackEnemy(target);
 		break;
-	/*
+	
 	case '1':
-		m_pAbilities.at(0)->UseAbility(target);
+		m_logMsg = m_abilities.at(0).UseAbility(target, m_name);
 		break;
 	case '2':
-		m_pAbilities.at(1)->UseAbility(this);
+		m_logMsg = m_abilities.at(1).UseAbility(this, m_name);
 		break;
 	case '3':
-		
+		m_logMsg = m_abilities.at(0).UseAbility(target, m_name);
 		break;
-	*/
+	
 	}
 	ReduceAllCooldowns();
 }

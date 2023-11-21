@@ -130,9 +130,6 @@
   <ItemGroup>
     <ClInclude Include="GameParameters.h" />
     <ClInclude Include="src\Abilities\Header\Ability.h" />
-    <ClInclude Include="src\Abilities\Header\Fireball.h" />
-    <ClInclude Include="src\Abilities\Header\MeteorStrike.h" />
-    <ClInclude Include="src\Abilities\Header\SelfHeal.h" />
     <ClInclude Include="src\Character\Header\Character.h" />
     <ClInclude Include="src\Character\Header\Enemy.h" />
     <ClInclude Include="src\Character\Header\Player.h" />
@@ -144,9 +141,6 @@
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="src\Abilities\Ability.cpp" />
-    <ClCompile Include="src\Abilities\Fireball.cpp" />
-    <ClCompile Include="src\Abilities\MeteorStrike.cpp" />
-    <ClCompile Include="src\Abilities\SelfHeal.cpp" />
     <ClCompile Include="src\Cell.cpp" />
     <ClCompile Include="src\Character\Character.cpp" />
     <ClCompile Include="src\Character\Enemy.cpp" />
