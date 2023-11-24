@@ -1,7 +1,7 @@
 #include "Header/Ability.h"
 
 Ability::Ability(int cooldown, int value, bool targetSelf, std::string name)
-	:m_currentCd(cooldown), m_cd(cooldown), m_value(value), m_name(name), m_targetSelf(targetSelf)
+	:m_currentCd(0), m_cd(cooldown), m_value(value), m_name(name), m_targetSelf(targetSelf)
 {}
 
 Ability::Ability()
@@ -16,7 +16,7 @@ int Ability::CheckCurrentCooldown()
 std::string Ability::UseAbility(Character* pTarget, std::string casterName)
 {
 	std::string logMsg = "";
-	if (m_currentCd == m_cd)
+	if (m_currentCd == 0)
 	{
 		if (m_targetSelf)
 		{
@@ -43,7 +43,8 @@ std::string Ability::UseAbility(Character* pTarget, std::string casterName)
 			logMsg = casterName + " casts " + m_name + "! " + pTarget->GetName() + " takes " + std::to_string(m_value) + " damage!";
 			pTarget->m_curHp -= m_value;
 		}
-		m_currentCd = 0;
+		m_currentCd = 3;
+		m_thisTurn = true;
 	}
 	return logMsg;
 }
@@ -55,11 +56,37 @@ int Ability::GetCooldown()
 
 void Ability::ReduceCooldown()
 {
-	if (m_currentCd < m_cd)
-		m_currentCd++;
+	if (!m_thisTurn)
+	{
+		if (m_currentCd > 0)
+		{
+			m_currentCd--;
+		}
+	}
+	else
+		m_thisTurn = false;
+	
 }
 
 bool Ability::IsReady()
 {
-	return m_currentCd == m_cd;
+	return m_currentCd == 0;
+}
+
+std::string Ability::GetAbilityMsg()
+{
+	m_logCdMsg = m_name + " Cd: ";
+	for (int i = m_cd; i > 0; i--)
+	{
+		if (i <= m_currentCd)
+			m_logCdMsg += "[ ] ";  // Use "[+] " for slots where the cooldown has been used
+		else
+			m_logCdMsg += "[+] ";  // Use "[] " for remaining cooldown slots
+	}
+	return m_logCdMsg;
+}
+
+std::string Ability::GetAbilityName()
+{
+	return m_name;
 }

@@ -32,7 +32,7 @@ void Character::LearnAbility(Ability ability)
 
 void Character::ReduceAllCooldowns()
 {
-	for (Ability ability : m_abilities)
+	for (Ability& ability : m_abilities)
 	{
 		ability.ReduceCooldown();
 	}

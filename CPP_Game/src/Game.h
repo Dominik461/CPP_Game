@@ -15,3 +15,4 @@ void PrintCombat(Player* player, Enemy* enemy, int turnNumber);
 void OpenWorld(std::vector<char>& playerInputs, Player* player, Enemy* enemy, Grid playArea);
 void ClearConsole();
 void moveTo(int x, int y);
+int PrintCombatActions(Player* player, Enemy* enemy);

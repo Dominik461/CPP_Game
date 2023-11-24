@@ -10,11 +10,7 @@ Player::Player(int hp, int dmg, int heal)
 
 Player::Player(int hp, int dmg, int heal, int2 position)
 	:Character(hp, dmg, position), m_heal(heal)
-{	
-	/*
-	LearnAbility(SelfHeal);
-	*/
-}
+{}
 
 void Player::AttackEnemy(Character* enemy)
 {
@@ -42,29 +38,6 @@ void Player::TakeTurn(char action, Character* target)
 	
 	}
 	ReduceAllCooldowns();
-}
-
-void Player::HealSelf()
-{
-	if (m_curHp < m_maxHp)
-	{
-		int healAmount;
-		if (m_curHp + m_heal >= m_maxHp)
-		{
-			healAmount = m_maxHp - m_curHp;
-			m_curHp = m_maxHp;
-		}
-		else
-		{
-			m_curHp += m_heal;
-			healAmount = m_heal;
-		}
-		m_logMsg = m_name + " heald for " + std::to_string(healAmount) + " and now has " + std::to_string(m_curHp) + "!";
-	}
-	else
-		m_logMsg = "You'r HP are already full!";
-
-	
 }
 
 void Player::Move(char moveInput, Grid& playArea)

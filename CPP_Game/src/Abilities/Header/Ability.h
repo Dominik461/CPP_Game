@@ -5,8 +5,8 @@ class Ability
 {
 protected:
 	int m_currentCd, m_cd, m_value;
-	std::string m_name;
-	bool m_targetSelf = false;
+	std::string m_name, m_logCdMsg;
+	bool m_targetSelf = false, m_thisTurn = false;
 
 public:
 	std::string m_logMsg;
@@ -17,4 +17,6 @@ public:
 	int GetCooldown();
 	void ReduceCooldown();
 	bool IsReady();
+	std::string GetAbilityMsg();
+	std::string GetAbilityName();
 };

@@ -44,28 +44,81 @@ bool RunGame(const GameParameters& params)
 
 bool Combat(std::vector<char>& playerInputs, Player* player, Enemy* enemy)
 {
-	std::vector<char> validInputs = { 'a' };
-	int turnNumber = 0;
+	int turnNumber = 1;
+
 	while (!player->Defeated() && !enemy->Defeated())
 	{
-		if (player->GetAbilityAtIndex(0).IsReady())
-			validInputs.push_back('1');
-		if (player->GetAbilityAtIndex(1).IsReady())
-			validInputs.push_back('2');
-		if (player->GetAbilityAtIndex(2).IsReady())
-			validInputs.push_back('3');
 		char action;
-		bool vaildInput = false;
+		bool validInput = false;
 		ClearConsole();
 		PrintCombat(player, enemy, turnNumber);
 		do
 		{
 			action = _getch();
-			auto it = std::find(validInputs.begin(), validInputs.end(), action);
-			vaildInput = (it != validInputs.end());
-			if (!vaildInput)
+			switch (action)
+			{
+			case 'a':
+				validInput = true;
+				break;
+			case '1':
+				if (player->GetAbilityAtIndex(0).GetAbilityName() != "PLACEHOLDER")
+				{
+					if (player->GetAbilityAtIndex(0).IsReady())
+						validInput = true;
+					else
+					{
+						std::cout << "1st ability not ready" << std::endl;
+						validInput = false;
+					}
+				}
+				else
+				{
+					std::cout << "1st ability not learned" << std::endl;
+					validInput = false;
+				}
+				break;
+
+			case '2':
+				if (player->GetAbilityAtIndex(1).GetAbilityName() != "PLACEHOLDER")
+				{
+					if (player->GetAbilityAtIndex(1).IsReady())
+						validInput = true;
+					else
+					{
+						std::cout << "2nd ability not ready" << std::endl;
+						validInput = false;
+					}
+				}
+				else
+				{
+					std::cout << "2nd ability not learned" << std::endl;
+					validInput = false;
+				}
+				break;
+
+			case '3':
+				if (player->GetAbilityAtIndex(2).GetAbilityName() != "PLACEHOLDER")
+				{
+					if (player->GetAbilityAtIndex(2).IsReady())
+						validInput = true;
+					else
+					{
+						std::cout << "3rd ability not ready" << std::endl;
+						validInput = false;
+					}
+				}
+				else
+				{
+					std::cout << "3rd ability not learned" << std::endl;
+					validInput = false;
+				}
+				break;
+
+			default:
 				std::cout << "Not a valid input!" << std::endl;
-		} while (!vaildInput);	
+				break;
+			}
+		} while (!validInput);	
 
  		player->TakeTurn(action, enemy);
 
@@ -116,32 +169,57 @@ void OpenWorld(std::vector<char>& playerInputs, Player* player, Enemy* enemy, Gr
 
 void PrintCombat(Player* player, Enemy* enemy, int turnNumber)
 {
+	int currentLine = 3;
 	std::cout << player->GetName() << " encountered a wild " << enemy->GetName() << "!" << std::endl;
 	std::cout <<  std::endl;
-	std::cout << "Use 'a' to attack the enemy or 'h' to heal your self!" << std::endl;
+	currentLine  += PrintCombatActions(player, enemy);
 	std::cout << "Turn: " << turnNumber << std::endl;
+	currentLine++;
 	std::cout << std::endl;
-
-	std::cout << "  o";
-	moveTo(42, 6);
+	currentLine++;
+ 	std::cout << "  o";
+	moveTo(42, currentLine++);
 	std::cout << "o  " << std::endl;
 	std::cout << " /|\\";
-	moveTo(41, 7);
+	moveTo(41, currentLine++);
 	std::cout << "/|\\  " << std::endl;
 	std::cout << "  |  ";
-	moveTo(42, 8);
+	moveTo(42, currentLine++);
 	std::cout << "|  " << std::endl;
 	std::cout << " / \\";
-	moveTo(41, 9);
+	moveTo(41, currentLine++);
 	std::cout << "/ \\  " << std::endl;
 	std::cout << player->GetName();
-	moveTo(40, 10);
+	moveTo(40, currentLine++);
 	std::cout << enemy->GetName() << std::endl;
 	std::cout << player->m_curHp << "/" << player->GetMaxHP();
-	moveTo(40, 11);
+	moveTo(40, currentLine++);
 	std::cout << enemy->m_curHp << "/" << enemy->GetMaxHP() << std::endl;
+	std::cout << "----------------------------------------------------------------------------------------------------------" << std::endl;
 	std::cout << player->GetLogMsg() << std::endl;
 	std::cout << enemy->GetLogMsg() << std::endl;
+}
+
+int PrintCombatActions(Player* player, Enemy* enemy)
+{
+	int row = 1;
+	std::cout << "a: Attack: " << std::endl;
+	if (player->GetAbilityAtIndex(0).GetAbilityName() != "PLACEHOLDER")
+	{
+		std::cout << "1: " << player->GetAbilityAtIndex(0).GetAbilityMsg() << std::endl;
+		row = 2;
+	}
+	if (player->GetAbilityAtIndex(1).GetAbilityName() != "PLACEHOLDER")
+	{
+		std::cout << "2: " << player->GetAbilityAtIndex(1).GetAbilityMsg() << std::endl;
+		row = 3;
+	}
+	if (player->GetAbilityAtIndex(2).GetAbilityName() != "PLACEHOLDER")
+	{
+		std::cout << "3: " << player->GetAbilityAtIndex(2).GetAbilityMsg() << std::endl;
+		row = 4;
+	}
+	return row;
 }
 
 void ClearConsole()
@@ -153,3 +231,4 @@ void moveTo(int x, int y)
 {
 	std::cout << "\033[" << y << ";" << x << "H";
 }
+
