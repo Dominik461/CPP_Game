@@ -17,6 +17,7 @@ public:
 	void SetValueAtIndex(unsigned int index, bool value); //set the blocked value of a cell at a given index
 	void SetValueAtLocation(int2 location, bool value); //set the blocked value of a given location
 	void SetCharacterAtLocation(Character* character); //set the blocked value of a given location
+	Character* GetCharacterAtLocation(int2 pos); //set the blocked value of a given location
 	unsigned int GetIndexFromLocation(int2 location); //convert a location to an index
 	int2 GetLocationFromIndex(unsigned int index); //convert an index into a location
 	unsigned int GetWidth(); //retrieve the width of the grid

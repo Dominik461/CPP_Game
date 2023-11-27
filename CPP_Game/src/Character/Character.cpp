@@ -38,6 +38,14 @@ void Character::ReduceAllCooldowns()
 	}
 }
 
+void Character::ResetAllCooldowns()
+{
+	for (Ability& ability : m_abilities)
+	{
+		ability.ResetCooldown();
+	}
+}
+
 void Character::SetName(std::string name)
 {
 	if (m_name == "")
@@ -52,8 +60,9 @@ std::string Character::GetName()
 
 std::string Character::GetLogMsg()
 {
-	if (m_name != "")
-		return m_logMsg;
+	std::string temp = m_logMsg;
+	m_logMsg = "";
+	return temp;
 }
 
 int2 Character::GetPosition()

@@ -4,19 +4,15 @@
 
 struct GameParameters
 {
-	std::vector<char> playerInputs;
 	int playerDamage;
-	int playerHeal;
 	int playerHealth;
 	int enemyDamage;
 	int enemyHealth;
 
 	int2 playerStart;
-	int2 enemyPosition;
 
-	int gridWidth;
-	int gridHeight;
+	unsigned int gridWidth;
+	unsigned int gridHeight;
 
-	bool manual;
-
+	int enemyCount;
 };

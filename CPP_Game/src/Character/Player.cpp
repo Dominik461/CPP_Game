@@ -12,9 +12,13 @@ Player::Player(int hp, int dmg, int heal, int2 position)
 	:Character(hp, dmg, position), m_heal(heal)
 {}
 
+Player::Player(int hp, int dmg, int2 position)
+	:Character(hp, dmg, position), m_heal(0)
+{}
+
 void Player::AttackEnemy(Character* enemy)
 {
-	m_logMsg = m_name + " dealt " + std::to_string(m_dmg) + " damage to " + enemy->GetName() + " !";
+	m_logMsg = m_name + " dealt " + std::to_string(m_dmg) + " damage to " + enemy->GetName() + "!";
 	enemy->m_curHp -= m_dmg;
 }
 
@@ -94,4 +98,13 @@ void Player::Move(char moveInput, Grid& playArea)
 		}
 		break;
 	}
+}
+
+void Player::EndOfCombat()
+{
+	if (m_curHp + (m_maxHp / 2) >= m_maxHp)
+		m_curHp = m_maxHp;
+	else
+		m_curHp += (m_maxHp / 2);
+	ResetAllCooldowns();
 }
