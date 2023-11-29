@@ -19,6 +19,7 @@ bool RunGame(const GameParameters& params)
 	std::uniform_int_distribution<int> enemyPositionY(0, params.gridHeight - 1);
 	std::vector<Enemy*> pEnemies;
 	Enemy* pCollidedEnemy;
+	bool succesfullCombat;
 	Ability fireball(3, 10, false, "Fireball");
 	Ability heal(3, 12, true, "Heal");
 	Ability meteorStrike(4, 15, false, "Meteor Strike");
@@ -51,14 +52,28 @@ bool RunGame(const GameParameters& params)
 		pEnemies.push_back(pEnemy);
 		playArea.SetCharacterAtLocation(pEnemies.at(i));
 	}
-	
-	playArea.Print();
-	
+	do {
+		playArea.Print();
 
-	pCollidedEnemy = OpenWorld(pPlayer, pEnemies, playArea);
 
-	//Comabt
-	return Combat(pPlayer, pCollidedEnemy);
+		pCollidedEnemy = OpenWorld(pPlayer, pEnemies, playArea);
+
+		//Comabt
+		succesfullCombat = Combat(pPlayer, pCollidedEnemy);
+		if (!succesfullCombat)
+		{
+			for (Enemy* ptr : pEnemies) {
+				delete ptr;
+			}
+			pEnemies.clear();
+			break;
+		}
+		else
+		{
+
+		}
+	} while (pEnemies.size() > 0);
+	return succesfullCombat;
 }
 
 bool Combat(Player* player, Enemy* enemy)
