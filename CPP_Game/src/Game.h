@@ -12,7 +12,7 @@
 bool RunGame(const GameParameters& params);
 bool Combat(Player* player, Enemy* enemy);
 void PrintCombat(Player* player, Enemy* enemy, int turnNumber);
-Enemy* OpenWorld(Player* player, std::vector<Enemy*> pEnemies, Grid playArea);
+Enemy* OpenWorld(Player* player, std::vector<Enemy*> pEnemies, Grid& playArea);
 void ClearConsole();
 void moveTo(int x, int y);
 int PrintCombatActions(Player* player, Enemy* enemy);

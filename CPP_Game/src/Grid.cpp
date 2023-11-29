@@ -110,7 +110,8 @@ bool Grid::LocationInBounds(int2 location)
 
 void Grid::Print()
 {
-	std::cout << "Grid:" << std::endl;
+	system("cls");
+	std::cout << "C++ game by Dominik Mueller(dm126)" << std::endl;
 	for (int y = m_Height - 1; y >= 0; --y)
 	{
 		for (size_t x = 0; x < m_Width; ++x)

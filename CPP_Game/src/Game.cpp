@@ -3,7 +3,7 @@
 
 bool RunGame(const GameParameters& params)
 {
-	std::cout << "C++ game by Dominik Mueller (dm126)" << std::endl;
+	//std::cout << "C++ game by Dominik Mueller (dm126)" << std::endl;
 	//init gameworld
 	std::vector<std::string> playerNames = { "Olaf", "Gaben", "Günter", "Otto", "Marcel Davis", "Steve Jobs" };
 	
@@ -20,6 +20,7 @@ bool RunGame(const GameParameters& params)
 	std::vector<Enemy*> pEnemies;
 	Enemy* pCollidedEnemy;
 	bool succesfullCombat;
+	int enemyIndex;
 	Ability fireball(3, 10, false, "Fireball");
 	Ability heal(3, 12, true, "Heal");
 	Ability meteorStrike(4, 15, false, "Meteor Strike");
@@ -40,11 +41,23 @@ bool RunGame(const GameParameters& params)
 	{
 		int movesAway = 0;
 		int2 enemyPosition;
+		bool positionAvailable = true;
 		do
 		{
 			enemyPosition = int2(enemyPositionX(gen), enemyPositionY(gen));
+			if (pEnemies.size() > 0)
+			{
+				for (Enemy* enemy : pEnemies)
+				{
+					if (enemy->GetPosition() == enemyPosition)
+					{
+						positionAvailable = false;
+						break;
+					}
+				}
+			}
 			movesAway = abs(enemyPosition.x - pPlayer->GetPosition().x) + abs(enemyPosition.y - pPlayer->GetPosition().y);
-		} while (movesAway <= 3);
+		} while (movesAway <= 3 && positionAvailable);
 		
 		Enemy* pEnemy = new Enemy(params.enemyHealth, params.enemyDamage, enemyPosition);
 		pEnemy->SetName("Visual Studio");
@@ -52,9 +65,11 @@ bool RunGame(const GameParameters& params)
 		pEnemies.push_back(pEnemy);
 		playArea.SetCharacterAtLocation(pEnemies.at(i));
 	}
+
+
 	do {
 		playArea.Print();
-
+		enemyIndex = NULL;
 
 		pCollidedEnemy = OpenWorld(pPlayer, pEnemies, playArea);
 
@@ -70,7 +85,11 @@ bool RunGame(const GameParameters& params)
 		}
 		else
 		{
-
+			playArea.SetValueAtLocation(pCollidedEnemy->GetPosition(), false);
+			auto enemyToRemove = std::find(pEnemies.begin(), pEnemies.end(), pCollidedEnemy);
+			delete *enemyToRemove;
+			pEnemies.erase(enemyToRemove);
+			playArea.SetCharacterAtLocation(pPlayer);
 		}
 	} while (pEnemies.size() > 0);
 	return succesfullCombat;
@@ -79,6 +98,7 @@ bool RunGame(const GameParameters& params)
 bool Combat(Player* player, Enemy* enemy)
 {
 	int turnNumber = 1;
+	bool enemyDefeated;
 
 	while (!player->Defeated() && !enemy->Defeated())
 	{
@@ -158,16 +178,10 @@ bool Combat(Player* player, Enemy* enemy)
 
 		if (enemy->Defeated())
 		{
-			ClearConsole();
-			PrintCombat(player, enemy, turnNumber);
-			std::cout << enemy->GetName() << " was defeated!" << std::endl;
-			std::cout << "Press any button to continue" << std::endl;
-			player->EndOfCombat();
-			_getch();
-			return true;
+			enemyDefeated = true;
+			break;
 		}
 
-		
 
 		if ((enemy->GetAbilityAtIndex(0).IsReady()) && enemy->GetAbilityAtIndex(0).GetAbilityName() != "PLACEHOLDER")
 			action = '1';
@@ -179,29 +193,46 @@ bool Combat(Player* player, Enemy* enemy)
 			action = 'a';
 		enemy->TakeTurn(action, player);
 
-		if (player->Defeated())
-		{
-			ClearConsole();
-			PrintCombat(player, enemy, turnNumber);
-			std::cout << player->GetName() << " was defeated!" << std::endl;
-			std::cout << "Press any button to continue" << std::endl;
-			_getch();
-			return false;
-		}
+		if (player->Defeated())			
+			enemyDefeated = false;
 
 		turnNumber++;
 	}
 
-	return true;
+	ClearConsole();
+	PrintCombat(player, enemy, turnNumber);
+
+	if (enemyDefeated)
+	{
+		std::cout << enemy->GetName() << " was defeated!" << std::endl;
+		player->EndOfCombat();
+	}
+	else
+		std::cout << player->GetName() << " was defeated!" << std::endl;
+
+	std::cout << "Press any button to continue" << std::endl;
+	_getch();
+
+	return enemyDefeated;
 }
 
-Enemy* OpenWorld(Player* player, std::vector<Enemy*> enemies, Grid playArea)
+Enemy* OpenWorld(Player* player, std::vector<Enemy*> enemies, Grid& playArea)
 {
+	char input;
+	bool validInput = false;
 	while (true)
 	{
-		char input = _getch();
-
-		ClearConsole();
+		do {
+			input = _getch();
+			if (input != 'w' && input != 'a' && input != 's' && input != 'd')
+			{
+				validInput = false;
+				std::cout << input <<" is not a valid move option!" << std::endl;
+			}			
+			else
+				validInput = true;
+		} while(!validInput);
+		
 		player->Move(input, playArea);
 		for (Enemy* enemy : enemies)
 		{
@@ -212,8 +243,8 @@ Enemy* OpenWorld(Player* player, std::vector<Enemy*> enemies, Grid playArea)
 				return enemy;
 			}
 		}
-		
 		playArea.Print();
+		std::cout << player->GetLogMsg() << std::endl;
 	}
 		
 }

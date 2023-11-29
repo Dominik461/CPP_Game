@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <Windows.h>
+#include <conio.h>
 #include "Cell.h"
 #include "Int2.h"
 #include "../Character/Header/Enemy.h"

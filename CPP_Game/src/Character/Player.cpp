@@ -46,7 +46,6 @@ void Player::TakeTurn(char action, Character* target)
 
 void Player::Move(char moveInput, Grid& playArea)
 {
-	std::cout << m_name <<" Input was " << moveInput << "!" << std::endl;
 	switch (moveInput)
 	{
 	case 'w':		
@@ -58,7 +57,7 @@ void Player::Move(char moveInput, Grid& playArea)
 		}
 		else
 		{
-			std::cout << "You are at the edge of the map!" << std::endl;
+			m_logMsg = "You are at the edge of the map!";
 		}
 		break;
 	case 'a':
@@ -70,7 +69,7 @@ void Player::Move(char moveInput, Grid& playArea)
 		}
 		else
 		{
-			std::cout << "You are at the edge of the map!" << std::endl;
+			m_logMsg = "You are at the edge of the map!";
 		}
 		break;
 	case 's':
@@ -82,7 +81,7 @@ void Player::Move(char moveInput, Grid& playArea)
 		}
 		else
 		{
-			std::cout << "You are at the edge of the map!" << std::endl;
+			m_logMsg = "You are at the edge of the map!";
 		}
 		break;
 	case 'd':
@@ -94,7 +93,7 @@ void Player::Move(char moveInput, Grid& playArea)
 		}
 		else
 		{
-			std::cout << "You are at the edge of the map!" << std::endl;
+			m_logMsg = "You are at the edge of the map!";
 		}
 		break;
 	}
