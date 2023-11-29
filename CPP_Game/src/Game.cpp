@@ -6,7 +6,7 @@ bool RunGame(const GameParameters& params)
 	std::cout << "C++ game by Dominik Mueller (dm126)" << std::endl;
 	//init gameworld
 	std::vector<std::string> playerNames = { "Olaf", "Gaben", "Günter", "Otto", "Marcel Davis", "Steve Jobs" };
-	std::vector<char> playerInputs = params.playerInputs;
+	
 
 	// Seed for the random number generator
 	std::random_device rd;
@@ -15,34 +15,68 @@ bool RunGame(const GameParameters& params)
 
 	// Define a distribution for the random numbers (here, integers between 1 and 100)
 	std::uniform_int_distribution<int> distribution(0, playerNames.size() - 1);
-
+	std::uniform_int_distribution<int> enemyPositionX(0, params.gridWidth - 1);
+	std::uniform_int_distribution<int> enemyPositionY(0, params.gridHeight - 1);
+	std::vector<Enemy*> pEnemies;
+	Enemy* pCollidedEnemy;
+	bool succesfullCombat;
 	Ability fireball(3, 10, false, "Fireball");
 	Ability heal(3, 12, true, "Heal");
 	Ability meteorStrike(4, 15, false, "Meteor Strike");
 
 	Grid playArea(params.gridWidth, params.gridHeight);
-	Enemy enemy(params.enemyHealth, params.enemyDamage, params.enemyPosition);
-	Player player(params.playerHealth, params.playerDamage, params.playerHeal, params.playerStart);
-	Enemy* pEnemy = &enemy;
+
+	Player player(params.playerHealth, params.playerDamage, params.playerStart);
 	Player* pPlayer = &player;
 	pPlayer->SetName(playerNames.at(distribution(gen)));
-	pEnemy->SetName("Visual Studio");
+
 	pPlayer->LearnAbility(fireball);
 	pPlayer->LearnAbility(heal);
-	pEnemy->LearnAbility(meteorStrike);
 
 	playArea.SetCharacterAtLocation(pPlayer);
-	playArea.SetCharacterAtLocation(pEnemy);
-	playArea.Print();
-	
 
-	OpenWorld(playerInputs, pPlayer, pEnemy, playArea);
 
-	//Comabt
-	return Combat(playerInputs, pPlayer, pEnemy);
+	for (size_t i = 0; i < params.enemyCount; i++)
+	{
+		int movesAway = 0;
+		int2 enemyPosition;
+		do
+		{
+			enemyPosition = int2(enemyPositionX(gen), enemyPositionY(gen));
+			movesAway = abs(enemyPosition.x - pPlayer->GetPosition().x) + abs(enemyPosition.y - pPlayer->GetPosition().y);
+		} while (movesAway <= 3);
+		
+		Enemy* pEnemy = new Enemy(params.enemyHealth, params.enemyDamage, enemyPosition);
+		pEnemy->SetName("Visual Studio");
+		pEnemy->LearnAbility(meteorStrike);
+		pEnemies.push_back(pEnemy);
+		playArea.SetCharacterAtLocation(pEnemies.at(i));
+	}
+	do {
+		playArea.Print();
+
+
+		pCollidedEnemy = OpenWorld(pPlayer, pEnemies, playArea);
+
+		//Comabt
+		succesfullCombat = Combat(pPlayer, pCollidedEnemy);
+		if (!succesfullCombat)
+		{
+			for (Enemy* ptr : pEnemies) {
+				delete ptr;
+			}
+			pEnemies.clear();
+			break;
+		}
+		else
+		{
+
+		}
+	} while (pEnemies.size() > 0);
+	return succesfullCombat;
 }
 
-bool Combat(std::vector<char>& playerInputs, Player* player, Enemy* enemy)
+bool Combat(Player* player, Enemy* enemy)
 {
 	int turnNumber = 1;
 
@@ -124,15 +158,22 @@ bool Combat(std::vector<char>& playerInputs, Player* player, Enemy* enemy)
 
 		if (enemy->Defeated())
 		{
+			ClearConsole();
+			PrintCombat(player, enemy, turnNumber);
 			std::cout << enemy->GetName() << " was defeated!" << std::endl;
+			std::cout << "Press any button to continue" << std::endl;
+			player->EndOfCombat();
+			_getch();
 			return true;
 		}
 
-		if (enemy->GetAbilityAtIndex(0).IsReady())
+		
+
+		if ((enemy->GetAbilityAtIndex(0).IsReady()) && enemy->GetAbilityAtIndex(0).GetAbilityName() != "PLACEHOLDER")
 			action = '1';
-		else if (enemy->GetAbilityAtIndex(1).IsReady())
+		else if (enemy->GetAbilityAtIndex(1).IsReady() && enemy->GetAbilityAtIndex(1).GetAbilityName() != "PLACEHOLDER")
 			action = '2';
-		else if (enemy->GetAbilityAtIndex(2).IsReady())
+		else if (enemy->GetAbilityAtIndex(2).IsReady() && enemy->GetAbilityAtIndex(2).GetAbilityName() != "PLACEHOLDER")
 			action = '3';
 		else
 			action = 'a';
@@ -140,7 +181,11 @@ bool Combat(std::vector<char>& playerInputs, Player* player, Enemy* enemy)
 
 		if (player->Defeated())
 		{
+			ClearConsole();
+			PrintCombat(player, enemy, turnNumber);
 			std::cout << player->GetName() << " was defeated!" << std::endl;
+			std::cout << "Press any button to continue" << std::endl;
+			_getch();
 			return false;
 		}
 
@@ -150,21 +195,27 @@ bool Combat(std::vector<char>& playerInputs, Player* player, Enemy* enemy)
 	return true;
 }
 
-void OpenWorld(std::vector<char>& playerInputs, Player* player, Enemy* enemy, Grid playArea)
+Enemy* OpenWorld(Player* player, std::vector<Enemy*> enemies, Grid playArea)
 {
-	while (player->GetPosition() != enemy->GetPosition())
+	while (true)
 	{
 		char input = _getch();
 
 		ClearConsole();
 		player->Move(input, playArea);
-		if (player->GetPosition() == enemy->GetPosition())
+		for (Enemy* enemy : enemies)
 		{
-			break;
+			
+			if (player->GetPosition() == enemy->GetPosition())
+			{
+				ClearConsole();
+				return enemy;
+			}
 		}
+		
 		playArea.Print();
 	}
-	ClearConsole();		
+		
 }
 
 void PrintCombat(Player* player, Enemy* enemy, int turnNumber)

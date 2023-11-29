@@ -27,6 +27,7 @@ class Character
 		Character(int hp, int dmg, int2 position);
 		void LearnAbility(Ability ability);
 		void ReduceAllCooldowns();
+		void ResetAllCooldowns();
 		void SetName(std::string name);
 		std::string GetName();
 		std::string GetLogMsg();

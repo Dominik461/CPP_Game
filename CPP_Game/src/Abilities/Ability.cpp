@@ -43,7 +43,7 @@ std::string Ability::UseAbility(Character* pTarget, std::string casterName)
 			logMsg = casterName + " casts " + m_name + "! " + pTarget->GetName() + " takes " + std::to_string(m_value) + " damage!";
 			pTarget->m_curHp -= m_value;
 		}
-		m_currentCd = 3;
+		m_currentCd = m_cd;
 		m_thisTurn = true;
 	}
 	return logMsg;
@@ -66,6 +66,11 @@ void Ability::ReduceCooldown()
 	else
 		m_thisTurn = false;
 	
+}
+
+void Ability::ResetCooldown()
+{
+	m_currentCd = 0;
 }
 
 bool Ability::IsReady()

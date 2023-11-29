@@ -59,6 +59,15 @@ void Grid::SetCharacterAtLocation(Character* character)
 	}
 }
 
+
+Character* Grid::GetCharacterAtLocation(int2 pos)
+{
+	if (LocationInBounds(pos))
+		return m_Values.at(GetIndexFromLocation(pos)).GetCharacter();
+	
+	return NULL;
+}
+
 unsigned int Grid::GetIndexFromLocation(int2 location)
 {
 	if (LocationInBounds(location))
@@ -110,14 +119,13 @@ void Grid::Print()
 			bool value = GetValueAtLocation(currentLocation);
 			Character* occupant = m_Values.at(GetIndexFromLocation(currentLocation)).GetCharacter();
 
-
 			if (value == 0 && occupant == NULL) {
 				std::cout << "." << " ";
 			}
-			else if (typeid(*occupant) == typeid(Player)) {
+			else if (value == 1 && typeid(*occupant) == typeid(Player)) {
 				std::cout << "p" << " ";
 			}
-			else if (typeid(*occupant) == typeid(Enemy)) {
+			else if (value == 1 && typeid(*occupant) == typeid(Enemy)) {
 				std::cout << "e" << " ";
 			}
 		}

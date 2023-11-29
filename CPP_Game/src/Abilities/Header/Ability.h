@@ -16,6 +16,7 @@ public:
 	int CheckCurrentCooldown();
 	int GetCooldown();
 	void ReduceCooldown();
+	void ResetCooldown();
 	bool IsReady();
 	std::string GetAbilityMsg();
 	std::string GetAbilityName();

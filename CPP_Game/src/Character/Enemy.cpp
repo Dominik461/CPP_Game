@@ -15,7 +15,7 @@ Enemy::Enemy(int hp, int dmg, int2 position)
 
 void Enemy::AttackPlayer(Character* player)
 {
-	m_logMsg = "Enemy dealt " + std::to_string(m_dmg) + " damage to Player!";
+	m_logMsg = "Enemy dealt " + std::to_string(m_dmg) + " damage to " + player->GetName() + "!";
 	player->m_curHp -= m_dmg;
 }
 
