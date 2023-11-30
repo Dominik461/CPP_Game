@@ -12,11 +12,11 @@ Character::Character(int hp, int dmg)
 Character::Character(int hp, int dmg, int2 position)
 	:m_maxHp(hp), m_curHp(hp), m_dmg(dmg), m_actionFlags(0), m_position(position)
 {
-	m_abilities.push_back(Ability());
-	m_abilities.push_back(Ability());
-	m_abilities.push_back(Ability());
+	//m_abilities.push_back(Ability());
+	//m_abilities.push_back(Ability());
+	//m_abilities.push_back(Ability());
 }
-
+/*
 void Character::LearnAbility(Ability ability)
 {
 	if (m_newAbilityIndex < 3)
@@ -29,21 +29,25 @@ void Character::LearnAbility(Ability ability)
 	m_newAbilityIndex++;
 		
 }
-
+*/
 void Character::ReduceAllCooldowns()
 {
-	for (Ability& ability : m_abilities)
+	/*
+	for (Ability* ability : m_abilities)
 	{
 		ability.ReduceCooldown();
 	}
+	*/
 }
 
 void Character::ResetAllCooldowns()
 {
-	for (Ability& ability : m_abilities)
+	/*
+	for (Ability* ability : m_abilities)
 	{
 		ability.ResetCooldown();
 	}
+	*/
 }
 
 void Character::SetName(std::string name)
@@ -81,8 +85,9 @@ bool Character::Defeated()
 		return true;
 	return false;
 }
-
+/*
 Ability Character::GetAbilityAtIndex(int index)
 {
 	return m_abilities.at(index);
 }
+*/

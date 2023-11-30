@@ -18,7 +18,7 @@ class Character
 		int2 m_position;
 		std::string m_name = "";
 		std::string m_logMsg = "";
-		std::vector<Ability>m_abilities;
+		std::vector<Ability*>m_abilities;
 
 	public:
 		int m_curHp;

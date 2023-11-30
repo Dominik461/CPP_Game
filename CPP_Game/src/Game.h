@@ -3,6 +3,7 @@
 #include "Character/Header/Enemy.h"
 #include "Character/Header/Player.h"
 #include "Abilities/Header/Ability.h"
+#include "Abilities/Header/Fireball.h"
 #include "Math/Grid.h"
 #include "GameMechanics/Combat.h"
 #include "GameMechanics/OpenWorld.h"

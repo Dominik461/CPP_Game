@@ -26,6 +26,7 @@ void Enemy::TakeTurn(char action, Character* target)
 	case 'a':
 		AttackPlayer(target);
 		break;
+	/*
 	case '1':
 		m_logMsg = m_abilities.at(0).UseAbility(target, m_name);
 		break;
@@ -35,6 +36,7 @@ void Enemy::TakeTurn(char action, Character* target)
 	case '3':
 		m_logMsg = m_abilities.at(2).UseAbility(target, m_name);
 		break;
+	*/
 	}
 	ReduceAllCooldowns();
 }

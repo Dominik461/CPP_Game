@@ -19,18 +19,21 @@ bool RunGame(const GameParameters& params)
 	Enemy* pCollidedEnemy;
 	bool succesfullCombat;
 	int enemyIndex;
+	
+	Fireball fireball(3, 10, "Fireball");
+	/*
 	Ability fireball(3, 10, false, "Fireball");
 	Ability heal(3, 12, true, "Heal");
 	Ability meteorStrike(4, 15, false, "Meteor Strike");
-
+	*/
 	Grid playArea(params.gridWidth, params.gridHeight);
 
 	Player player(params.playerHealth, params.playerDamage, params.playerStart);
 	Player* pPlayer = &player;
 	pPlayer->SetName(playerNames.at(distribution(gen)));
 
-	pPlayer->LearnAbility(fireball);
-	pPlayer->LearnAbility(heal);
+	//pPlayer->LearnAbility(fireball);
+	//pPlayer->LearnAbility(heal);
 
 	playArea.SetCharacterAtLocation(pPlayer);
 
@@ -59,7 +62,7 @@ bool RunGame(const GameParameters& params)
 		
 		Enemy* pEnemy = new Enemy(params.enemyHealth, params.enemyDamage, enemyPosition);
 		pEnemy->SetName("Visual Studio");
-		pEnemy->LearnAbility(meteorStrike);
+		//pEnemy->LearnAbility(meteorStrike);
 		pEnemies.push_back(pEnemy);
 		playArea.SetCharacterAtLocation(pEnemies.at(i));
 	}

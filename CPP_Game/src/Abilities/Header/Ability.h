@@ -12,7 +12,7 @@ public:
 	std::string m_logMsg;
 	Ability();
 	Ability(int cooldown, int value, bool targetSelf,std::string name);
-	std::string UseAbility(Character* pTarget, std::string casterName);
+	virtual std::string UseAbility(Character* pTarget, std::string casterName) = 0;
 	int CheckCurrentCooldown();
 	int GetCooldown();
 	void ReduceCooldown();
