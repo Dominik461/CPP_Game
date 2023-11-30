@@ -134,9 +134,12 @@
     <ClInclude Include="src\Character\Header\Enemy.h" />
     <ClInclude Include="src\Character\Header\Player.h" />
     <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\GameMechanics\Combat.h" />
+    <ClInclude Include="src\GameMechanics\OpenWorld.h" />
     <ClInclude Include="src\Math\Cell.h" />
     <ClInclude Include="src\Math\Grid.h" />
     <ClInclude Include="src\Math\Int2.h" />
+    <ClInclude Include="src\Misc\ConsoleHelpers.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -146,8 +149,11 @@
     <ClCompile Include="src\Character\Enemy.cpp" />
     <ClCompile Include="src\Character\Player.cpp" />
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\GameMechanics\Combat.cpp" />
+    <ClCompile Include="src\GameMechanics\OpenWorld.cpp" />
     <ClCompile Include="src\Grid.cpp" />
     <ClCompile Include="src\Int2.cpp" />
+    <ClCompile Include="src\Misc\ConsoleHelpers.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
