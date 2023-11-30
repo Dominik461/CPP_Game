@@ -29,17 +29,17 @@ void Player::TakeTurn(char action, Character* target)
 	case 'a':
 		AttackEnemy(target);
 		break;
-	/*
+	
 	case '1':
-		m_logMsg = m_abilities.at(0).UseAbility(target, m_name);
+		m_logMsg = m_abilities.at(0)->UseAbility();
 		break;
 	case '2':
-		m_logMsg = m_abilities.at(1).UseAbility(this, m_name);
+		m_logMsg = m_abilities.at(1)->UseAbility();
 		break;
 	case '3':
-		m_logMsg = m_abilities.at(0).UseAbility(target, m_name);
+		m_logMsg = m_abilities.at(0)->UseAbility();
 		break;
-	*/
+	
 	}
 	ReduceAllCooldowns();
 }

@@ -1,4 +1,4 @@
-#include "Math/Int2.h"
+#include "Header/Int2.h"
 #include <ostream>
 
 int2::int2()

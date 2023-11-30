@@ -1,5 +1,5 @@
 #pragma once
-#include "src/Math/Int2.h"
+#include "src/Math/Header/Int2.h"
 #include <vector>
 
 struct GameParameters

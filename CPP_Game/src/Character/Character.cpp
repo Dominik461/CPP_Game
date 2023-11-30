@@ -12,15 +12,18 @@ Character::Character(int hp, int dmg)
 Character::Character(int hp, int dmg, int2 position)
 	:m_maxHp(hp), m_curHp(hp), m_dmg(dmg), m_actionFlags(0), m_position(position)
 {
-	//m_abilities.push_back(Ability());
-	//m_abilities.push_back(Ability());
-	//m_abilities.push_back(Ability());
+	m_abilities.push_back(std::make_shared<Ability>());
+	m_abilities.push_back(std::make_shared<Ability>());
+	m_abilities.push_back(std::make_shared<Ability>());
 }
-/*
-void Character::LearnAbility(Ability ability)
+
+void Character::LearnAbility(const std::shared_ptr<Ability>& ability)
 {
 	if (m_newAbilityIndex < 3)
+	{
 		m_abilities.at(m_newAbilityIndex) = ability;
+	}
+		
 	else
 	{
 		m_newAbilityIndex = 0;
@@ -29,25 +32,23 @@ void Character::LearnAbility(Ability ability)
 	m_newAbilityIndex++;
 		
 }
-*/
+
 void Character::ReduceAllCooldowns()
 {
-	/*
-	for (Ability* ability : m_abilities)
+	
+	for (auto& ability : m_abilities)
 	{
-		ability.ReduceCooldown();
+		ability->ReduceCooldown();
 	}
-	*/
+	
 }
 
 void Character::ResetAllCooldowns()
 {
-	/*
-	for (Ability* ability : m_abilities)
+	for (auto& ability : m_abilities)
 	{
-		ability.ResetCooldown();
+		ability->ResetCooldown();
 	}
-	*/
 }
 
 void Character::SetName(std::string name)
@@ -60,6 +61,8 @@ std::string Character::GetName()
 {
 	if (m_name != "")
 		return m_name;
+	else
+		return "PLACEHOLDER NAME";
 }
 
 std::string Character::GetLogMsg()
@@ -85,9 +88,23 @@ bool Character::Defeated()
 		return true;
 	return false;
 }
-/*
-Ability Character::GetAbilityAtIndex(int index)
+
+std::shared_ptr<Ability> Character::GetAbilityAtIndex(int index)
 {
 	return m_abilities.at(index);
 }
-*/
+
+void Character::InitCombat(Character* pTarget)
+{
+	for (auto& ability : m_abilities)
+	{
+		if (ability->GetAbilityName() != "PLACEHOLDER")
+		{
+			ability->SetCasterName(m_name);
+			if (ability->GetSelfTarget())
+				ability->SetTargetPointer(this);
+			else
+				ability->SetTargetPointer(pTarget);
+		}
+	}
+}

@@ -5,8 +5,8 @@
 #include <conio.h>
 #include "Cell.h"
 #include "Int2.h"
-#include "../Character/Header/Enemy.h"
-#include "../Character/Header/Player.h"
+#include "../../Character/Header/Enemy.h"
+#include "../../Character/Header/Player.h"
 
 class Grid
 {

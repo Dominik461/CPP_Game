@@ -3,7 +3,8 @@
 bool Combat(Player* player, Enemy* enemy)
 {
 	int turnNumber = 1;
-
+	player->InitCombat(enemy);
+	enemy->InitCombat(player);
 	while (!player->Defeated() && !enemy->Defeated())
 	{
 		char action;
@@ -18,11 +19,11 @@ bool Combat(Player* player, Enemy* enemy)
 			case 'a':
 				validInput = true;
 				break;
-			/*
+			
 			case '1':
-				if (player->GetAbilityAtIndex(0).GetAbilityName() != "PLACEHOLDER")
+				if (player->GetAbilityAtIndex(0)->GetAbilityName() != "PLACEHOLDER")
 				{
-					if (player->GetAbilityAtIndex(0).IsReady())
+					if (player->GetAbilityAtIndex(0)->IsReady())
 						validInput = true;
 					else
 					{
@@ -38,9 +39,9 @@ bool Combat(Player* player, Enemy* enemy)
 				break;
 
 			case '2':
-				if (player->GetAbilityAtIndex(1).GetAbilityName() != "PLACEHOLDER")
+				if (player->GetAbilityAtIndex(1)->GetAbilityName() != "PLACEHOLDER")
 				{
-					if (player->GetAbilityAtIndex(1).IsReady())
+					if (player->GetAbilityAtIndex(1)->IsReady())
 						validInput = true;
 					else
 					{
@@ -56,9 +57,9 @@ bool Combat(Player* player, Enemy* enemy)
 				break;
 
 			case '3':
-				if (player->GetAbilityAtIndex(2).GetAbilityName() != "PLACEHOLDER")
+				if (player->GetAbilityAtIndex(2)->GetAbilityName() != "PLACEHOLDER")
 				{
-					if (player->GetAbilityAtIndex(2).IsReady())
+					if (player->GetAbilityAtIndex(2)->IsReady())
 						validInput = true;
 					else
 					{
@@ -72,7 +73,7 @@ bool Combat(Player* player, Enemy* enemy)
 					validInput = false;
 				}
 				break;
-			*/
+			
 			default:
 				std::cout << "Not a valid input!" << std::endl;
 				break;
@@ -93,14 +94,14 @@ bool Combat(Player* player, Enemy* enemy)
 		}
 
 
-		/*
-		if ((enemy->GetAbilityAtIndex(0).IsReady()) && enemy->GetAbilityAtIndex(0).GetAbilityName() != "PLACEHOLDER")
+		
+		if ((enemy->GetAbilityAtIndex(0)->IsReady()) && enemy->GetAbilityAtIndex(0)->GetAbilityName() != "PLACEHOLDER")
 			action = '1';
-		else if (enemy->GetAbilityAtIndex(1).IsReady() && enemy->GetAbilityAtIndex(1).GetAbilityName() != "PLACEHOLDER")
+		else if (enemy->GetAbilityAtIndex(1)->IsReady() && enemy->GetAbilityAtIndex(1)->GetAbilityName() != "PLACEHOLDER")
 			action = '2';
-		else if (enemy->GetAbilityAtIndex(2).IsReady() && enemy->GetAbilityAtIndex(2).GetAbilityName() != "PLACEHOLDER")
+		else if (enemy->GetAbilityAtIndex(2)->IsReady() && enemy->GetAbilityAtIndex(2)->GetAbilityName() != "PLACEHOLDER")
 			action = '3';
-		else*/
+		else
 			action = 'a';
 		enemy->TakeTurn(action, player);
 
@@ -157,22 +158,22 @@ int PrintCombatActions(Player* player, Enemy* enemy)
 {
 	int row = 1;
 	std::cout << "a: Attack: " << std::endl;
-	/*
-	if (player->GetAbilityAtIndex(0).GetAbilityName() != "PLACEHOLDER")
+	
+	if (player->GetAbilityAtIndex(0)->GetAbilityName() != "PLACEHOLDER")
 	{
-		std::cout << "1: " << player->GetAbilityAtIndex(0).GetAbilityMsg() << std::endl;
+		std::cout << "1: " << player->GetAbilityAtIndex(0)->GetAbilityMsg() << std::endl;
 		row = 2;
 	}
-	if (player->GetAbilityAtIndex(1).GetAbilityName() != "PLACEHOLDER")
+	if (player->GetAbilityAtIndex(1)->GetAbilityName() != "PLACEHOLDER")
 	{
-		std::cout << "2: " << player->GetAbilityAtIndex(1).GetAbilityMsg() << std::endl;
+		std::cout << "2: " << player->GetAbilityAtIndex(1)->GetAbilityMsg() << std::endl;
 		row = 3;
 	}
-	if (player->GetAbilityAtIndex(2).GetAbilityName() != "PLACEHOLDER")
+	if (player->GetAbilityAtIndex(2)->GetAbilityName() != "PLACEHOLDER")
 	{
-		std::cout << "3: " << player->GetAbilityAtIndex(2).GetAbilityMsg() << std::endl;
+		std::cout << "3: " << player->GetAbilityAtIndex(2)->GetAbilityMsg() << std::endl;
 		row = 4;
 	}
-	*/
+	
 	return row;
 }

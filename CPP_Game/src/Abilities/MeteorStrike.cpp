@@ -1,14 +1,14 @@
-#include "Header/Fireball.h"
+#include "Header/MeteorStrike.h"
 
-Fireball::Fireball(int cooldown, int value, std::string name, bool selfTarget)
+MeteorStrike::MeteorStrike(int cooldown, int value, std::string name, bool selfTarget)
 	:Ability(cooldown, value, name, selfTarget)
 {}
 
-Fireball::Fireball()
+MeteorStrike::MeteorStrike()
 	:Ability()
 {}
 
-std::string Fireball::UseAbility()
+std::string MeteorStrike::UseAbility()
 {
 	std::string logMsg = "";
 	if (m_currentCd == 0)
@@ -16,7 +16,7 @@ std::string Fireball::UseAbility()
 
 		logMsg = m_casterName + " casts " + m_name + "! " + m_pTarget->GetName() + " takes " + std::to_string(m_value) + " damage!";
 		m_pTarget->m_curHp -= m_value;
-		
+
 		m_currentCd = m_cd;
 		m_thisTurn = true;
 	}

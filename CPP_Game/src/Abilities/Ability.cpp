@@ -1,12 +1,30 @@
 #include "Header/Ability.h"
 
-Ability::Ability(int cooldown, int value, bool targetSelf, std::string name)
-	:m_currentCd(0), m_cd(cooldown), m_value(value), m_name(name), m_targetSelf(targetSelf)
+Ability::Ability(int cooldown, int value, std::string name, bool selfTarget)
+	:m_currentCd(0), m_cd(cooldown), m_value(value), m_name(name), m_selfTarget(selfTarget)
 {}
 
 Ability::Ability()
-	:m_currentCd(0), m_cd(9999999), m_value(0), m_name("PLACEHOLDER"), m_targetSelf(false)
+	:m_currentCd(0), m_cd(9999999), m_value(0), m_name("PLACEHOLDER")
 {}
+
+std::string Ability::UseAbility()
+{
+	std::string logMsg = "";
+	return logMsg;
+}
+
+void Ability::SetTargetPointer(Character* pTarget)
+{
+	if (pTarget != NULL)
+		m_pTarget = pTarget;
+}
+
+void Ability::SetCasterName(std::string casterName)
+{
+	if (casterName != "")
+		m_casterName = casterName;
+}
 
 int Ability::CheckCurrentCooldown()
 {
@@ -58,4 +76,9 @@ std::string Ability::GetAbilityMsg()
 std::string Ability::GetAbilityName()
 {
 	return m_name;
+}
+
+bool Ability::GetSelfTarget()
+{
+	return m_selfTarget;
 }

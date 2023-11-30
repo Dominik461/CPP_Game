@@ -1,6 +1,6 @@
 #pragma once
 #include "Int2.h"
-#include "../Character/Header/Character.h"
+#include "../../Character/Header/Character.h"
 
 class Cell
 {

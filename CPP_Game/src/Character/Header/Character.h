@@ -3,7 +3,7 @@
 #define ABILITYONE 0x02
 #define ABILITYTWO 0x04
 #define ABILITYTHREE 0x08
-#include "../../Math/Int2.h"
+#include "../../Math/Header/Int2.h"
 #include "../../Abilities/Header/Ability.h"
 #include <iostream>
 #include <string>
@@ -18,14 +18,14 @@ class Character
 		int2 m_position;
 		std::string m_name = "";
 		std::string m_logMsg = "";
-		std::vector<Ability*>m_abilities;
+		std::vector<std::shared_ptr<Ability>>m_abilities;
 
 	public:
 		int m_curHp;
 		Character();
 		Character(int hp, int dmg);
 		Character(int hp, int dmg, int2 position);
-		void LearnAbility(Ability ability);
+		void LearnAbility(const std::shared_ptr<Ability>& ability);
 		void ReduceAllCooldowns();
 		void ResetAllCooldowns();
 		void SetName(std::string name);
@@ -35,5 +35,6 @@ class Character
 		int2 GetPosition();
 		int GetMaxHP();
 		bool Defeated();
-		Ability GetAbilityAtIndex(int index);
+		std::shared_ptr<Ability> GetAbilityAtIndex(int index);
+		void InitCombat(Character* pTarget);
 };
