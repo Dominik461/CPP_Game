@@ -16,6 +16,7 @@ bool RunGame(const GameParameters& params)
 	std::uniform_int_distribution<int> enemyPositionX(0, params.gridWidth - 1);
 	std::uniform_int_distribution<int> enemyPositionY(0, params.gridHeight - 1);
 	std::vector<Enemy*> pEnemies;
+	std::shared_ptr<Ability> meteorStrike = std::make_shared<MeteorStrike>(4, 15, "Meteor Strike", false);
 	Enemy* pCollidedEnemy;
 	bool succesfullCombat;
 	int enemyIndex;
@@ -37,27 +38,18 @@ bool RunGame(const GameParameters& params)
 	{
 		int movesAway = 0;
 		int2 enemyPosition;
-		bool positionAvailable = true;
 		do
 		{
 			enemyPosition = int2(enemyPositionX(gen), enemyPositionY(gen));
-			if (pEnemies.size() > 0)
-			{
-				for (Enemy* enemy : pEnemies)
-				{
-					if (enemy->GetPosition() == enemyPosition)
-					{
-						positionAvailable = false;
-						break;
-					}
-				}
-			}
-			movesAway = abs(enemyPosition.x - pPlayer->GetPosition().x) + abs(enemyPosition.y - pPlayer->GetPosition().y);
-		} while (movesAway <= 3 && positionAvailable);
+			if (playArea.GetValueAtLocation(enemyPosition))
+				continue;
+
+			movesAway = abs(enemyPosition.x - params.playerStart.x) + abs(enemyPosition.y - params.playerStart.y);
+		} while (movesAway < 3);
 		
 		Enemy* pEnemy = new Enemy(params.enemyHealth, params.enemyDamage, enemyPosition);
-		pEnemy->SetName("Visual Studio");
-		pEnemy->LearnAbility(std::make_shared<MeteorStrike>(4, 15, "Meteor Strike", false));
+		pEnemy->SetName("Goblin");
+		pEnemy->LearnAbility(meteorStrike);
 		pEnemies.push_back(pEnemy);
 		playArea.SetCharacterAtLocation(pEnemies.at(i));
 	}
@@ -87,5 +79,10 @@ bool RunGame(const GameParameters& params)
 			playArea.SetCharacterAtLocation(pPlayer);
 		}
 	} while (pEnemies.size() > 0);
+	if (succesfullCombat)
+	{
+		std::cout << pPlayer->GetName() << " won!" << std::endl;
+		std::cout << "Press any button to close the game..." << std::endl;
+	}
 	return succesfullCombat;
 }

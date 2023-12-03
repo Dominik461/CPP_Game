@@ -1,8 +1,4 @@
 #pragma once
-#define ATTACK 0x01
-#define ABILITYONE 0x02
-#define ABILITYTWO 0x04
-#define ABILITYTHREE 0x08
 #include "../../Math/Header/Int2.h"
 #include "../../Abilities/Header/Ability.h"
 #include <iostream>
@@ -14,7 +10,7 @@ class Ability;
 class Character
 {
 	protected:
-		int m_dmg, m_maxHp, m_actionFlags, m_newAbilityIndex = 0;
+		int m_dmg, m_maxHp, m_newAbilityIndex = 0;
 		int2 m_position;
 		std::string m_name = "";
 		std::string m_logMsg = "";

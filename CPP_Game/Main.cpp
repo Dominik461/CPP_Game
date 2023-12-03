@@ -14,7 +14,7 @@ int main()
 	params.playerStart = int2(2, 2);
 	params.gridWidth = 12;
 	params.gridHeight = 10;
-	params.enemyCount = 3;
+	params.enemyCount = 2;
 
 	RunGame(params);
 

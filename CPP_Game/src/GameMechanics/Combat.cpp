@@ -78,7 +78,7 @@ bool Combat(Player* player, Enemy* enemy)
 				std::cout << "Not a valid input!" << std::endl;
 				break;
 			}
-		} while (!validInput);
+			} while (!validInput);
 
 		player->TakeTurn(action, enemy);
 
@@ -86,8 +86,9 @@ bool Combat(Player* player, Enemy* enemy)
 		{
 			ClearConsole();
 			PrintCombat(player, enemy, turnNumber);
+			
 			std::cout << enemy->GetName() << " was defeated!" << std::endl;
-			std::cout << "Press any button to continue" << std::endl;
+			std::cout << "Press any button to continue..." << std::endl;
 			player->EndOfCombat();
 			_getch();
 			return true;

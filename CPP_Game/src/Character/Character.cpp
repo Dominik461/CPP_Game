@@ -2,15 +2,15 @@
 
 
 Character::Character()
-	:m_maxHp(0), m_curHp(0),m_dmg(0), m_actionFlags(0)
+	:m_maxHp(0), m_curHp(0),m_dmg(0)
 {}
 
 Character::Character(int hp, int dmg)
-	:m_maxHp(hp), m_curHp(hp), m_dmg(dmg), m_actionFlags(0)
+	:m_maxHp(hp), m_curHp(hp), m_dmg(dmg)
 {}
 
 Character::Character(int hp, int dmg, int2 position)
-	:m_maxHp(hp), m_curHp(hp), m_dmg(dmg), m_actionFlags(0), m_position(position)
+	:m_maxHp(hp), m_curHp(hp), m_dmg(dmg), m_position(position)
 {
 	m_abilities.push_back(std::make_shared<Ability>());
 	m_abilities.push_back(std::make_shared<Ability>());

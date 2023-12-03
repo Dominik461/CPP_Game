@@ -363,3 +363,6 @@ MigrationBackup/
 FodyWeavers.xsd
 
 *.zip
+/CPP_Game/Exercise5.zip
+/CPP_Game/Exercise4.zip
+/CPP_Game/CPP_Game.7z
