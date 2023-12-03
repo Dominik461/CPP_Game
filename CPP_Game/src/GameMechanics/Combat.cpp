@@ -110,6 +110,7 @@ bool Combat(Player* player, Enemy* enemy)
 		{
 			ClearConsole();
 			PrintCombat(player, enemy, turnNumber);
+			std::cout << std::endl;
 			std::cout << player->GetName() << " was defeated!" << std::endl;
 			std::cout << "Press any button to close the game..." << std::endl;
 			_getch();

@@ -4,7 +4,7 @@
 bool RunGame(const GameParameters& params)
 {
 	//init gameworld
-	std::vector<std::string> playerNames = { "Olaf", "Gaben", "Günter", "Otto", "Marcel Davis", "Steve Jobs" };
+	std::vector<std::string> playerNames = { "Olaf", "Gaben", "Guenter", "Otto", "Marcel Davis", "Steve Jobs" };
 
 	// Seed for the random number generator
 	std::random_device rd;
@@ -81,8 +81,11 @@ bool RunGame(const GameParameters& params)
 	} while (pEnemies.size() > 0);
 	if (succesfullCombat)
 	{
-		std::cout << pPlayer->GetName() << " won!" << std::endl;
+		playArea.Print();
+		std::cout << std::endl;
+		std::cout << "All enemies defeated! " << pPlayer->GetName() << " won!" << std::endl;
 		std::cout << "Press any button to close the game..." << std::endl;
+		_getch();
 	}
 	return succesfullCombat;
 }
