@@ -1,6 +1,6 @@
 #pragma once
 #include "Character.h"
-#include "../../Math/Grid.h"
+#include "../../Math/Header/Grid.h"
 #include "Enemy.h"
 
 class Grid;

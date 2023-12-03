@@ -1,6 +1,6 @@
 ﻿#include <iostream>
-#include "src/Math/Int2.h"
-#include "src/Math/Grid.h"
+#include "src/Math/Header/Int2.h"
+#include "src/Math/Header/Grid.h"
 #include "src/Game.h"
 #include "GameParameters.h"
 
@@ -14,7 +14,7 @@ int main()
 	params.playerStart = int2(2, 2);
 	params.gridWidth = 12;
 	params.gridHeight = 10;
-	params.enemyCount = 3;
+	params.enemyCount = 2;
 
 	RunGame(params);
 

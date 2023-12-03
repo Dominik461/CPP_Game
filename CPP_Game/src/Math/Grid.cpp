@@ -1,4 +1,4 @@
-#include "Math/Grid.h"
+#include "Header/Grid.h"
 
 
 Grid::Grid(unsigned int width, unsigned int height)
@@ -103,8 +103,7 @@ bool Grid::LocationInBounds(int2 location)
 {
 	if (((location.x < m_Width) && (location.y < m_Height)) && ((location.x >= 0) && (location.y >= 0)))
 		return true;
-		
-	//std::cout << "This location (" << location.x << "|" << location.y << ") is out of bounds" << std::endl;
+
 	return false;
 }
 

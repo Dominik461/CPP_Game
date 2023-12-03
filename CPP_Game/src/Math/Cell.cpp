@@ -1,4 +1,4 @@
-#include "Math/Cell.h"
+#include "Header/Cell.h"
 
 Cell::Cell(int2 position)
 	: m_Position(position), m_pCharacter(NULL)
