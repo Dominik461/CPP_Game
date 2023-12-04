@@ -1,6 +1,5 @@
 #include "Header/Character.h"
 
-
 Character::Character()
 	:m_maxHp(0), m_curHp(0),m_dmg(0)
 {}
@@ -127,6 +126,11 @@ std::shared_ptr<Ability> Character::GetAbilityAtIndex(int index)
 	return m_abilities.at(index);
 }
 
+int Character::GetDamge()
+{
+	return m_dmg;
+}
+
 void Character::InitCombat(Character* pTarget)
 {
 	m_pTarget = pTarget;
@@ -134,11 +138,8 @@ void Character::InitCombat(Character* pTarget)
 	{
 		if (ability->GetAbilityName() != "PLACEHOLDER")
 		{
-			ability->SetCasterName(m_name);
-			if (ability->GetSelfTarget())
-				ability->SetTargetPointer(this);
-			else
-				ability->SetTargetPointer(pTarget);
+			ability->SetCasterPointer(this);
+			ability->SetTargetPointer(pTarget);
 		}
 	}
 }

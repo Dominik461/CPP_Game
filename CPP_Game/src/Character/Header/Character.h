@@ -33,6 +33,7 @@ class Character
 		int2 GetPosition();
 		int GetMaxHP();
 		char GetSymbol();
+		int GetDamge();
 		bool Defeated();
 		std::shared_ptr<Ability> GetAbilityAtIndex(int index);
 		void InitCombat(Character* pTarget);
