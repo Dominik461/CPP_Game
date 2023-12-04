@@ -110,6 +110,11 @@ int Character::GetMaxHP()
 	return m_maxHp;
 }
 
+char Character::GetSymbol()
+{
+	return m_symbole;
+}
+
 bool Character::Defeated()
 {
 	if (m_curHp <= 0)

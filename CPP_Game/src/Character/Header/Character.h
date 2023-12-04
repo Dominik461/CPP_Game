@@ -12,10 +12,10 @@ class Character
 	protected:
 		int m_dmg, m_maxHp, m_newAbilityIndex = 0;
 		int2 m_position;
-		std::string m_name = "";
-		std::string m_logMsg = "";
+		std::string m_name = "", m_logMsg = "";
 		std::vector<std::shared_ptr<Ability>>m_abilities;
 		Character* m_pTarget;
+		char m_symbole;
 
 	public:
 		int m_curHp;
@@ -32,6 +32,7 @@ class Character
 		void AttackTarget();
 		int2 GetPosition();
 		int GetMaxHP();
+		char GetSymbol();
 		bool Defeated();
 		std::shared_ptr<Ability> GetAbilityAtIndex(int index);
 		void InitCombat(Character* pTarget);

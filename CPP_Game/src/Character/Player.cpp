@@ -14,7 +14,9 @@ Player::Player(int hp, int dmg, int heal, int2 position)
 
 Player::Player(int hp, int dmg, int2 position)
 	:Character(hp, dmg, position), m_heal(0)
-{}
+{
+	m_symbole = 'p';
+}
 
 void Player::Move(char moveInput, Grid& playArea)
 {

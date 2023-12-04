@@ -122,11 +122,8 @@ void Grid::Print()
 			if (value == 0 && occupant == NULL) {
 				std::cout << "." << " ";
 			}
-			else if (value == 1 && typeid(*occupant) == typeid(Player)) {
-				std::cout << "p" << " ";
-			}
-			else if (value == 1 && typeid(*occupant) == typeid(Enemy)) {
-				std::cout << "e" << " ";
+			else if (value == 1 && occupant != NULL) {
+				std::cout << occupant->GetSymbol() << " ";
 			}
 		}
 		std::cout << std::endl;
