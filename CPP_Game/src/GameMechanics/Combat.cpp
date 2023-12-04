@@ -80,7 +80,7 @@ bool Combat(Player* player, Enemy* enemy)
 			}
 			} while (!validInput);
 
-		player->TakeTurn(action, enemy);
+		player->TakeTurn(action);
 
 		if (enemy->Defeated())
 		{
@@ -104,12 +104,13 @@ bool Combat(Player* player, Enemy* enemy)
 			action = '3';
 		else
 			action = 'a';
-		enemy->TakeTurn(action, player);
+		enemy->TakeTurn(action);
 
 		if (player->Defeated())
 		{
 			ClearConsole();
 			PrintCombat(player, enemy, turnNumber);
+			std::cout << std::endl;
 			std::cout << player->GetName() << " was defeated!" << std::endl;
 			std::cout << "Press any button to close the game..." << std::endl;
 			_getch();

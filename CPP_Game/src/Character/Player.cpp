@@ -14,34 +14,8 @@ Player::Player(int hp, int dmg, int heal, int2 position)
 
 Player::Player(int hp, int dmg, int2 position)
 	:Character(hp, dmg, position), m_heal(0)
-{}
-
-void Player::AttackEnemy(Character* enemy)
 {
-	m_logMsg = m_name + " dealt " + std::to_string(m_dmg) + " damage to " + enemy->GetName() + "!";
-	enemy->m_curHp -= m_dmg;
-}
-
-void Player::TakeTurn(char action, Character* target)
-{
-	switch (action)
-	{
-	case 'a':
-		AttackEnemy(target);
-		break;
-	
-	case '1':
-		m_logMsg = m_abilities.at(0)->UseAbility();
-		break;
-	case '2':
-		m_logMsg = m_abilities.at(1)->UseAbility();
-		break;
-	case '3':
-		m_logMsg = m_abilities.at(0)->UseAbility();
-		break;
-	
-	}
-	ReduceAllCooldowns();
+	m_symbole = 'p';
 }
 
 void Player::Move(char moveInput, Grid& playArea)

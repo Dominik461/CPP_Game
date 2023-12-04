@@ -6,6 +6,7 @@
 
 int main()
 {
+	//EXAMPLE FOR EXERCISE 6
 	GameParameters params;
 	params.playerDamage = 3;
 	params.playerHealth = 40;
@@ -14,7 +15,7 @@ int main()
 	params.playerStart = int2(2, 2);
 	params.gridWidth = 12;
 	params.gridHeight = 10;
-	params.enemyCount = 2;
+	params.enemyCount = 3;
 
 	RunGame(params);
 
