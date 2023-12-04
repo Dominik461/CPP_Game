@@ -15,10 +15,6 @@ class Player : public Character
 		Player(int hp, int dmg, int heal, int2 position);
 		Player(int hp, int dmg, int2 position);
 
-		void AttackEnemy(Character* enemy);
-
-		void TakeTurn(char action, Character* target) override;
-
 		void Move(char moveInput, Grid& playArea);
 
 		void EndOfCombat();

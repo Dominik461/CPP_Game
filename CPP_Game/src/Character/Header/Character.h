@@ -15,6 +15,7 @@ class Character
 		std::string m_name = "";
 		std::string m_logMsg = "";
 		std::vector<std::shared_ptr<Ability>>m_abilities;
+		Character* m_pTarget;
 
 	public:
 		int m_curHp;
@@ -27,7 +28,8 @@ class Character
 		void SetName(std::string name);
 		std::string GetName();
 		std::string GetLogMsg();
-		virtual void TakeTurn(char action, Character* target) = 0;
+		void TakeTurn(char action);
+		void AttackTarget();
 		int2 GetPosition();
 		int GetMaxHP();
 		bool Defeated();

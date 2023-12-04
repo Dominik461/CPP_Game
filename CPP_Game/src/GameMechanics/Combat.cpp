@@ -80,7 +80,7 @@ bool Combat(Player* player, Enemy* enemy)
 			}
 			} while (!validInput);
 
-		player->TakeTurn(action, enemy);
+		player->TakeTurn(action);
 
 		if (enemy->Defeated())
 		{
@@ -104,7 +104,7 @@ bool Combat(Player* player, Enemy* enemy)
 			action = '3';
 		else
 			action = 'a';
-		enemy->TakeTurn(action, player);
+		enemy->TakeTurn(action);
 
 		if (player->Defeated())
 		{

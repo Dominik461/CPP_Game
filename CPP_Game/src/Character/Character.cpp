@@ -72,6 +72,34 @@ std::string Character::GetLogMsg()
 	return temp;
 }
 
+void Character::TakeTurn(char action)
+{
+	switch (action)
+	{
+	case 'a':
+		AttackTarget();
+		break;
+
+	case '1':
+		m_logMsg = m_abilities.at(0)->UseAbility();
+		break;
+	case '2':
+		m_logMsg = m_abilities.at(1)->UseAbility();
+		break;
+	case '3':
+		m_logMsg = m_abilities.at(2)->UseAbility();
+		break;
+
+	}
+	ReduceAllCooldowns();
+}
+
+void Character::AttackTarget()
+{
+	m_logMsg = m_name + " dealt " + std::to_string(m_dmg) + " damage to " + m_pTarget->GetName() + "!";
+	m_pTarget->m_curHp -= m_dmg;
+}
+
 int2 Character::GetPosition()
 {
 	return m_position;
@@ -96,6 +124,7 @@ std::shared_ptr<Ability> Character::GetAbilityAtIndex(int index)
 
 void Character::InitCombat(Character* pTarget)
 {
+	m_pTarget = pTarget;
 	for (auto& ability : m_abilities)
 	{
 		if (ability->GetAbilityName() != "PLACEHOLDER")
