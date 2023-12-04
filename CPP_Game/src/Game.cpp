@@ -16,7 +16,7 @@ bool RunGame(const GameParameters& params)
 	std::uniform_int_distribution<int> enemyPositionX(0, params.gridWidth - 1);
 	std::uniform_int_distribution<int> enemyPositionY(0, params.gridHeight - 1);
 	std::vector<Enemy*> pEnemies;
-	std::shared_ptr<Ability> meteorStrike = std::make_shared<MeteorStrike>(4, 15, "Meteor Strike", false);
+	std::shared_ptr<Ability> howl = std::make_shared<Howl>();
 	Enemy* pCollidedEnemy;
 	bool succesfullCombat;
 	int enemyIndex;
@@ -27,8 +27,8 @@ bool RunGame(const GameParameters& params)
 	Player* pPlayer = &player;
 	pPlayer->SetName(playerNames.at(distribution(gen)));
 
-	pPlayer->LearnAbility(std::make_shared<Fireball>(3, 10, "Fireball", false));
-	pPlayer->LearnAbility(std::make_shared<Heal>(3, 12, "Heal", true));
+	pPlayer->LearnAbility(std::make_shared<Fireball>());
+	pPlayer->LearnAbility(std::make_shared<Rejuvenate>());
 
 
 	playArea.SetCharacterAtLocation(pPlayer);
@@ -49,7 +49,7 @@ bool RunGame(const GameParameters& params)
 		
 		Enemy* pEnemy = new Enemy(params.enemyHealth, params.enemyDamage, enemyPosition);
 		pEnemy->SetName("Goblin");
-		pEnemy->LearnAbility(meteorStrike);
+		pEnemy->LearnAbility(howl);
 		pEnemies.push_back(pEnemy);
 		playArea.SetCharacterAtLocation(pEnemies.at(i));
 	}
