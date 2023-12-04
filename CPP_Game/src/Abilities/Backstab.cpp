@@ -1,16 +1,20 @@
-#include "Header/MeteorStrike.h"
+#include "Header/Backstab.h"
 
-MeteorStrike::MeteorStrike()
-	:Ability(4, 2, "Meteorstrike")
+Backstab::Backstab()
+	:Ability(2, 1.1, "Backstab")
 {}
 
-std::string MeteorStrike::UseAbility()
+std::string Backstab::UseAbility()
 {
+	int dmg;
 	std::string logMsg = "";
 	if (m_currentCd == 0)
 	{
+		if(m_pTarget->m_curHp < m_pTarget->GetMaxHP()*0.3)
+			dmg = m_pCaster->GetDamge() * (m_mulitplier*2);
+		else
+			dmg = m_pCaster->GetDamge() * m_mulitplier;
 
-		int dmg = m_pCaster->GetDamge() * m_mulitplier;
 		logMsg = m_pCaster->GetName() + " casts " + m_name + "! " + m_pTarget->GetName() + " takes " + std::to_string(dmg) + " damage!";
 		m_pTarget->m_curHp -= dmg;
 

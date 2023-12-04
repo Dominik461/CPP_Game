@@ -1,0 +1,9 @@
+#pragma once
+#include "Smash.h"
+#include "Backstab.h"
+#include "Rumble.h"
+#include "Howl.h"
+#include "Fireball.h"
+#include "Claw.h"
+#include "MeteorStrike.h"
+#include "Rejuvenate.h"

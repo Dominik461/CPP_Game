@@ -4,24 +4,25 @@ class Character;
 class Ability
 {
 protected:
-	int m_currentCd, m_cd, m_value;
-	std::string m_name, m_casterName, m_logCdMsg;
-	bool m_thisTurn = false, m_selfTarget;
+	int m_currentCd, m_cd;
+	double m_mulitplier;
+	std::string m_name, m_logCdMsg;
+	bool m_thisTurn = false;
 	Character* m_pTarget;
+	Character* m_pCaster;
 
 public:
 	std::string m_logMsg;
 	Ability();
-	Ability(int cooldown, int value, std::string name, bool selfTarget);
+	Ability(int cooldown, double mulitplier, std::string name);
 	void SetTargetPointer(Character* pTarget);
-	void SetCasterName(std::string casterName);
+	void SetCasterPointer(Character* pCaster);
 	virtual std::string UseAbility();
 	int CheckCurrentCooldown();
 	int GetCooldown();
 	void ReduceCooldown();
 	void ResetCooldown();
 	bool IsReady();
-	bool GetSelfTarget();
 	std::string GetAbilityMsg();
 	std::string GetAbilityName();
 };

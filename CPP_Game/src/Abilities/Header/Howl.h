@@ -1,9 +1,11 @@
 #pragma once
 #include "Ability.h"
 
-class Fireball : public Ability
+class Howl : public Ability
 {
+private:
+	double m_healMultiplier;
 public:
-	Fireball();
+	Howl();
 	std::string UseAbility() override;
 };

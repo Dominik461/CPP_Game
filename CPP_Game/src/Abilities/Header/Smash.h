@@ -1,9 +1,9 @@
 #pragma once
 #include "Ability.h"
 
-class Fireball : public Ability
+class Smash : public Ability
 {
 public:
-	Fireball();
+	Smash();
 	std::string UseAbility() override;
 };
