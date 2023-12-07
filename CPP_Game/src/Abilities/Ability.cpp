@@ -8,12 +8,6 @@ Ability::Ability()
 	:m_currentCd(0), m_cd(9999999), m_mulitplier(0), m_name("PLACEHOLDER")
 {}
 
-std::string Ability::UseAbility()
-{
-	std::string logMsg = "";
-	return logMsg;
-}
-
 void Ability::SetTargetPointer(Character* pTarget)
 {
 	if (pTarget != NULL)
