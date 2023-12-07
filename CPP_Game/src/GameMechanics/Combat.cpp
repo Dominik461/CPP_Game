@@ -85,9 +85,14 @@ bool Combat(Player* player, Enemy* enemy)
 		if (enemy->Defeated())
 		{
 			ClearConsole();
+			player->m_curXp += enemy->RetrunXpDrop();
 			PrintCombat(player, enemy, turnNumber);
 			
 			std::cout << enemy->GetName() << " was defeated!" << std::endl;
+
+			if (player->LevelUpIsReady())
+				player->LevelUp();
+
 			std::cout << "Press any button to continue..." << std::endl;
 			player->EndOfCombat();
 			_getch();
@@ -151,6 +156,8 @@ void PrintCombat(Player* player, Enemy* enemy, int turnNumber)
 	std::cout << player->m_curHp << "/" << player->GetMaxHP();
 	moveTo(40, currentLine++);
 	std::cout << enemy->m_curHp << "/" << enemy->GetMaxHP() << std::endl;
+	std::cout << "Level " << player->GetLevel() << std::endl;
+	std::cout << "XP: " << player->m_curXp << "/" << player->GetXpNeeded() <<  std::endl;
 	std::cout << "----------------------------------------------------------------------------------------------------------" << std::endl;
 	std::cout << player->GetLogMsg() << std::endl;
 	std::cout << enemy->GetLogMsg() << std::endl;

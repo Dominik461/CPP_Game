@@ -16,4 +16,5 @@ public:
 	Enemy();
 	Enemy(int hp, int dmg, char symbole, std::string name, int2 position, Element element);
 	Enemy(int hp, int dmg, int2 position);
+	int RetrunXpDrop();
 };
