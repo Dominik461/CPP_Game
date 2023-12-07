@@ -48,8 +48,6 @@ bool RunGame(const GameParameters& params)
 		} while (movesAway < 3);
 		
 		Enemy* pEnemy = ChooseRandomEnemy(enemyPosition);
-		pEnemy->FillAbilitiesWithPlaceholders(placeholder);
-		//pEnemy->LearnAbility(howl);
 		pEnemies.push_back(pEnemy);
 		playArea.SetCharacterAtLocation(pEnemies.at(i));
 	}
