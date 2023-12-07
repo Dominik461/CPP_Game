@@ -1,7 +1,6 @@
 #pragma once
 #include "../GameParameters.h"
-#include "Character/Header/Enemy.h"
-#include "Character/Header/Player.h"
+#include "Character/Header/AllCharacters.h"
 #include "Abilities/Header/Ability.h"
 #include "Abilities/Header/AllAbilites.h"
 #include "Math/Header/Grid.h"
@@ -12,3 +11,4 @@
 #include <iostream>
 
 bool RunGame(const GameParameters& params);
+Enemy* ChooseRandomEnemy(int2 position);

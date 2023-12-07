@@ -16,17 +16,17 @@ bool RunGame(const GameParameters& params)
 	std::uniform_int_distribution<int> enemyPositionX(0, params.gridWidth - 1);
 	std::uniform_int_distribution<int> enemyPositionY(0, params.gridHeight - 1);
 	std::vector<Enemy*> pEnemies;
-	std::shared_ptr<Ability> howl = std::make_shared<Howl>();
+	std::shared_ptr<Ability> placeholder = std::make_shared<Placeholder>();
 	Enemy* pCollidedEnemy;
 	bool succesfullCombat;
 	int enemyIndex;
 	
 	Grid playArea(params.gridWidth, params.gridHeight);
 
-	Player player(params.playerHealth, params.playerDamage, params.playerStart);
+	Player player(45, 8, params.playerStart);
 	Player* pPlayer = &player;
 	pPlayer->SetName(playerNames.at(distribution(gen)));
-
+	pPlayer->FillAbilitiesWithPlaceholders(placeholder);
 	pPlayer->LearnAbility(std::make_shared<Fireball>());
 	pPlayer->LearnAbility(std::make_shared<Rejuvenate>());
 
@@ -47,9 +47,9 @@ bool RunGame(const GameParameters& params)
 			movesAway = abs(enemyPosition.x - params.playerStart.x) + abs(enemyPosition.y - params.playerStart.y);
 		} while (movesAway < 3);
 		
-		Enemy* pEnemy = new Enemy(params.enemyHealth, params.enemyDamage, enemyPosition);
-		pEnemy->SetName("Goblin");
-		pEnemy->LearnAbility(howl);
+		Enemy* pEnemy = ChooseRandomEnemy(enemyPosition);
+		pEnemy->FillAbilitiesWithPlaceholders(placeholder);
+		//pEnemy->LearnAbility(howl);
 		pEnemies.push_back(pEnemy);
 		playArea.SetCharacterAtLocation(pEnemies.at(i));
 	}
@@ -88,4 +88,56 @@ bool RunGame(const GameParameters& params)
 		_getch();
 	}
 	return succesfullCombat;
+}
+
+Enemy* ChooseRandomEnemy(int2 position)
+{
+	// Seed for the random number generator
+	std::random_device rd;
+	// Mersenne Twister random number generator
+	std::mt19937 gen(rd());
+
+
+	int sum_of_weight = 0;
+	std::vector<int> choice_weights = { Yeti::m_spawnChance, Crawler::m_spawnChance, Monolith::m_spawnChance, Exile::m_spawnChance, FlameOfFury::m_spawnChance };
+	std::vector<char> choices = { 'Y', 'C', 'M', 'E', 'F' };
+
+	for (int i = 0; i < choices.size(); i++) {
+		sum_of_weight += choice_weights[i];
+	}
+
+	std::uniform_int_distribution<int> distributionOfChoices(0, sum_of_weight);
+
+	int rnd = distributionOfChoices(gen);
+	for (int i = 0; i < choices.size(); i++) {
+		if (rnd <= choice_weights[i])
+		{
+
+			Enemy* enemy;
+
+			switch (choices.at(i))
+			{
+			case 'Y':
+				enemy = new Yeti(position);
+				break;
+			case 'M':
+				enemy = new Monolith(position);
+				break;
+			case 'C':
+				enemy = new Crawler(position);
+				break;
+			case 'F':
+				enemy = new FlameOfFury(position);
+				break;
+			case 'E':
+				enemy = new Exile(position);
+				break;
+			default:
+				enemy = new Enemy();
+			}
+			return enemy;
+		}
+		rnd -= choice_weights[i];
+	}
+
 }
