@@ -10,11 +10,7 @@ Character::Character(int hp, int dmg)
 
 Character::Character(int hp, int dmg, int2 position)
 	:m_maxHp(hp), m_curHp(hp), m_dmg(dmg), m_position(position)
-{
-	m_abilities.push_back(std::make_shared<Ability>());
-	m_abilities.push_back(std::make_shared<Ability>());
-	m_abilities.push_back(std::make_shared<Ability>());
-}
+{}
 
 void Character::LearnAbility(const std::shared_ptr<Ability>& ability)
 {
@@ -142,4 +138,11 @@ void Character::InitCombat(Character* pTarget)
 			ability->SetTargetPointer(pTarget);
 		}
 	}
+}
+
+void Character::FillAbilitiesWithPlaceholders(std::shared_ptr<Ability> placeholder)
+{
+	m_abilities.push_back(placeholder);
+	m_abilities.push_back(placeholder);
+	m_abilities.push_back(placeholder);
 }

@@ -7,8 +7,6 @@ class Grid;
 
 class Player : public Character
 {
-	private:
-		int m_heal;
 	public:
 		Player();
 		Player(int hp, int dmg, int heal);
