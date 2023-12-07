@@ -17,3 +17,8 @@ Enemy::Enemy(int hp, int dmg, int2 position)
 {
 	m_symbole = 'e';
 }
+
+int Enemy::RetrunXpDrop()
+{
+	return m_xpDrop;
+}
