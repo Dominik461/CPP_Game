@@ -144,7 +144,6 @@
     <ClInclude Include="src\Character\Header\Character.h" />
     <ClInclude Include="src\Character\Header\Crawler.h" />
     <ClInclude Include="src\Character\Header\Enemy.h" />
-    <ClInclude Include="src\Character\Header\EnemyFactory.h" />
     <ClInclude Include="src\Character\Header\Exile.h" />
     <ClInclude Include="src\Character\Header\Flame of Fury.h" />
     <ClInclude Include="src\Character\Header\Monolith.h" />
