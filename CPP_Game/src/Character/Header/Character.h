@@ -1,6 +1,7 @@
 #pragma once
 #include "../../Math/Header/Int2.h"
 #include "../../Abilities/Header/Ability.h"
+//#include "../../Abilities/Header/Placeholder.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -10,7 +11,7 @@ class Ability;
 class Character
 {
 	protected:
-		int m_dmg, m_maxHp, m_newAbilityIndex = 0;
+		int m_dmg, m_maxHp, m_newAbilityIndex = 0, m_tempo;
 		int2 m_position;
 		std::string m_name = "", m_logMsg = "";
 		std::vector<std::shared_ptr<Ability>>m_abilities;
@@ -37,4 +38,6 @@ class Character
 		bool Defeated();
 		std::shared_ptr<Ability> GetAbilityAtIndex(int index);
 		void InitCombat(Character* pTarget);
+		//To stop a Circular Dependencie
+		void FillAbilitiesWithPlaceholders(std::shared_ptr<Ability> placeholder);
 };

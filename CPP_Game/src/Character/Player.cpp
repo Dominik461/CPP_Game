@@ -1,19 +1,7 @@
 #include "Header/Player.h"
 
-Player::Player()
-	:Character(), m_heal(0)
-{}
-
-Player::Player(int hp, int dmg, int heal)
-	:Character(hp, dmg), m_heal(heal)
-{}
-
-Player::Player(int hp, int dmg, int heal, int2 position)
-	:Character(hp, dmg, position), m_heal(heal)
-{}
-
 Player::Player(int hp, int dmg, int2 position)
-	:Character(hp, dmg, position), m_heal(0)
+	:Character(hp, dmg, position)
 {
 	m_symbole = 'p';
 }
