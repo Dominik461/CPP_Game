@@ -78,6 +78,33 @@
     <ClInclude Include="src\Abilities\Header\AllAbilites.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\GameMechanics\Element.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Character\Header\Yeti.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Character\Header\Crawler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Character\Header\AllCharacters.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Character\Header\EnemyFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Character\Header\Monolith.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Character\Header\Exile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Character\Header\Flame of Fury.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Abilities\Header\Placeholder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -89,7 +116,7 @@
     <ClCompile Include="src\Character\Character.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Character\Enemy.cpp">
+    <ClCompile Include="src\Character\Enemies\Enemy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Character\Player.cpp">
@@ -138,6 +165,24 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Abilities\Backstab.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Character\Enemies\Yeti.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Character\Enemies\Crawler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Character\Enemies\Flame of Fury.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Character\Enemies\Monolith.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Character\Enemies\Exile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Abilities\Placeholder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
