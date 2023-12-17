@@ -1,5 +1,4 @@
 #include "Game.h"
-#include <cassert>
 
 
 bool RunGame(const GameParameters& params)
@@ -52,7 +51,6 @@ bool RunGame(const GameParameters& params)
 		pEnemies.push_back(pEnemy);
 		playArea.SetCharacterAtLocation(pEnemies.at(i));
 	}
-
 	do {
 		playArea.Print();
 		enemyIndex = NULL;
@@ -78,7 +76,6 @@ bool RunGame(const GameParameters& params)
 			playArea.SetCharacterAtLocation(pPlayer);
 		}
 	} while (pEnemies.size() > 0);
-
 	if (succesfullCombat)
 	{
 		playArea.Print();
@@ -98,18 +95,18 @@ Enemy* ChooseRandomEnemy(int2 position)
 	std::mt19937 gen(rd());
 
 
-	int sum_of_weight = 0;
+	int sum_of_weights = 0;
 	std::vector<int> choice_weights = { Yeti::m_spawnChance, Crawler::m_spawnChance, Monolith::m_spawnChance, Exile::m_spawnChance, FlameOfFury::m_spawnChance };
 	std::vector<char> choices = { 'Y', 'C', 'M', 'E', 'F' };
 
 	for (int i = 0; i < choices.size(); i++) {
-		sum_of_weight += choice_weights[i];
+		sum_of_weights += choice_weights[i];
 	}
 
-	std::uniform_int_distribution<int> distributionOfChoices(0, sum_of_weight);
+	//the -1 is needed because the generated number should be 1 lower than sum_of_weights and in this function both arugments are inclusive
+	std::uniform_int_distribution<int> distributionOfChoices(0, sum_of_weights-1);
 
 	int rnd = distributionOfChoices(gen);
-
 	for (int i = 0; i < choices.size(); i++) {
 		if (rnd <= choice_weights[i])
 		{
@@ -140,6 +137,5 @@ Enemy* ChooseRandomEnemy(int2 position)
 		}
 		rnd -= choice_weights[i];
 	}
-	//assert(!"Should never get here");
-	return NULL;
+
 }
