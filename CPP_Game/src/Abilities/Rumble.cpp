@@ -1,7 +1,7 @@
 #include "Header/Rumble.h"
 
 Rumble::Rumble()
-	:Ability(6, 5.0, "Rumble")
+	:Ability(6, 5.0, "Rumble", false)
 {
 	m_currentCd = m_cd;
 }

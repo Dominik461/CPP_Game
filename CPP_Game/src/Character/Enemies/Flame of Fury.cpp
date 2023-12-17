@@ -7,4 +7,5 @@ FlameOfFury::FlameOfFury(int2 position)
 	FillAbilitiesWithPlaceholders(std::make_shared<Placeholder>());
 	LearnAbility(std::make_shared<Fireball>());
 	LearnAbility(std::make_shared<MeteorStrike>());
+	SortAbilityPriority();
 }

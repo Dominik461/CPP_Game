@@ -1,7 +1,7 @@
 #include "Header/Rejuvenate.h"
 
 Rejuvenate::Rejuvenate()
-	:Ability(4, 0.3, "Rejuvenate")
+	:Ability(4, 0.3, "Rejuvenate", true)
 {}
 
 std::string Rejuvenate::UseAbility()

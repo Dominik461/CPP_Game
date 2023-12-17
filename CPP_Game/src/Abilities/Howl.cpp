@@ -1,7 +1,7 @@
 #include "Header/Howl.h"
 
 Howl::Howl()
-	:Ability(5, 1.1, "Howl"), m_healMultiplier(0.1) 
+	:Ability(5, 1.1, "Howl", true), m_healMultiplier(0.1)
 {}
 
 std::string Howl::UseAbility()

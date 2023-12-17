@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <cassert>
 
 
 bool RunGame(const GameParameters& params)
@@ -23,7 +24,7 @@ bool RunGame(const GameParameters& params)
 	
 	Grid playArea(params.gridWidth, params.gridHeight);
 
-	Player player(45, 8, params.playerStart);
+	Player player(params.playerStart);
 	Player* pPlayer = &player;
 	pPlayer->SetName(playerNames.at(distribution(gen)));
 	pPlayer->FillAbilitiesWithPlaceholders(placeholder);
@@ -77,6 +78,7 @@ bool RunGame(const GameParameters& params)
 			playArea.SetCharacterAtLocation(pPlayer);
 		}
 	} while (pEnemies.size() > 0);
+
 	if (succesfullCombat)
 	{
 		playArea.Print();
@@ -107,6 +109,7 @@ Enemy* ChooseRandomEnemy(int2 position)
 	std::uniform_int_distribution<int> distributionOfChoices(0, sum_of_weight);
 
 	int rnd = distributionOfChoices(gen);
+
 	for (int i = 0; i < choices.size(); i++) {
 		if (rnd <= choice_weights[i])
 		{
@@ -137,5 +140,6 @@ Enemy* ChooseRandomEnemy(int2 position)
 		}
 		rnd -= choice_weights[i];
 	}
-
+	//assert(!"Should never get here");
+	return NULL;
 }

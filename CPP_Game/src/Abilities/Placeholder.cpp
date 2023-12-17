@@ -1,7 +1,7 @@
 #include "Header/Placeholder.h"
 
 Placeholder::Placeholder()
-	:Ability(999999999, 0.0, "PLACEHOLDER")
+	:Ability(0, 0.0, "PLACEHOLDER", false)
 {}
 
 std::string Placeholder::UseAbility()
