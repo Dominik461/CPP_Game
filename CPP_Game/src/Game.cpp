@@ -26,10 +26,6 @@ bool RunGame(const GameParameters& params)
 	Player player(params.playerStart);
 	Player* pPlayer = &player;
 	pPlayer->SetName(playerNames.at(distribution(gen)));
-	pPlayer->FillAbilitiesWithPlaceholders(placeholder);
-	pPlayer->LearnAbility(std::make_shared<Fireball>());
-	pPlayer->LearnAbility(std::make_shared<Rejuvenate>());
-
 
 	playArea.SetCharacterAtLocation(pPlayer);
 

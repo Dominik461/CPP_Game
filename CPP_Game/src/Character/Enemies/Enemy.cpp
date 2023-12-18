@@ -39,3 +39,7 @@ void Enemy::SortAbilityPriority()
 		});
 }
 
+int Enemy::RetrunXpDrop()
+{
+	return m_xpDrop;
+}

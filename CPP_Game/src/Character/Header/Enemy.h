@@ -19,4 +19,6 @@ public:
 	Enemy(int hp, int dmg, int2 position);
 	void InitCombat(Character* pTarget) override;
 	void SortAbilityPriority();
+	int RetrunXpDrop();
+
 };
