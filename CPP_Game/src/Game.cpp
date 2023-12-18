@@ -108,7 +108,7 @@ Enemy* ChooseRandomEnemy(int2 position)
 
 	int rnd = distributionOfChoices(gen);
 	for (int i = 0; i < choices.size(); i++) {
-		if (rnd <= choice_weights[i])
+		if (rnd < choice_weights[i])
 		{
 
 			Enemy* enemy;
