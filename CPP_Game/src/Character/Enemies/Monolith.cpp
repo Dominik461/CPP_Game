@@ -4,7 +4,8 @@ Monolith::Monolith(int2 position)
 	:Enemy(90, 6, 'M', "Monolith", position, Earth)
 {
 	m_xpDrop = 60;
-	FillAbilitiesWithPlaceholders(std::make_shared<Placeholder>());
-	LearnAbility(std::make_shared<Rumble>());
+	FillAbilitiesWithPlaceholders(std::make_shared<Placeholder>());	
 	LearnAbility(std::make_shared<Smash>());
+	LearnAbility(std::make_shared<Rumble>());
+	SortAbilityPriority();
 }

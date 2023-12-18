@@ -13,6 +13,9 @@ class Player : public Character
 	private:
 		int m_xpNeeded = 50, m_level = 1;
 	public:
+
+
+		Player(int2 position);
 		int m_curXp = 0;
 		Player(int hp, int dmg, int2 position);
 

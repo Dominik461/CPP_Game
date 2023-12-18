@@ -157,6 +157,7 @@
     <ClInclude Include="src\Math\Header\Grid.h" />
     <ClInclude Include="src\Math\Header\Int2.h" />
     <ClInclude Include="src\Misc\ConsoleHelpers.h" />
+    <ClInclude Include="src\Misc\Quicksort.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -185,6 +186,7 @@
     <ClCompile Include="src\Math\Grid.cpp" />
     <ClCompile Include="src\Math\Int2.cpp" />
     <ClCompile Include="src\Misc\ConsoleHelpers.cpp" />
+    <ClCompile Include="src\Misc\Quicksort.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

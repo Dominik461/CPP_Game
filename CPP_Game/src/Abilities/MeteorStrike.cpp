@@ -1,7 +1,7 @@
 #include "Header/MeteorStrike.h"
 
 MeteorStrike::MeteorStrike()
-	:Ability(4, 2, "Meteorstrike")
+	:Ability(4, 2, "Meteorstrike", false)
 {}
 
 std::string MeteorStrike::UseAbility()

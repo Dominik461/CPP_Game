@@ -1,7 +1,7 @@
 #include "Header/Player.h"
 
-Player::Player(int hp, int dmg, int2 position)
-	:Character(hp, dmg, position)
+Player::Player(int2 position)
+	:Character(45, 8, position)
 {
 	m_symbole = 'p';
 	FillAbilitiesWithPlaceholders(std::make_shared<Placeholder>());

@@ -13,7 +13,7 @@ class Character
 		int m_dmg, m_maxHp, m_newAbilityIndex = 0, m_tempo;
 		int2 m_position;
 		std::string m_name = "", m_logMsg = "";
-		std::vector<std::shared_ptr<Ability>>m_abilities;
+		std::vector<std::shared_ptr<Ability>> m_abilities;
 		Character* m_pTarget;
 		char m_symbole;
 
@@ -36,7 +36,7 @@ class Character
 		int GetDamge();
 		bool Defeated();
 		std::shared_ptr<Ability> GetAbilityAtIndex(int index);
-		void InitCombat(Character* pTarget);
+		virtual void InitCombat(Character* pTarget);
 		//To stop a Circular Dependencie
 		void FillAbilitiesWithPlaceholders(std::shared_ptr<Ability> placeholder);
 };

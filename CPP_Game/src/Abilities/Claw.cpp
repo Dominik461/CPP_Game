@@ -1,7 +1,7 @@
 #include "Header/Claw.h"
 
 Claw::Claw()
-	:Ability(2, 1.2, "Claw")
+	:Ability(2, 1.2, "Claw", false)
 {}
 
 std::string Claw::UseAbility()

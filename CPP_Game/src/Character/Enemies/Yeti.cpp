@@ -7,4 +7,5 @@ Yeti::Yeti(int2 position)
 	FillAbilitiesWithPlaceholders(std::make_shared<Placeholder>());
 	LearnAbility(std::make_shared<Smash>());
 	LearnAbility(std::make_shared<Howl>());
+	SortAbilityPriority();
 }

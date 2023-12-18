@@ -12,9 +12,10 @@ protected:
 	Character* m_pCaster;
 
 public:
+	const bool m_hasHeal;
 	std::string m_logMsg;
 	Ability();
-	Ability(int cooldown, double mulitplier, std::string name);
+	Ability(int cooldown, double mulitplier, std::string name, bool hasHeal);
 	void SetTargetPointer(Character* pTarget);
 	void SetCasterPointer(Character* pCaster);
 	virtual std::string UseAbility() = 0;

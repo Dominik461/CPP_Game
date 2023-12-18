@@ -101,11 +101,11 @@ bool Combat(Player* player, Enemy* enemy)
 
 
 		
-		if ((enemy->GetAbilityAtIndex(0)->IsReady()) && enemy->GetAbilityAtIndex(0)->GetAbilityName() != "PLACEHOLDER")
+		if ((enemy->GetAbilityAtIndex(0)->IsReady()) && enemy->GetAbilityAtIndex(0)->GetAbilityName() != "PLACEHOLDER" && (enemy->GetAbilityAtIndex(0)->m_hasHeal && enemy->m_curHp < enemy->GetMaxHP() || !enemy->GetAbilityAtIndex(0)->m_hasHeal))
 			action = '1';
-		else if (enemy->GetAbilityAtIndex(1)->IsReady() && enemy->GetAbilityAtIndex(1)->GetAbilityName() != "PLACEHOLDER")
+		else if (enemy->GetAbilityAtIndex(1)->IsReady() && enemy->GetAbilityAtIndex(1)->GetAbilityName() != "PLACEHOLDER" && (enemy->GetAbilityAtIndex(1)->m_hasHeal && enemy->m_curHp < enemy->GetMaxHP() || !enemy->GetAbilityAtIndex(1)->m_hasHeal))
 			action = '2';
-		else if (enemy->GetAbilityAtIndex(2)->IsReady() && enemy->GetAbilityAtIndex(2)->GetAbilityName() != "PLACEHOLDER")
+		else if (enemy->GetAbilityAtIndex(2)->IsReady() && enemy->GetAbilityAtIndex(2)->GetAbilityName() != "PLACEHOLDER" && (enemy->GetAbilityAtIndex(2)->m_hasHeal && enemy->m_curHp < enemy->GetMaxHP() || !enemy->GetAbilityAtIndex(2)->m_hasHeal))
 			action = '3';
 		else
 			action = 'a';

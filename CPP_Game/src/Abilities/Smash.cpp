@@ -1,7 +1,7 @@
 #include "Header/Smash.h"
 
 Smash::Smash()
-	:Ability(3, 1.5, "Smash")
+	:Ability(3, 1.5, "Smash", false)
 {}
 
 std::string Smash::UseAbility()

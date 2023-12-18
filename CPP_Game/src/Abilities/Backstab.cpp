@@ -1,7 +1,7 @@
 #include "Header/Backstab.h"
 
 Backstab::Backstab()
-	:Ability(2, 1.1, "Backstab")
+	:Ability(2, 1.1, "Backstab", false)
 {}
 
 std::string Backstab::UseAbility()

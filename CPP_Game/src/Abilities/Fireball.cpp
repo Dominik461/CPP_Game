@@ -1,7 +1,7 @@
 #include "Header/Fireball.h"
 
 Fireball::Fireball()
-	:Ability(3, 1.5, "Fireball")
+	:Ability(3, 1.5, "Fireball", false)
 {}
 
 std::string Fireball::UseAbility()

@@ -1,11 +1,11 @@
 #include "Header/Ability.h"
 
-Ability::Ability(int cooldown, double multiplier, std::string name)
-	:m_currentCd(0), m_cd(cooldown), m_mulitplier(multiplier), m_name(name)
+Ability::Ability(int cooldown, double multiplier, std::string name, bool hasHeal)
+	:m_currentCd(0), m_cd(cooldown), m_mulitplier(multiplier), m_name(name), m_hasHeal(hasHeal)
 {}
 
 Ability::Ability()
-	:m_currentCd(0), m_cd(9999999), m_mulitplier(0), m_name("PLACEHOLDER")
+	:m_currentCd(0), m_cd(9999999), m_mulitplier(0), m_name("PLACEHOLDER"), m_hasHeal(false)
 {}
 
 void Ability::SetTargetPointer(Character* pTarget)
