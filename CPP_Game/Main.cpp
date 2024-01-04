@@ -13,7 +13,8 @@ int main()
 	params.gridHeight = 25;
 	params.enemyCount = 15;
 
-	RunGame(params);
+	//RunGame(params);
+	RunGame();
 
 	return 0;
 }

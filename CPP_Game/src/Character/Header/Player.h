@@ -16,8 +16,9 @@ class Player : public Character
 
 
 		Player(int2 position);
+		Player();
+
 		int m_curXp = 0;
-		Player(int hp, int dmg, int2 position);
 
 		void Move(char moveInput, Grid& playArea);
 

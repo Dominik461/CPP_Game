@@ -15,6 +15,7 @@ public:
 
 	void AddChunk(std::shared_ptr<Chunk> newChunk);
 	void PrintChunkAtIndex(int index);
+	void SetCharacterAtChunkIndex(Character* pCharacter, int index);
 	void DebugPrintAllChunks();
 
 	void AddChoiceWeight(int choiceWeight);
@@ -25,6 +26,7 @@ public:
 
 	int GetChoiceWeightAtIndex(int index);
 	char GetEnemyTypeChoiceAtIndex(int index);
+	std::shared_ptr<Chunk> GetChunkAtIndex(int index);
 	std::vector<char> GetEnemyTypeChoices();
 
 

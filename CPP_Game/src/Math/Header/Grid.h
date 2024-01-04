@@ -35,6 +35,7 @@ public:
 	0 1 1 1 1
 	*/
 	void Print();
+	void Print(std::string regionName);
 	void DebugPrint();
 private:
 	unsigned int m_Width;

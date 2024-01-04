@@ -5,10 +5,19 @@ void Chunk::SetGrid(std::shared_ptr<Grid> grid)
 	mGrid = grid;
 }
 
+std::shared_ptr<Grid> Chunk::GetGrid()
+{
+	return mGrid;
+}
+
 void Chunk::AddEnemy(Enemy* pEnemy)
 {
-	std::cout << "New enemy added: " << pEnemy->GetName() << "\n";
 	mpEnemies.push_back(pEnemy);
+}
+
+void Chunk::SetCharacter(Character* pCharacter)
+{
+	mGrid->SetCharacterAtLocation(pCharacter);
 }
 
 Enemy* Chunk::GetEnemyAtIndex(int index)
@@ -21,9 +30,9 @@ std::vector<Enemy*> Chunk::GetEnemyVector()
 	return mpEnemies;
 }
 
-void Chunk::PrintGrid()
+void Chunk::PrintGrid(std::string regionName)
 {
-	mGrid->Print();
+	mGrid->Print(regionName);
 }
 
 void Chunk::DebugPrintGrid()

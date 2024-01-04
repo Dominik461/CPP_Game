@@ -12,4 +12,5 @@
 #include <iostream>
 
 bool RunGame(const GameParameters& params);
+bool RunGame();
 Enemy* ChooseRandomEnemy(int2 position);

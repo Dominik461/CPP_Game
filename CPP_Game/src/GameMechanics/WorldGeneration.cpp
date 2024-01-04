@@ -155,7 +155,8 @@ void WorldGeneration::GenerateRegion()
 						mLine = (pos != std::string::npos) ? mLine.substr(pos + 1) : "";
 					}
 					PrintIfDebug("Chunk with enemies:");
-					mChunk->DebugPrintGrid();
+					if(mDebug)
+						mChunk->DebugPrintGrid();
 					region->AddChunk(mChunk);
 					chunkCounter++;
 					newChunk = true;
@@ -278,6 +279,7 @@ void WorldGeneration::GenerateEnemiesForChunk(int x, int y, int difficultyScale,
 					std::cout << "I should never land here\n";
 					enemy = new Enemy();
 				}
+				PrintIfDebug("New enemy added: " + enemy->GetName());
 				mChunk->AddEnemy(enemy);
 				break;
 			}

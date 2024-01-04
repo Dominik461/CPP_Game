@@ -11,7 +11,12 @@ void Region::AddChunk(std::shared_ptr<Chunk> newChunk)
 
 void Region::PrintChunkAtIndex(int index)
 {
-	mChunks[index]->PrintGrid();
+	mChunks[index]->PrintGrid(mRegionName);
+}
+
+void Region::SetCharacterAtChunkIndex(Character* pCharacter, int index)
+{
+	mChunks[index]->SetCharacter(pCharacter);
 }
 
 void Region::DebugPrintAllChunks()
@@ -51,6 +56,11 @@ int Region::GetChoiceWeightAtIndex(int index)
 char Region::GetEnemyTypeChoiceAtIndex(int index)
 {
 	return mChoices[index];
+}
+
+std::shared_ptr<Chunk> Region::GetChunkAtIndex(int index)
+{
+	return mChunks[index];
 }
 
 std::vector<char> Region::GetEnemyTypeChoices()

@@ -31,13 +31,13 @@ bool Grid::GetValueAtLocation(int2 location)
 {
 	if (LocationInBounds(location))
 		return  m_Values.at(GetIndexFromLocation(location)).blocked;
-		
+
 }
 
 void Grid::SetValueAtIndex(unsigned int index, bool value)
 {
 	if (IndexInBounds(index))
-		m_Values.at(index).blocked = value;	
+		m_Values.at(index).blocked = value;
 }
 
 void Grid::SetValueAtLocation(int2 location, bool value)
@@ -45,7 +45,7 @@ void Grid::SetValueAtLocation(int2 location, bool value)
 	if (LocationInBounds(location))
 	{
 		m_Values.at(GetIndexFromLocation(location)).blocked = value;
-		if(!value)
+		if (!value)
 			m_Values.at(GetIndexFromLocation(location)).ClearCharacterPointer();
 	}
 }
@@ -64,7 +64,7 @@ Character* Grid::GetCharacterAtLocation(int2 pos)
 {
 	if (LocationInBounds(pos))
 		return m_Values.at(GetIndexFromLocation(pos)).GetCharacter();
-	
+
 	return NULL;
 }
 
@@ -94,7 +94,7 @@ bool Grid::IndexInBounds(unsigned int index)
 {
 	if (index < m_Width * m_Height)
 		return true;
-		
+
 	std::cout << "This index (" << index << ") is out of bounds" << std::endl;
 	return false;
 }
@@ -107,6 +107,7 @@ bool Grid::LocationInBounds(int2 location)
 	return false;
 }
 
+//Old method should be removed after new method works
 void Grid::Print()
 {
 	system("cls");
@@ -119,9 +120,35 @@ void Grid::Print()
 			bool value = GetValueAtLocation(currentLocation);
 			Character* occupant = m_Values.at(GetIndexFromLocation(currentLocation)).GetCharacter();
 
-			if (value == 0 && occupant == NULL) 
+			if (value == 0 && occupant == NULL)
 				std::cout << "." << " ";
-			else if (value == 1 && occupant != NULL) 
+			else if (value == 1 && occupant != NULL)
+				std::cout << occupant->GetSymbol() << " ";
+			else if (value == 1 && occupant == NULL)
+				std::cout << "@" << " ";
+
+		}
+		std::cout << std::endl;
+	}
+	std::cout << "Move with w, a, s ,d!" << std::endl;
+}
+
+void Grid::Print(std::string regionName)
+{
+	system("cls");
+	std::cout << "C++ game by Dominik Mueller(dm126)\n" << std::endl;
+	std::cout << regionName << std::endl;
+	for (int y = m_Height - 1; y >= 0; --y)
+	{
+		for (size_t x = 0; x < m_Width; ++x)
+		{
+			int2 currentLocation(x, y);
+			bool value = GetValueAtLocation(currentLocation);
+			Character* occupant = m_Values.at(GetIndexFromLocation(currentLocation)).GetCharacter();
+
+			if (value == 0 && occupant == NULL)
+				std::cout << "." << " ";
+			else if (value == 1 && occupant != NULL)
 				std::cout << occupant->GetSymbol() << " ";
 			else if (value == 1 && occupant == NULL)
 				std::cout << "@" << " ";

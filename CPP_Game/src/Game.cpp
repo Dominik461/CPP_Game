@@ -3,7 +3,7 @@
 
 bool RunGame(const GameParameters& params)
 {
-	WorldGeneration worldGen = WorldGeneration(true);
+	WorldGeneration worldGen = WorldGeneration(false);
 
 	std::shared_ptr<World> world = worldGen.GenerateWorld();
 	
@@ -91,6 +91,67 @@ bool RunGame(const GameParameters& params)
 	}
 	return succesfullCombat;
 	
+}
+
+bool RunGame()
+{
+	WorldGeneration worldGen = WorldGeneration(false);
+
+	std::shared_ptr<World> world = worldGen.GenerateWorld();
+	world->SpawnPlayer();
+	Enemy* pCollidedEnemy;
+	bool succesfullCombat = true;
+
+	world->PrintRegionChunk();
+	/*
+	do
+	{
+
+		pCollidedEnemy = OpenWorld(world);
+	}while(true)
+	*/
+
+
+	/*
+		do {
+			playArea.Print();
+			//enemyIndex = NULL;
+
+			pCollidedEnemy = OpenWorld(pPlayer, pEnemies, playArea);
+
+	#pragma region Combat
+			//Comabt
+			succesfullCombat = Combat(pPlayer, pCollidedEnemy);
+			if (!succesfullCombat)
+			{
+				for (Enemy* ptr : pEnemies) {
+					delete ptr;
+				}
+				pEnemies.clear();
+				break;
+			}
+			else
+			{
+				playArea.SetValueAtLocation(pCollidedEnemy->GetPosition(), false);
+				auto enemyToRemove = std::find(pEnemies.begin(), pEnemies.end(), pCollidedEnemy);
+				delete* enemyToRemove;
+				pEnemies.erase(enemyToRemove);
+				playArea.SetCharacterAtLocation(pPlayer);
+			}
+	#pragma endregion
+		} while (pEnemies.size() > 0);
+
+		if (succesfullCombat)
+		{
+			playArea.Print();
+			std::cout << std::endl;
+			std::cout << "All enemies defeated! " << pPlayer->GetName() << " won!" << std::endl;
+			std::cout << "Press any button to close the game..." << std::endl;
+			_getch();
+		}
+		*/
+
+	return succesfullCombat;
 }
 
 Enemy* ChooseRandomEnemy(int2 position)

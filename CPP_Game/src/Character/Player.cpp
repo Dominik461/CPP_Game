@@ -9,6 +9,16 @@ Player::Player(int2 position)
 	LearnAbility(std::make_shared<Rejuvenate>());
 }
 
+Player::Player()
+	:Character(45, 8, int2(0, 0))
+{
+	m_symbole = 'p';
+	FillAbilitiesWithPlaceholders(std::make_shared<Placeholder>());
+	LearnAbility(std::make_shared<Fireball>());
+	LearnAbility(std::make_shared<Rejuvenate>());
+}
+
+
 void Player::Move(char moveInput, Grid& playArea)
 {
 	switch (moveInput)
