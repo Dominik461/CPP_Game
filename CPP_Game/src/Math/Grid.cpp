@@ -119,14 +119,38 @@ void Grid::Print()
 			bool value = GetValueAtLocation(currentLocation);
 			Character* occupant = m_Values.at(GetIndexFromLocation(currentLocation)).GetCharacter();
 
-			if (value == 0 && occupant == NULL) {
+			if (value == 0 && occupant == NULL) 
 				std::cout << "." << " ";
-			}
-			else if (value == 1 && occupant != NULL) {
+			else if (value == 1 && occupant != NULL) 
 				std::cout << occupant->GetSymbol() << " ";
-			}
+			else if (value == 1 && occupant == NULL)
+				std::cout << "@" << " ";
+
 		}
 		std::cout << std::endl;
 	}
 	std::cout << "Move with w, a, s ,d!" << std::endl;
+}
+
+void Grid::DebugPrint()
+{
+	std::cout << "Debug Print Mode" << std::endl;
+	for (int y = m_Height - 1; y >= 0; --y)
+	{
+		for (size_t x = 0; x < m_Width; ++x)
+		{
+			int2 currentLocation(x, y);
+			bool value = GetValueAtLocation(currentLocation);
+			Character* occupant = m_Values.at(GetIndexFromLocation(currentLocation)).GetCharacter();
+
+			if (value == 0 && occupant == NULL)
+				std::cout << "." << " ";
+			else if (value == 1 && occupant != NULL)
+				std::cout << occupant->GetSymbol() << " ";
+			else if (value == 1 && occupant == NULL)
+				std::cout << "@" << " ";
+
+		}
+		std::cout << std::endl;
+	}
 }

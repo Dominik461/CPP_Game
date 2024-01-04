@@ -153,6 +153,10 @@
     <ClInclude Include="src\GameMechanics\Combat.h" />
     <ClInclude Include="src\GameMechanics\Element.h" />
     <ClInclude Include="src\GameMechanics\OpenWorld.h" />
+    <ClInclude Include="src\GameMechanics\WorldGeneration.h" />
+    <ClInclude Include="src\GameMechanics\World\Chunk.h" />
+    <ClInclude Include="src\GameMechanics\World\Region.h" />
+    <ClInclude Include="src\GameMechanics\World\World.h" />
     <ClInclude Include="src\Math\Header\Cell.h" />
     <ClInclude Include="src\Math\Header\Grid.h" />
     <ClInclude Include="src\Math\Header\Int2.h" />
@@ -176,6 +180,10 @@
     <ClCompile Include="src\Character\Enemies\Monolith.cpp" />
     <ClCompile Include="src\Character\Enemies\Yeti.cpp" />
     <ClCompile Include="src\Character\Enemies\Flame of Fury.cpp" />
+    <ClCompile Include="src\GameMechanics\WorldGeneration.cpp" />
+    <ClCompile Include="src\GameMechanics\World\Chunk.cpp" />
+    <ClCompile Include="src\GameMechanics\World\Region.cpp" />
+    <ClCompile Include="src\GameMechanics\World\World.cpp" />
     <ClCompile Include="src\Math\Cell.cpp" />
     <ClCompile Include="src\Character\Character.cpp" />
     <ClCompile Include="src\Character\Enemies\Enemy.cpp" />
@@ -187,6 +195,9 @@
     <ClCompile Include="src\Math\Int2.cpp" />
     <ClCompile Include="src\Misc\ConsoleHelpers.cpp" />
     <ClCompile Include="src\Misc\Quicksort.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="resources\World.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -7,6 +7,7 @@
 #include "GameMechanics/Combat.h"
 #include "GameMechanics/OpenWorld.h"
 #include "Misc/ConsoleHelpers.h"
+#include "GameMechanics/WorldGeneration.h"
 #include <random>
 #include <iostream>
 

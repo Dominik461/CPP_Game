@@ -3,6 +3,10 @@
 
 bool RunGame(const GameParameters& params)
 {
+	WorldGeneration worldGen = WorldGeneration(true);
+
+	std::shared_ptr<World> world = worldGen.GenerateWorld();
+	
 	//init gameworld
 	std::vector<std::string> playerNames = { "Olaf", "Gaben", "Guenter", "Otto", "Marcel Davis", "Steve Jobs" };
 
@@ -16,10 +20,10 @@ bool RunGame(const GameParameters& params)
 	std::uniform_int_distribution<int> enemyPositionX(0, params.gridWidth - 1);
 	std::uniform_int_distribution<int> enemyPositionY(0, params.gridHeight - 1);
 	std::vector<Enemy*> pEnemies;
-	std::shared_ptr<Ability> placeholder = std::make_shared<Placeholder>();
+	//std::shared_ptr<Ability> placeholder = std::make_shared<Placeholder>();
 	Enemy* pCollidedEnemy;
 	bool succesfullCombat;
-	int enemyIndex;
+	//int enemyIndex;
 	
 	Grid playArea(params.gridWidth, params.gridHeight);
 
@@ -47,12 +51,15 @@ bool RunGame(const GameParameters& params)
 		pEnemies.push_back(pEnemy);
 		playArea.SetCharacterAtLocation(pEnemies.at(i));
 	}
+
+	
 	do {
 		playArea.Print();
-		enemyIndex = NULL;
+		//enemyIndex = NULL;
 
 		pCollidedEnemy = OpenWorld(pPlayer, pEnemies, playArea);
 
+		#pragma region Combat
 		//Comabt
 		succesfullCombat = Combat(pPlayer, pCollidedEnemy);
 		if (!succesfullCombat)
@@ -67,11 +74,13 @@ bool RunGame(const GameParameters& params)
 		{
 			playArea.SetValueAtLocation(pCollidedEnemy->GetPosition(), false);
 			auto enemyToRemove = std::find(pEnemies.begin(), pEnemies.end(), pCollidedEnemy);
-			delete *enemyToRemove;
+			delete* enemyToRemove;
 			pEnemies.erase(enemyToRemove);
 			playArea.SetCharacterAtLocation(pPlayer);
 		}
+		#pragma endregion
 	} while (pEnemies.size() > 0);
+
 	if (succesfullCombat)
 	{
 		playArea.Print();
@@ -81,6 +90,7 @@ bool RunGame(const GameParameters& params)
 		_getch();
 	}
 	return succesfullCombat;
+	
 }
 
 Enemy* ChooseRandomEnemy(int2 position)
@@ -133,5 +143,4 @@ Enemy* ChooseRandomEnemy(int2 position)
 		}
 		rnd -= choice_weights[i];
 	}
-
 }
