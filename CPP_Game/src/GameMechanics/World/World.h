@@ -23,4 +23,7 @@ public:
 	void PrintRegionChunk();
 	void SetCurrentRegionChunk(std::string regionChunk);
 	void DebugPrintAllRegions();
+	bool CheckIfAllEnemiesAreDefeated();
+	void RemoveAllEnemiesFromMemory();
+	void RemoveEnemyAtLocationAndMovePlayer(Enemy* pCollidedEnemy);
 };

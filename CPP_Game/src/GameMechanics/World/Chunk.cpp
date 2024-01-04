@@ -20,6 +20,11 @@ void Chunk::SetCharacter(Character* pCharacter)
 	mGrid->SetCharacterAtLocation(pCharacter);
 }
 
+void Chunk::SetValueAtLocation(int2 position, bool value)
+{
+	mGrid->SetValueAtLocation(position, value);
+}
+
 Enemy* Chunk::GetEnemyAtIndex(int index)
 {
 	return mpEnemies[index];

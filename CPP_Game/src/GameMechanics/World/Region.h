@@ -29,5 +29,7 @@ public:
 	std::shared_ptr<Chunk> GetChunkAtIndex(int index);
 	std::vector<char> GetEnemyTypeChoices();
 
-
+	bool CheckIfAllEnemiesAreDefeatedInRegion();
+	void RemoveAllEnemiesFromMemoryInRegion();
+	int2 RemoveEnemyAtLocationInRegion(int chunkIndex, Enemy* pCollidedEnemy);
 };

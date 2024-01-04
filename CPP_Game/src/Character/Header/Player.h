@@ -21,7 +21,9 @@ class Player : public Character
 		int m_curXp = 0;
 
 		void Move(char moveInput, Grid& playArea);
+		int2 Move(char moveInput, std::shared_ptr<Grid> grid);
 
+		void SetAfterCombatPosition(int2 newPosition);
 		void EndOfCombat();
 		bool LevelUpIsReady();
 		void LevelUp();

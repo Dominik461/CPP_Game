@@ -67,3 +67,47 @@ std::vector<char> Region::GetEnemyTypeChoices()
 {
 	return mChoices;
 }
+
+bool Region::CheckIfAllEnemiesAreDefeatedInRegion()
+{
+	std::vector<Enemy*> pEnemies;
+	for (std::shared_ptr<Chunk> chunk : mChunks)
+	{
+		pEnemies = chunk->GetEnemyVector();
+		if (pEnemies.size() > 0)
+			return false;
+	}
+
+	return true;
+}
+
+void Region::RemoveAllEnemiesFromMemoryInRegion()
+{
+	std::vector<Enemy*> pEnemies;
+	for (std::shared_ptr<Chunk> chunk : mChunks)
+	{
+		pEnemies = chunk->GetEnemyVector();
+		for (Enemy* pEnemy : pEnemies)
+		{
+			delete pEnemy;
+		}
+		pEnemies.clear();			
+	}
+}
+
+int2 Region::RemoveEnemyAtLocationInRegion(int chunkIndex, Enemy* pCollidedEnemy)
+{
+	std::vector<Enemy*> pEnemies;
+	std::shared_ptr<Chunk> chunk = mChunks[chunkIndex];
+	int2 newPlayerPosition = pCollidedEnemy->GetPosition();
+
+	pEnemies = chunk->GetEnemyVector();
+
+	chunk->SetValueAtLocation(pCollidedEnemy->GetPosition(), false);
+
+	auto enemyToRemove = std::find(pEnemies.begin(), pEnemies.end(), pCollidedEnemy);
+	delete* enemyToRemove;
+	pEnemies.erase(enemyToRemove);
+
+	return newPlayerPosition;
+}

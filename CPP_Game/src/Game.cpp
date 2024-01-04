@@ -100,19 +100,37 @@ bool RunGame()
 	std::shared_ptr<World> world = worldGen.GenerateWorld();
 	world->SpawnPlayer();
 	Enemy* pCollidedEnemy;
-	bool succesfullCombat = true;
+	bool succesfullCombat;
 
-	world->PrintRegionChunk();
-	/*
 	do
 	{
-
 		pCollidedEnemy = OpenWorld(world);
-	}while(true)
-	*/
+		#pragma region Combat
+		//Comabt
+		succesfullCombat = Combat(world->GetPlayerPointer(), pCollidedEnemy);
+		if (!succesfullCombat)
+		{
+			world->RemoveAllEnemiesFromMemory();
+			break;
+		}
+		else
+		{
+			world->RemoveEnemyAtLocationAndMovePlayer(pCollidedEnemy);
+		}
+		#pragma endregion
+	} while (!world->CheckIfAllEnemiesAreDefeated());
 
+	if (succesfullCombat)
+	{
+		world->PrintRegionChunk();
+		std::cout << std::endl;
+		std::cout << "All enemies defeated! " << world->GetPlayerPointer()->GetName() << " won!" << std::endl;
+		std::cout << "Press any button to close the game..." << std::endl;
+		_getch();
+	}
 
 	/*
+	* done
 		do {
 			playArea.Print();
 			//enemyIndex = NULL;
@@ -141,6 +159,7 @@ bool RunGame()
 	#pragma endregion
 		} while (pEnemies.size() > 0);
 
+	* implemented but not yet tested
 		if (succesfullCombat)
 		{
 			playArea.Print();
@@ -149,7 +168,7 @@ bool RunGame()
 			std::cout << "Press any button to close the game..." << std::endl;
 			_getch();
 		}
-		*/
+	*/
 
 	return succesfullCombat;
 }

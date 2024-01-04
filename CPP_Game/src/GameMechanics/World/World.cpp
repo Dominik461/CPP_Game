@@ -81,3 +81,36 @@ void World::DebugPrintAllRegions()
 		mRegions[i]->DebugPrintAllChunks();
 	}
 }
+
+bool World::CheckIfAllEnemiesAreDefeated()
+{
+	for (std::shared_ptr<Region> region : mRegions)
+	{
+		if (!region->CheckIfAllEnemiesAreDefeatedInRegion())
+			return false;
+	}
+
+	return true;
+}
+
+void World::RemoveAllEnemiesFromMemory()
+{
+	for (std::shared_ptr<Region> region : mRegions)
+	{
+		region->RemoveAllEnemiesFromMemoryInRegion();
+	}
+}
+
+void World::RemoveEnemyAtLocationAndMovePlayer(Enemy* pCollidedEnemy)
+{
+	std::shared_ptr<Region> region = GetCurrentRegion();
+
+	region->GetChunkAtIndex(GetCurrentChunkIndex())->SetValueAtLocation(mpPlayer->GetPosition(), false);
+
+	int2 newPlayerPos = region->RemoveEnemyAtLocationInRegion(GetCurrentChunkIndex(), pCollidedEnemy);
+
+	mpPlayer->SetAfterCombatPosition(newPlayerPos);
+	
+	region->GetChunkAtIndex(GetCurrentChunkIndex())->SetCharacter(mpPlayer);
+
+}

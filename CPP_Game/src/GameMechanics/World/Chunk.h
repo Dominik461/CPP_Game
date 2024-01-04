@@ -19,6 +19,7 @@ public:
 	std::shared_ptr<Grid> GetGrid();
 	void AddEnemy(Enemy* pEnemy);
 	void SetCharacter(Character* pCharacter);
+	void SetValueAtLocation(int2 position, bool value);
 	Enemy* GetEnemyAtIndex(int index);
 	std::vector<Enemy*> GetEnemyVector();
 	void PrintGrid(std::string regionName);
