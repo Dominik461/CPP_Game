@@ -133,8 +133,9 @@ void Grid::Print()
 	std::cout << "Move with w, a, s ,d!" << std::endl;
 }
 
-void Grid::Print(std::string regionName)
+void Grid::Print(std::string regionName, std::string playerLevel)
 {
+	Character* p_player = NULL;
 	system("cls");
 	std::cout << "C++ game by Dominik Mueller(dm126)\n" << std::endl;
 	std::cout << regionName << std::endl;
@@ -149,14 +150,31 @@ void Grid::Print(std::string regionName)
 			if (value == 0 && occupant == NULL)
 				std::cout << "." << " ";
 			else if (value == 1 && occupant != NULL)
+			{
 				std::cout << occupant->GetSymbol() << " ";
+				if (occupant->GetSymbol() == 'p')
+					p_player = occupant;
+			}				
 			else if (value == 1 && occupant == NULL)
 				std::cout << "@" << " ";
 
 		}
 		std::cout << std::endl;
 	}
-	std::cout << "Move with w, a, s ,d!" << std::endl;
+	if (p_player != NULL)
+	{
+		std::cout << std::endl;
+		std::cout << p_player->GetName() << ":" << std::endl;
+		std::cout << "HP: " << p_player->m_curHp << "/" << p_player->GetMaxHP() << std::endl;
+		std::cout << "Abilities: " << std::endl;
+		if(p_player->GetAbilityAtIndex(0)->GetAbilityName() != "PLACEHOLDER")
+			std::cout << "1: " << p_player->GetAbilityAtIndex(0)->GetAbilityName() << " " << p_player->GetAbilityAtIndex(0)->GetAbilityMsg() << std::endl;
+		if (p_player->GetAbilityAtIndex(1)->GetAbilityName() != "PLACEHOLDER")
+			std::cout << "1: " << p_player->GetAbilityAtIndex(1)->GetAbilityName() << " " << p_player->GetAbilityAtIndex(1)->GetAbilityMsg() << std::endl;
+		if (p_player->GetAbilityAtIndex(2)->GetAbilityName() != "PLACEHOLDER")
+			std::cout << "1: " << p_player->GetAbilityAtIndex(2)->GetAbilityName() << " " << p_player->GetAbilityAtIndex(2)->GetAbilityMsg() << std::endl;
+		std::cout << playerLevel<< std::endl;
+	}
 }
 
 void Grid::DebugPrint()

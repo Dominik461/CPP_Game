@@ -15,7 +15,7 @@ public:
 	Region(std::string regionName, std::string shortForm);
 
 	void AddChunk(std::shared_ptr<Chunk> newChunk);
-	void PrintChunkAtIndex(int index);
+	void PrintChunkAtIndex(int index, std::string playerLevel);
 	void SetCharacterAtChunkIndex(Character* pCharacter, int index);
 	void DebugPrintAllChunks();
 

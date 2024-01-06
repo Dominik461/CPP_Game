@@ -63,8 +63,8 @@ Player* World::GetPlayerPointer()
 void World::PrintRegionChunk()
 {
 	std::shared_ptr<Region> region = GetCurrentRegion();
-
-	region->PrintChunkAtIndex(GetCurrentChunkIndex());
+	
+	region->PrintChunkAtIndex(GetCurrentChunkIndex(), mpPlayer->GetLevelAsString());
 
 }
 

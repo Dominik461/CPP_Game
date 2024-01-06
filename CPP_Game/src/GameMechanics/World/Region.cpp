@@ -9,9 +9,9 @@ void Region::AddChunk(std::shared_ptr<Chunk> newChunk)
 	mChunks.push_back(newChunk);
 }
 
-void Region::PrintChunkAtIndex(int index)
+void Region::PrintChunkAtIndex(int index, std::string playerLevel)
 {
-	mChunks[index]->PrintGrid(mRegionName);
+	mChunks[index]->PrintGrid(mRegionName, playerLevel);
 }
 
 void Region::SetCharacterAtChunkIndex(Character* pCharacter, int index)
@@ -93,10 +93,9 @@ bool Region::CheckIfAllEnemiesAreDefeatedInRegion()
 
 void Region::RemoveAllEnemiesFromMemoryInRegion()
 {
-	std::vector<Enemy*> pEnemies;
-	for (std::shared_ptr<Chunk> chunk : mChunks)
+	for (std::shared_ptr<Chunk>& chunk : mChunks)
 	{
-		pEnemies = chunk->GetEnemyVector();
+		std::vector<Enemy*>& pEnemies = chunk->GetEnemyVector();
 		for (Enemy* pEnemy : pEnemies)
 		{
 			delete pEnemy;
@@ -107,16 +106,16 @@ void Region::RemoveAllEnemiesFromMemoryInRegion()
 
 int2 Region::RemoveEnemyAtLocationInRegion(int chunkIndex, Enemy* pCollidedEnemy)
 {
-	std::vector<Enemy*> pEnemies;
-	std::shared_ptr<Chunk> chunk = mChunks[chunkIndex];
+	
+	std::shared_ptr<Chunk>& chunk = mChunks[chunkIndex];
 	int2 newPlayerPosition = pCollidedEnemy->GetPosition();
 
-	pEnemies = chunk->GetEnemyVector();
+	std::vector<Enemy*>& pEnemies = chunk->GetEnemyVector();
 
 	chunk->SetValueAtLocation(pCollidedEnemy->GetPosition(), false);
 
 	auto enemyToRemove = std::find(pEnemies.begin(), pEnemies.end(), pCollidedEnemy);
-	delete* enemyToRemove;
+	delete *enemyToRemove;
 	pEnemies.erase(enemyToRemove);
 
 	return newPlayerPosition;

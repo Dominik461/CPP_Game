@@ -27,6 +27,7 @@ class Player : public Character
 		void EndOfCombat();
 		bool LevelUpIsReady();
 		void LevelUp();
+		std::string GetLevelAsString();
 		int GetLevel();
 		int GetXpNeeded();
 };

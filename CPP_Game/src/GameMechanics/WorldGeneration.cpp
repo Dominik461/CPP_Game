@@ -190,7 +190,7 @@ void WorldGeneration::GenerateEnemiesForChunk(int x, int y, double difficultySca
 
 	std::uniform_int_distribution<int> enemyPositionX(1, x - 2);
 	std::uniform_int_distribution<int> enemyPositionY(1, y - 2);
-	std::uniform_int_distribution<int> enemyCount(3, 6);
+	std::uniform_int_distribution<int> enemyCount(2, 6);
 
 	// Seed for the random number generator
 	std::random_device rd;

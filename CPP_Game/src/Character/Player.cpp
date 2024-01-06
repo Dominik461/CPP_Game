@@ -183,6 +183,11 @@ int Player::GetLevel()
 	return m_level;
 }
 
+std::string Player::GetLevelAsString()
+{
+	return "Level: " + std::to_string(m_level) + "(" + std::to_string(m_curXp) + "|" + std::to_string(m_xpNeeded) + ")";
+}
+
 int Player::GetXpNeeded()
 {
 	return m_xpNeeded;

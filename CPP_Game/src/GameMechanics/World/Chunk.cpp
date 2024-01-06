@@ -30,14 +30,14 @@ Enemy* Chunk::GetEnemyAtIndex(int index)
 	return mpEnemies[index];
 }
 
-std::vector<Enemy*> Chunk::GetEnemyVector()
+std::vector<Enemy*>& Chunk::GetEnemyVector()
 {
 	return mpEnemies;
 }
 
-void Chunk::PrintGrid(std::string regionName)
+void Chunk::PrintGrid(std::string regionName, std::string playerLevel)
 {
-	mGrid->Print(regionName);
+	mGrid->Print(regionName, playerLevel);
 }
 
 void Chunk::DebugPrintGrid()

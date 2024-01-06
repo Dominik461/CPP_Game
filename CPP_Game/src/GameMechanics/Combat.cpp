@@ -82,6 +82,8 @@ bool Combat(Player* player, Enemy* enemy)
 
 		player->TakeTurn(action);
 
+		//std::this_thread::sleep_for(std::chrono::milliseconds(500));
+
 		if (enemy->Defeated())
 		{
 			ClearConsole();

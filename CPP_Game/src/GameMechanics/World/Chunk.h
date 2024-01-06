@@ -22,7 +22,7 @@ public:
 	void SetCharacter(Character* pCharacter);
 	void SetValueAtLocation(int2 position, bool value);
 	Enemy* GetEnemyAtIndex(int index);
-	std::vector<Enemy*> GetEnemyVector();
-	void PrintGrid(std::string regionName);
+	std::vector<Enemy*>& GetEnemyVector();
+	void PrintGrid(std::string regionName, std::string playerLevel);
 	void DebugPrintGrid();
 };
