@@ -13,8 +13,9 @@ class Chunk
 	Player* mpPlayer;
 
 public:
-	std::string mNextRegionN, mNextRegionE, mNextRegionS, mNextRegionW;
-
+	//Will be in the order of N,E,S,W
+	std::vector<std::shared_ptr<std::string>> mpNextChunk;
+	
 	void SetGrid(std::shared_ptr<Grid> grid);
 	std::shared_ptr<Grid> GetGrid();
 	void AddEnemy(Enemy* pEnemy);

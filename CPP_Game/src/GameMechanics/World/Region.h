@@ -9,6 +9,7 @@ class Region
 	std::vector<std::shared_ptr<Chunk>> mChunks;
 	std::vector<int> mChoiceWeights;
 	std::vector<char> mChoices;
+	double mDifficultyScale = 0;
 
 public:
 	Region(std::string regionName, std::string shortForm);
@@ -23,7 +24,9 @@ public:
 
 	std::string GetRegionName();
 	std::string GetShortForm();
-
+	
+	void SetDifficulty(double scale);
+	double GetDifficulty();
 	int GetChoiceWeightAtIndex(int index);
 	char GetEnemyTypeChoiceAtIndex(int index);
 	std::shared_ptr<Chunk> GetChunkAtIndex(int index);

@@ -173,6 +173,7 @@ bool RunGame()
 	return succesfullCombat;
 }
 
+//Old function
 Enemy* ChooseRandomEnemy(int2 position)
 {
 	// Seed for the random number generator
@@ -196,7 +197,7 @@ Enemy* ChooseRandomEnemy(int2 position)
 	for (int i = 0; i < choices.size(); i++) {
 		if (rnd < choice_weights[i])
 		{
-
+/*
 			Enemy* enemy;
 
 			switch (choices.at(i))
@@ -219,7 +220,8 @@ Enemy* ChooseRandomEnemy(int2 position)
 			default:
 				enemy = new Enemy();
 			}
-			return enemy;
+	*/
+			return NULL;
 		}
 		rnd -= choice_weights[i];
 	}

@@ -1,7 +1,7 @@
 #include "World.h"
 
 World::World(std::string playerSpawnRegion, int2 playerSpawnPosition)
-	:mPlayerSpawnRegion(playerSpawnRegion), mCurrentRegionChunk(playerSpawnRegion), mPlayerSpawnPosition(playerSpawnPosition)
+	:mPlayerSpawnRegion(playerSpawnRegion), mpCurrentRegionChunk(std::make_shared<std::string>(playerSpawnRegion)), mPlayerSpawnPosition(playerSpawnPosition)
 {
 	CreatePlayer(mPlayerSpawnPosition);
 }
@@ -39,7 +39,7 @@ void World::SpawnPlayer()
 
 std::shared_ptr<Region> World::GetCurrentRegion()
 {
-	std::string region = mCurrentRegionChunk.substr(0, 2);
+	std::string region = mpCurrentRegionChunk->substr(0, 2);
 	for (size_t i = 0; i < mRegions.size(); i++)
 	{
 		if (mRegions[i]->GetShortForm() == region)
@@ -52,7 +52,7 @@ std::shared_ptr<Region> World::GetCurrentRegion()
 int World::GetCurrentChunkIndex()
 {
 	std::shared_ptr<Region> region = GetCurrentRegion();
-	return std::stoi(mCurrentRegionChunk.substr(2, 1));
+	return std::stoi(mpCurrentRegionChunk->substr(2, 1));
 }
 
 Player* World::GetPlayerPointer()
@@ -66,11 +66,6 @@ void World::PrintRegionChunk()
 
 	region->PrintChunkAtIndex(GetCurrentChunkIndex());
 
-}
-
-void World::SetCurrentRegionChunk(std::string regionChunk)
-{
-	mCurrentRegionChunk = regionChunk;
 }
 
 void World::DebugPrintAllRegions()

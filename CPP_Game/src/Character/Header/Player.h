@@ -21,7 +21,7 @@ class Player : public Character
 		int m_curXp = 0;
 
 		void Move(char moveInput, Grid& playArea);
-		int2 Move(char moveInput, std::shared_ptr<Grid> grid);
+		int2 Move(char moveInput, std::shared_ptr<Grid>& grid, std::shared_ptr<std::string>& currentChunk, std::vector<std::shared_ptr<std::string>>& nextChunk);
 
 		void SetAfterCombatPosition(int2 newPosition);
 		void EndOfCombat();

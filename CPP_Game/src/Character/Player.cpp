@@ -18,7 +18,7 @@ Player::Player()
 	LearnAbility(std::make_shared<Rejuvenate>());
 }
 
-
+//Old function
 void Player::Move(char moveInput, Grid& playArea)
 {
 	switch (moveInput)
@@ -79,91 +79,72 @@ void Player::Move(char moveInput, Grid& playArea)
 }
 
 
-int2 Player::Move(char moveInput, std::shared_ptr<Grid> grid)
+int2 Player::Move(char moveInput, std::shared_ptr<Grid>& grid, std::shared_ptr<std::string>& currentChunk, std::vector<std::shared_ptr<std::string>>& nextChunk)
 {
 	int2 nextPosition;
+
 	switch (moveInput)
 	{
-	case 'w':
+	case 'w':		
 		nextPosition = m_position + int2(0, 1);
-		if (grid->LocationInBounds(nextPosition) && !grid->GetValueAtLocation(nextPosition))
-		{
-			grid->SetValueAtLocation(m_position, false);
-			m_position = nextPosition;
-			grid->SetCharacterAtLocation(this);
-			return int2(-1,-1);
-		}
-		else
-		{
-			bool value = grid->GetValueAtLocation(nextPosition);
-			Character* occupant = grid->GetCharacterAtLocation(nextPosition);
-
-			if (value && occupant == NULL)
-				return int2(-1, -1);
-			else if (value && occupant != NULL)
-				return nextPosition;
-		}
 		break;
 	case 'a':
 		nextPosition = m_position + int2(-1, 0);
-		if (grid->LocationInBounds(nextPosition) && !grid->GetValueAtLocation(nextPosition))
-		{
-			grid->SetValueAtLocation(m_position, false);
-			m_position = nextPosition;
-			grid->SetCharacterAtLocation(this);
-			return int2(-1, -1);
-		}
-		else
-		{
-			bool value = grid->GetValueAtLocation(nextPosition);
-			Character* occupant = grid->GetCharacterAtLocation(nextPosition);
 
-			if (value && occupant == NULL)
-				return int2(-1, -1);
-			else if (value && occupant != NULL)
-				return nextPosition;
-		}
 		break;
 	case 's':
 		nextPosition = m_position + int2(0, -1);
-		if (grid->LocationInBounds(nextPosition) && !grid->GetValueAtLocation(nextPosition))
-		{
-			grid->SetValueAtLocation(m_position, false);
-			m_position = nextPosition;
-			grid->SetCharacterAtLocation(this);
-			return int2(-1, -1);
-		}
-		else
-		{
-			bool value = grid->GetValueAtLocation(nextPosition);
-			Character* occupant = grid->GetCharacterAtLocation(nextPosition);
-
-			if (value && occupant == NULL)
-				return int2(-1, -1);
-			else if (value && occupant != NULL)
-				return nextPosition;
-		}
 		break;
-	case 'd':
+	case 'd':		
 		nextPosition = m_position + int2(1, 0);
-		if (grid->LocationInBounds(nextPosition) && !grid->GetValueAtLocation(nextPosition))
+		break;
+	}
+
+	if (grid->LocationInBounds(nextPosition) && !grid->GetValueAtLocation(nextPosition))
+	{
+		grid->SetValueAtLocation(m_position, false);
+		m_position = nextPosition;
+		grid->SetCharacterAtLocation(this);
+		return int2(-1, -1);
+	}
+	else
+	{
+		bool value = grid->GetValueAtLocation(nextPosition);
+		Character* occupant = grid->GetCharacterAtLocation(nextPosition);
+
+		if (value && occupant == NULL)
 		{
-			grid->SetValueAtLocation(m_position, false);
-			m_position = nextPosition;
-			grid->SetCharacterAtLocation(this);
 			return int2(-1, -1);
 		}
-		else
+		else if (!value)
 		{
-			bool value = grid->GetValueAtLocation(nextPosition);
-			Character* occupant = grid->GetCharacterAtLocation(nextPosition);
-
-			if (value && occupant == NULL)
-				return int2(-1, -1);
-			else if (value && occupant != NULL)
-				return nextPosition;
+			grid->SetValueAtLocation(m_position, false);
+			
+			if (nextPosition.y == grid->GetHeight())
+			{
+				currentChunk = nextChunk[0];
+				m_position = int2(m_position.x, 0);
+			}
+			else if(nextPosition.x == grid->GetWidth())
+			{
+				currentChunk = nextChunk[1];
+				m_position = int2(0, m_position.y);
+			}
+			if (nextPosition.y == -1)
+			{
+				currentChunk = nextChunk[2];
+				m_position = int2(m_position.x, grid->GetHeight()-1);
+			}
+			else if (nextPosition.x == -1)
+			{
+				currentChunk = nextChunk[3];
+				m_position = int2(grid->GetWidth()-1, m_position.y);
+			}
+			
+			return int2(-2, -2);
 		}
-		break;
+		else if (value && occupant != NULL)
+			return nextPosition;
 	}
 }
 

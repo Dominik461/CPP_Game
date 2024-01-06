@@ -48,6 +48,16 @@ std::string Region::GetShortForm()
 	return mShortForm;
 }
 
+void Region::SetDifficulty(double scale)
+{
+	mDifficultyScale = scale;
+}
+
+double Region::GetDifficulty()
+{
+	return mDifficultyScale;
+}
+
 int Region::GetChoiceWeightAtIndex(int index)
 {
 	return mChoiceWeights[index];
