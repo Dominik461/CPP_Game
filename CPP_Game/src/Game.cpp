@@ -3,6 +3,10 @@
 
 bool RunGame(const GameParameters& params)
 {
+	WorldGeneration worldGen = WorldGeneration(false);
+
+	std::shared_ptr<World> world = worldGen.GenerateWorld();
+	
 	//init gameworld
 	std::vector<std::string> playerNames = { "Olaf", "Gaben", "Guenter", "Otto", "Marcel Davis", "Steve Jobs" };
 
@@ -16,10 +20,10 @@ bool RunGame(const GameParameters& params)
 	std::uniform_int_distribution<int> enemyPositionX(0, params.gridWidth - 1);
 	std::uniform_int_distribution<int> enemyPositionY(0, params.gridHeight - 1);
 	std::vector<Enemy*> pEnemies;
-	std::shared_ptr<Ability> placeholder = std::make_shared<Placeholder>();
+	//std::shared_ptr<Ability> placeholder = std::make_shared<Placeholder>();
 	Enemy* pCollidedEnemy;
 	bool succesfullCombat;
-	int enemyIndex;
+	//int enemyIndex;
 	
 	Grid playArea(params.gridWidth, params.gridHeight);
 
@@ -47,12 +51,15 @@ bool RunGame(const GameParameters& params)
 		pEnemies.push_back(pEnemy);
 		playArea.SetCharacterAtLocation(pEnemies.at(i));
 	}
+
+	
 	do {
 		playArea.Print();
-		enemyIndex = NULL;
+		//enemyIndex = NULL;
 
 		pCollidedEnemy = OpenWorld(pPlayer, pEnemies, playArea);
 
+		#pragma region Combat
 		//Comabt
 		succesfullCombat = Combat(pPlayer, pCollidedEnemy);
 		if (!succesfullCombat)
@@ -67,11 +74,13 @@ bool RunGame(const GameParameters& params)
 		{
 			playArea.SetValueAtLocation(pCollidedEnemy->GetPosition(), false);
 			auto enemyToRemove = std::find(pEnemies.begin(), pEnemies.end(), pCollidedEnemy);
-			delete *enemyToRemove;
+			delete* enemyToRemove;
 			pEnemies.erase(enemyToRemove);
 			playArea.SetCharacterAtLocation(pPlayer);
 		}
+		#pragma endregion
 	} while (pEnemies.size() > 0);
+
 	if (succesfullCombat)
 	{
 		playArea.Print();
@@ -81,8 +90,90 @@ bool RunGame(const GameParameters& params)
 		_getch();
 	}
 	return succesfullCombat;
+	
 }
 
+bool RunGame()
+{
+	WorldGeneration worldGen = WorldGeneration(false);
+
+	std::shared_ptr<World> world = worldGen.GenerateWorld();
+	world->SpawnPlayer();
+	Enemy* pCollidedEnemy;
+	bool succesfullCombat;
+
+	do
+	{
+		pCollidedEnemy = OpenWorld(world);
+		#pragma region Combat
+		//Comabt
+		succesfullCombat = Combat(world->GetPlayerPointer(), pCollidedEnemy);
+		if (!succesfullCombat)
+		{
+			world->RemoveAllEnemiesFromMemory();
+			break;
+		}
+		else
+		{
+			world->RemoveEnemyAtLocationAndMovePlayer(pCollidedEnemy);
+		}
+		#pragma endregion
+	} while (!world->CheckIfAllEnemiesAreDefeated());
+
+	if (succesfullCombat)
+	{
+		world->PrintRegionChunk();
+		std::cout << std::endl;
+		std::cout << "All enemies defeated! " << world->GetPlayerPointer()->GetName() << " won!" << std::endl;
+		std::cout << "Press any button to close the game..." << std::endl;
+		_getch();
+	}
+
+	/*
+	* done
+		do {
+			playArea.Print();
+			//enemyIndex = NULL;
+
+			pCollidedEnemy = OpenWorld(pPlayer, pEnemies, playArea);
+
+	#pragma region Combat
+			//Comabt
+			succesfullCombat = Combat(pPlayer, pCollidedEnemy);
+			if (!succesfullCombat)
+			{
+				for (Enemy* ptr : pEnemies) {
+					delete ptr;
+				}
+				pEnemies.clear();
+				break;
+			}
+			else
+			{
+				playArea.SetValueAtLocation(pCollidedEnemy->GetPosition(), false);
+				auto enemyToRemove = std::find(pEnemies.begin(), pEnemies.end(), pCollidedEnemy);
+				delete* enemyToRemove;
+				pEnemies.erase(enemyToRemove);
+				playArea.SetCharacterAtLocation(pPlayer);
+			}
+	#pragma endregion
+		} while (pEnemies.size() > 0);
+
+	* implemented but not yet tested
+		if (succesfullCombat)
+		{
+			playArea.Print();
+			std::cout << std::endl;
+			std::cout << "All enemies defeated! " << pPlayer->GetName() << " won!" << std::endl;
+			std::cout << "Press any button to close the game..." << std::endl;
+			_getch();
+		}
+	*/
+
+	return succesfullCombat;
+}
+
+//Old function
 Enemy* ChooseRandomEnemy(int2 position)
 {
 	// Seed for the random number generator
@@ -106,7 +197,7 @@ Enemy* ChooseRandomEnemy(int2 position)
 	for (int i = 0; i < choices.size(); i++) {
 		if (rnd < choice_weights[i])
 		{
-
+/*
 			Enemy* enemy;
 
 			switch (choices.at(i))
@@ -129,9 +220,9 @@ Enemy* ChooseRandomEnemy(int2 position)
 			default:
 				enemy = new Enemy();
 			}
-			return enemy;
+	*/
+			return NULL;
 		}
 		rnd -= choice_weights[i];
 	}
-
 }

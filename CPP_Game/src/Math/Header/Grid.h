@@ -35,6 +35,8 @@ public:
 	0 1 1 1 1
 	*/
 	void Print();
+	void Print(std::string regionName, std::string playerLevel);
+	void DebugPrint();
 private:
 	unsigned int m_Width;
 	unsigned int m_Height;

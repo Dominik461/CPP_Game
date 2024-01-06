@@ -7,8 +7,10 @@
 #include "GameMechanics/Combat.h"
 #include "GameMechanics/OpenWorld.h"
 #include "Misc/ConsoleHelpers.h"
+#include "GameMechanics/WorldGeneration.h"
 #include <random>
 #include <iostream>
 
 bool RunGame(const GameParameters& params);
+bool RunGame();
 Enemy* ChooseRandomEnemy(int2 position);

@@ -16,14 +16,18 @@ class Player : public Character
 
 
 		Player(int2 position);
+		Player();
+
 		int m_curXp = 0;
-		Player(int hp, int dmg, int2 position);
 
 		void Move(char moveInput, Grid& playArea);
+		int2 Move(char moveInput, std::shared_ptr<Grid>& grid, std::shared_ptr<std::string>& currentChunk, std::vector<std::shared_ptr<std::string>>& nextChunk);
 
+		void SetAfterCombatPosition(int2 newPosition);
 		void EndOfCombat();
 		bool LevelUpIsReady();
 		void LevelUp();
+		std::string GetLevelAsString();
 		int GetLevel();
 		int GetXpNeeded();
 };
