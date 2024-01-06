@@ -1,87 +1,87 @@
 #include "Region.h"
 
 Region::Region(std::string regionName, std::string shortForm)
-	:mRegionName(regionName), mShortForm(shortForm)
+	:m_regionName(regionName), m_shortForm(shortForm)
 {}
 
 void Region::AddChunk(std::shared_ptr<Chunk> newChunk)
 {
-	mChunks.push_back(newChunk);
+	m_chunks.push_back(newChunk);
 }
 
 void Region::PrintChunkAtIndex(int index, std::string playerLevel)
 {
-	mChunks[index]->PrintGrid(mRegionName, playerLevel);
+	m_chunks[index]->PrintGrid(m_regionName, playerLevel);
 }
 
 void Region::SetCharacterAtChunkIndex(Character* pCharacter, int index)
 {
-	mChunks[index]->SetCharacter(pCharacter);
+	m_chunks[index]->SetCharacter(pCharacter);
 }
 
 void Region::DebugPrintAllChunks()
 {
-	for (size_t i = 0; i < mChunks.size(); i++)
+	for (size_t i = 0; i < m_chunks.size(); i++)
 	{
-		std::cout << "Current chunk: " << mShortForm << i << std::endl;
-		mChunks[i]->DebugPrintGrid();
+		std::cout << "Current chunk: " << m_shortForm << i << std::endl;
+		m_chunks[i]->DebugPrintGrid();
 	}
 }
 
 void Region::AddChoiceWeight(int choiceWeight)
 {
-	mChoiceWeights.push_back(choiceWeight);
+	m_choiceWeights.push_back(choiceWeight);
 }
 
 void Region::AddEnemyTypeToChoice(char enemyType)
 {
-	mChoices.push_back(enemyType);
+	m_choices.push_back(enemyType);
 }
 
 std::string Region::GetRegionName()
 {
-	return mRegionName;
+	return m_regionName;
 }
 
 std::string Region::GetShortForm()
 {
-	return mShortForm;
+	return m_shortForm;
 }
 
 void Region::SetDifficulty(double scale)
 {
-	mDifficultyScale = scale;
+	m_difficultyScale = scale;
 }
 
 double Region::GetDifficulty()
 {
-	return mDifficultyScale;
+	return m_difficultyScale;
 }
 
 int Region::GetChoiceWeightAtIndex(int index)
 {
-	return mChoiceWeights[index];
+	return m_choiceWeights[index];
 }
 
 char Region::GetEnemyTypeChoiceAtIndex(int index)
 {
-	return mChoices[index];
+	return m_choices[index];
 }
 
 std::shared_ptr<Chunk> Region::GetChunkAtIndex(int index)
 {
-	return mChunks[index];
+	return m_chunks[index];
 }
 
 std::vector<char> Region::GetEnemyTypeChoices()
 {
-	return mChoices;
+	return m_choices;
 }
 
 bool Region::CheckIfAllEnemiesAreDefeatedInRegion()
 {
 	std::vector<Enemy*> pEnemies;
-	for (std::shared_ptr<Chunk> chunk : mChunks)
+	for (std::shared_ptr<Chunk> chunk : m_chunks)
 	{
 		pEnemies = chunk->GetEnemyVector();
 		if (pEnemies.size() > 0)
@@ -93,7 +93,7 @@ bool Region::CheckIfAllEnemiesAreDefeatedInRegion()
 
 void Region::RemoveAllEnemiesFromMemoryInRegion()
 {
-	for (std::shared_ptr<Chunk>& chunk : mChunks)
+	for (std::shared_ptr<Chunk>& chunk : m_chunks)
 	{
 		std::vector<Enemy*>& pEnemies = chunk->GetEnemyVector();
 		for (Enemy* pEnemy : pEnemies)
@@ -107,7 +107,7 @@ void Region::RemoveAllEnemiesFromMemoryInRegion()
 int2 Region::RemoveEnemyAtLocationInRegion(int chunkIndex, Enemy* pCollidedEnemy)
 {
 	
-	std::shared_ptr<Chunk>& chunk = mChunks[chunkIndex];
+	std::shared_ptr<Chunk>& chunk = m_chunks[chunkIndex];
 	int2 newPlayerPosition = pCollidedEnemy->GetPosition();
 
 	std::vector<Enemy*>& pEnemies = chunk->GetEnemyVector();

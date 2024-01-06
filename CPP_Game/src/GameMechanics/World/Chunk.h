@@ -8,13 +8,13 @@
 
 class Chunk
 {
-	std::shared_ptr<Grid> mGrid;
-	std::vector<Enemy*> mpEnemies;
-	Player* mpPlayer;
+	std::shared_ptr<Grid> m_grid;
+	std::vector<Enemy*> mp_enemies;
+	Player* mp_player;
 
 public:
 	//Will be in the order of N,E,S,W
-	std::vector<std::shared_ptr<std::string>> mpNextChunk;
+	std::vector<std::shared_ptr<std::string>> mp_nextChunk;
 	
 	void SetGrid(std::shared_ptr<Grid> grid);
 	std::shared_ptr<Grid> GetGrid();

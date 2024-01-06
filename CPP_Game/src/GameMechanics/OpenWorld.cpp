@@ -24,8 +24,8 @@ Enemy* OpenWorld(std::shared_ptr<World> world)
 		std::shared_ptr<Chunk> chunk = region->GetChunkAtIndex(chunkIndex);
 		std::shared_ptr<Grid> grid = chunk->GetGrid();
 	
-		if (world != NULL && chunk != NULL && grid != NULL && world->mpCurrentRegionChunk != NULL && chunk->mpNextChunk.size() == 4)
-			playerPosition = world->GetPlayerPointer()->Move(input, grid, world->mpCurrentRegionChunk, chunk->mpNextChunk);
+		if (world != NULL && chunk != NULL && grid != NULL && world->mp_currentRegionChunk != NULL && chunk->mp_nextChunk.size() == 4)
+			playerPosition = world->GetPlayerPointer()->Move(input, grid, world->mp_currentRegionChunk, chunk->mp_nextChunk);
 
 		
 		if (int2(-2, -2) == playerPosition)
