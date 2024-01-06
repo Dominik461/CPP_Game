@@ -10,7 +10,7 @@ The playyer has currently 3 actions in battle:
 - Pressing '1' or '2' will use the respective ability
   - The ability is ready when between every bracket is a plus displayed. An example with an ability which cooldown is 3:
     - [+] [+] [+] indicates that the ability is ready
-    - [ ] [ ] [ ] indicates that the ability is on cooldown
+    - /[ ] [ ] [ ] indicates that the ability is on cooldown
   - each turn the cooldown is reducded, a plus is filled in from left to right until it is ready again
 
 The game ends if all enemies are defeated or the player died
