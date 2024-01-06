@@ -23,7 +23,7 @@ class WorldGeneration
 	void GenerateRegion();
 	void PrintIfDebug(std::string line);
 	void PrintIfDebug(bool line);
-	void GenerateEnemiesForChunk(int x, int y, int difficultyMultipier, std::shared_ptr<Region> region, std::string currentRegionChunk);
+	void GenerateEnemiesForChunk(int x, int y, double difficultyMultipier, std::shared_ptr<Region> region, std::string currentRegionChunk);
 
 public:
 	WorldGeneration(bool debug);

@@ -61,7 +61,8 @@ void WorldGeneration::GenerateRegion()
 		std::string regionSymbole = mLine;
 		std::getline(mInputFile, mLine);
 
-		int difficultyScale = std::stoi(mLine);
+		double difficultyScale = std::stod(mLine);
+
 		std::getline(mInputFile, mLine);
 		std::string spawnChances = mLine;
 
@@ -133,23 +134,8 @@ void WorldGeneration::GenerateRegion()
 						size_t pos = mLine.find(',');
 
 						// Extract the part before the stop characters (or the entire line if not found)
-						std::string nextRegion = mLine.substr(0, pos);
-
-						switch (i)
-						{
-						case 0:
-							mChunk->mNextRegionN = nextRegion;
-							break;
-						case 1:
-							mChunk->mNextRegionE = nextRegion;
-							break;
-						case 2:
-							mChunk->mNextRegionS = nextRegion;
-							break;
-						case 3:
-							mChunk->mNextRegionW = nextRegion;
-							break;
-						}
+						std::shared_ptr<std::string> nextRegion = std::make_shared<std::string>(mLine.substr(0, pos));
+						mChunk->mpNextChunk.push_back(nextRegion);
 
 						// Extract the part after the stop characters (if found)
 						mLine = (pos != std::string::npos) ? mLine.substr(pos + 1) : "";
@@ -196,7 +182,7 @@ void WorldGeneration::PrintIfDebug(bool line)
 }
 
 
-void WorldGeneration::GenerateEnemiesForChunk(int x, int y, int difficultyScale, std::shared_ptr<Region> region, std::string currentRegionChunk)
+void WorldGeneration::GenerateEnemiesForChunk(int x, int y, double difficultyScale, std::shared_ptr<Region> region, std::string currentRegionChunk)
 {
 	PrintIfDebug("Chunk to generateEnemies: " + currentRegionChunk);
 	int enemyNumber;
@@ -261,19 +247,19 @@ void WorldGeneration::GenerateEnemiesForChunk(int x, int y, int difficultyScale,
 				switch (region->GetEnemyTypeChoiceAtIndex(i))
 				{
 				case 'Y':
-					enemy = new Yeti(position);
+					enemy = new Yeti(position, difficultyScale);
 					break;
 				case 'M':
-					enemy = new Monolith(position);
+					enemy = new Monolith(position, difficultyScale);
 					break;
 				case 'C':
-					enemy = new Crawler(position);
+					enemy = new Crawler(position, difficultyScale);
 					break;
 				case 'F':
-					enemy = new FlameOfFury(position);
+					enemy = new FlameOfFury(position, difficultyScale);
 					break;
 				case 'E':
-					enemy = new Exile(position);
+					enemy = new Exile(position, difficultyScale);
 					break;
 				default:
 					std::cout << "I should never land here\n";
