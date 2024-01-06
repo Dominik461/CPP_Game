@@ -1,4 +1,5 @@
 #include "Header/Player.h"
+#include "../Misc/ConsoleHelpers.h"
 
 Player::Player(int2 position)
 	:Character(45, 8, position)
@@ -17,67 +18,6 @@ Player::Player()
 	LearnAbility(std::make_shared<Fireball>());
 	LearnAbility(std::make_shared<Rejuvenate>());
 }
-
-//Old function
-void Player::Move(char moveInput, Grid& playArea)
-{
-	switch (moveInput)
-	{
-	case 'w':	
-		std::cout << "w was pressd";
-		if (playArea.LocationInBounds(m_position + int2(0, 1)))
-		{
-			playArea.SetValueAtLocation(m_position, false);
-			m_position += int2(0, 1);
-			playArea.SetCharacterAtLocation(this);
-		}
-		else
-		{
-			m_logMsg = "You are at the edge of the map!";
-		}
-		break;
-	case 'a':
-		std::cout << "a was pressd";
-		if (playArea.LocationInBounds(m_position + int2(-1, 0)))
-		{
-			playArea.SetValueAtLocation(m_position, false);
-			m_position += int2(-1, 0);
-			playArea.SetCharacterAtLocation(this);
-		}
-		else
-		{
-			m_logMsg = "You are at the edge of the map!";
-		}
-		break;
-	case 's':
-		std::cout << "s was pressd";
-		if (playArea.LocationInBounds(m_position + int2(0, -1)))
-		{
-			playArea.SetValueAtLocation(m_position, false);
-			m_position += int2(0, -1);
-			playArea.SetCharacterAtLocation(this);
-		}
-		else
-		{
-			m_logMsg = "You are at the edge of the map!";
-		}
-		break;
-	case 'd':
-		std::cout << "d was pressd";
-		if (playArea.LocationInBounds(m_position + int2(1, 0)))
-		{
-			playArea.SetValueAtLocation(m_position, false);
-			m_position += int2(1, 0);
-			playArea.SetCharacterAtLocation(this);
-		}
-		else
-		{
-			m_logMsg = "You are at the edge of the map!";
-		}
-		break;
-	}
-}
-
 
 int2 Player::Move(char moveInput, std::shared_ptr<Grid>& grid, std::shared_ptr<std::string>& currentChunk, std::vector<std::shared_ptr<std::string>>& nextChunk)
 {
@@ -170,12 +110,14 @@ bool Player::LevelUpIsReady()
 
 void Player::LevelUp()
 {
+	ClearConsole();
 	std::cout << m_name << " leveled up!" << std::endl;
 	m_maxHp *= 1.2;
 	m_dmg *= 1.2;
 	m_curXp -= m_xpNeeded;
 	m_xpNeeded *= 1.3;
 	m_level++;
+	
 }
 
 int Player::GetLevel()

@@ -128,7 +128,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="GameParameters.h" />
     <ClInclude Include="src\Abilities\Header\Ability.h" />
     <ClInclude Include="src\Abilities\Header\AllAbilites.h" />
     <ClInclude Include="src\Abilities\Header\Backstab.h" />

@@ -6,14 +6,6 @@
 
 int main()
 {
-	//EXAMPLE FOR EXERCISE 7
-	GameParameters params;
-	params.playerStart = int2(2, 2);
-	params.gridWidth = 25;
-	params.gridHeight = 25;
-	params.enemyCount = 15;
-
-	//RunGame(params);
 	RunGame();
 
 	return 0;

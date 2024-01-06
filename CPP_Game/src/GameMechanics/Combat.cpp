@@ -127,6 +127,8 @@ bool Combat(Player* player, Enemy* enemy)
 		turnNumber++;
 	}
 
+
+
 	return true;
 }
 
