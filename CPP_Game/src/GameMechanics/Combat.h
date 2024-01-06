@@ -7,7 +7,6 @@
 #include "../Character/Header/Player.h"
 #include "../Misc/ConsoleHelpers.h"
 
-
 bool Combat(Player* player, Enemy* enemy);
-void PrintCombat(Player* player, Enemy* enemy, int turnNumber);
+void PrintCombat(Player* player, Enemy* enemy, int turnNumber, std::string logMsg);
 int PrintCombatActions(Player* player, Enemy* enemy);
