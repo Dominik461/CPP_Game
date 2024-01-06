@@ -9,7 +9,7 @@ World::World(std::string playerSpawnRegion, int2 playerSpawnPosition)
 void World::CreatePlayer(int2 spawnPosition)
 {
 	//init gameworld
-	std::vector<std::string> playerNames = { "Olaf", "Gaben", "Guenter", "Otto", "Marcel Davis", "Steve Jobs" };
+	std::vector<std::string> playerNames = { "Olaf", "Gaben", "Guenter", "Otto" };
 
 	// Seed for the random number generator
 	std::random_device rd;
