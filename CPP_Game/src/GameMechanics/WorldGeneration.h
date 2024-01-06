@@ -11,14 +11,14 @@
 
 class WorldGeneration
 {
-	std::shared_ptr<World> mWorld;
-	std::string mLine, mPlayerSpawnRegion;
-	std::shared_ptr<Grid> mGrid;
-	std::shared_ptr<Chunk> mChunk;
-	std::ifstream mInputFile;
-	int2 mPlayerSpawnLocation;
-	int mCounter = 0;
-	bool mEndOfTextfile = false, mDebug;
+	std::shared_ptr<World> m_world;
+	std::string m_line, m_playerSpawnRegion;
+	std::shared_ptr<Grid> m_grid;
+	std::shared_ptr<Chunk> m_chunk;
+	std::ifstream m_inputFile;
+	int2 m_playerSpawnLocation;
+	int m_counter = 0;
+	bool m_endOfTextfile = false, m_debug;
 
 	void GenerateRegion();
 	void PrintIfDebug(std::string line);

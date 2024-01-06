@@ -5,12 +5,12 @@ bool Combat(Player* player, Enemy* enemy)
 	int turnNumber = 1;
 	player->InitCombat(enemy);
 	enemy->InitCombat(player);
+	PrintCombat(player, enemy, turnNumber, "");
 	while (!player->Defeated() && !enemy->Defeated())
 	{
 		char action;
 		bool validInput = false;
-		ClearConsole();
-		PrintCombat(player, enemy, turnNumber);
+		
 		do
 		{
 			action = _getch();
@@ -81,27 +81,27 @@ bool Combat(Player* player, Enemy* enemy)
 			} while (!validInput);
 
 		player->TakeTurn(action);
-
-		//std::this_thread::sleep_for(std::chrono::milliseconds(500));
+		PrintCombat(player, enemy, turnNumber, player->GetLogMsg());
+		
+		
 
 		if (enemy->Defeated())
 		{
-			ClearConsole();
 			player->m_curXp += enemy->RetrunXpDrop();
-			PrintCombat(player, enemy, turnNumber);
 			
 			std::cout << enemy->GetName() << " was defeated!" << std::endl;
 
 			if (player->LevelUpIsReady())
 				player->LevelUp();
-
-			std::cout << "Press any button to continue..." << std::endl;
-			player->EndOfCombat();
-			_getch();
+			else
+			{
+				std::cout << "Press any button to continue..." << std::endl;
+				player->EndOfCombat();
+				_getch();
+			}
 			return true;
 		}
-
-
+		std::this_thread::sleep_for(std::chrono::milliseconds(750));
 		
 		if ((enemy->GetAbilityAtIndex(0)->IsReady()) && enemy->GetAbilityAtIndex(0)->GetAbilityName() != "PLACEHOLDER" && (enemy->GetAbilityAtIndex(0)->m_hasHeal && enemy->m_curHp < enemy->GetMaxHP() || !enemy->GetAbilityAtIndex(0)->m_hasHeal))
 			action = '1';
@@ -111,27 +111,30 @@ bool Combat(Player* player, Enemy* enemy)
 			action = '3';
 		else
 			action = 'a';
+
 		enemy->TakeTurn(action);
+
+		PrintCombat(player, enemy, turnNumber, enemy->GetLogMsg());
+		
 
 		if (player->Defeated())
 		{
-			ClearConsole();
-			PrintCombat(player, enemy, turnNumber);
 			std::cout << std::endl;
 			std::cout << player->GetName() << " was defeated!" << std::endl;
 			std::cout << "Press any button to close the game..." << std::endl;
 			_getch();
 			return false;
 		}
-
+		std::this_thread::sleep_for(std::chrono::milliseconds(750));
 		turnNumber++;
 	}
 
 	return true;
 }
 
-void PrintCombat(Player* player, Enemy* enemy, int turnNumber)
+void PrintCombat(Player* player, Enemy* enemy, int turnNumber, std::string logMsg)
 {
+	ClearConsole();
 	int currentLine = 3;
 	std::cout << player->GetName() << " encountered a wild " << enemy->GetName() << "!" << std::endl;
 	std::cout << std::endl;
@@ -161,7 +164,7 @@ void PrintCombat(Player* player, Enemy* enemy, int turnNumber)
 	std::cout << "Level " << player->GetLevel() << std::endl;
 	std::cout << "XP: " << player->m_curXp << "/" << player->GetXpNeeded() <<  std::endl;
 	std::cout << "----------------------------------------------------------------------------------------------------------" << std::endl;
-	std::cout << player->GetLogMsg() << std::endl;
+	std::cout << logMsg << player->GetLogMsg() << std::endl;
 	std::cout << enemy->GetLogMsg() << std::endl;
 }
 

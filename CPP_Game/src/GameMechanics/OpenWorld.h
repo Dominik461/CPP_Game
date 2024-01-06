@@ -7,5 +7,4 @@
 #include "../Misc/ConsoleHelpers.h"
 #include <algorithm>
 
-Enemy* OpenWorld(Player* player, std::vector<Enemy*> enemies, Grid& playArea);
 Enemy* OpenWorld(std::shared_ptr<World> world);

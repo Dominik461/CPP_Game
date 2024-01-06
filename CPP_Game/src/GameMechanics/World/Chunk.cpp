@@ -2,45 +2,45 @@
 
 void Chunk::SetGrid(std::shared_ptr<Grid> grid)
 {
-	mGrid = grid;
+	m_grid = grid;
 }
 
 std::shared_ptr<Grid> Chunk::GetGrid()
 {
-	return mGrid;
+	return m_grid;
 }
 
 void Chunk::AddEnemy(Enemy* pEnemy)
 {
-	mpEnemies.push_back(pEnemy);
+	mp_enemies.push_back(pEnemy);
 }
 
 void Chunk::SetCharacter(Character* pCharacter)
 {
-	mGrid->SetCharacterAtLocation(pCharacter);
+	m_grid->SetCharacterAtLocation(pCharacter);
 }
 
 void Chunk::SetValueAtLocation(int2 position, bool value)
 {
-	mGrid->SetValueAtLocation(position, value);
+	m_grid->SetValueAtLocation(position, value);
 }
 
 Enemy* Chunk::GetEnemyAtIndex(int index)
 {
-	return mpEnemies[index];
+	return mp_enemies[index];
 }
 
 std::vector<Enemy*>& Chunk::GetEnemyVector()
 {
-	return mpEnemies;
+	return mp_enemies;
 }
 
 void Chunk::PrintGrid(std::string regionName, std::string playerLevel)
 {
-	mGrid->Print(regionName, playerLevel);
+	m_grid->Print(regionName, playerLevel);
 }
 
 void Chunk::DebugPrintGrid()
 {
-	mGrid->DebugPrint();
+	m_grid->DebugPrint();
 }

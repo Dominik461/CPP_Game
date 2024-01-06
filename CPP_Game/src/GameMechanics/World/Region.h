@@ -5,11 +5,11 @@
 
 class Region
 {
-	std::string mRegionName, mShortForm;
-	std::vector<std::shared_ptr<Chunk>> mChunks;
-	std::vector<int> mChoiceWeights;
-	std::vector<char> mChoices;
-	double mDifficultyScale = 0;
+	std::string m_regionName, m_shortForm;
+	std::vector<std::shared_ptr<Chunk>> m_chunks;
+	std::vector<int> m_choiceWeights;
+	std::vector<char> m_choices;
+	double m_difficultyScale = 0;
 
 public:
 	Region(std::string regionName, std::string shortForm);

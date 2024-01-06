@@ -107,32 +107,6 @@ bool Grid::LocationInBounds(int2 location)
 	return false;
 }
 
-//Old method should be removed after new method works
-void Grid::Print()
-{
-	system("cls");
-	std::cout << "C++ game by Dominik Mueller(dm126)" << std::endl;
-	for (int y = m_Height - 1; y >= 0; --y)
-	{
-		for (size_t x = 0; x < m_Width; ++x)
-		{
-			int2 currentLocation(x, y);
-			bool value = GetValueAtLocation(currentLocation);
-			Character* occupant = m_Values.at(GetIndexFromLocation(currentLocation)).GetCharacter();
-
-			if (value == 0 && occupant == NULL)
-				std::cout << "." << " ";
-			else if (value == 1 && occupant != NULL)
-				std::cout << occupant->GetSymbol() << " ";
-			else if (value == 1 && occupant == NULL)
-				std::cout << "@" << " ";
-
-		}
-		std::cout << std::endl;
-	}
-	std::cout << "Move with w, a, s ,d!" << std::endl;
-}
-
 void Grid::Print(std::string regionName, std::string playerLevel)
 {
 	Character* p_player = NULL;

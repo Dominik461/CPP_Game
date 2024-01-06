@@ -1,39 +1,5 @@
 #include "OpenWorld.h"
 
-
-Enemy* OpenWorld(Player* player, std::vector<Enemy*> enemies, Grid& playArea)
-{
-	char input;
-	bool validInput = false;
-	while (true)
-	{
-		do {
-			input = _getch();
-			if (input != 'w' && input != 'a' && input != 's' && input != 'd')
-			{
-				validInput = false;
-				std::cout << input << " is not a valid move option!" << std::endl;
-			}
-			else
-				validInput = true;
-		} while (!validInput);
-
-		player->Move(input, playArea);
-		for (Enemy* enemy : enemies)
-		{
-
-			if (player->GetPosition() == enemy->GetPosition())
-			{
-				ClearConsole();
-				return enemy;
-			}
-		}
-		playArea.Print();
-		std::cout << player->GetLogMsg() << std::endl;
-	}
-
-}
-
 Enemy* OpenWorld(std::shared_ptr<World> world)
 {
 	int2 playerPosition;
@@ -58,24 +24,8 @@ Enemy* OpenWorld(std::shared_ptr<World> world)
 		std::shared_ptr<Chunk> chunk = region->GetChunkAtIndex(chunkIndex);
 		std::shared_ptr<Grid> grid = chunk->GetGrid();
 	
-		if (world != NULL)
-		{
-			if (chunk != NULL)
-			{
-				if (grid != NULL)
-				{
-					if (world->mpCurrentRegionChunk != NULL)
-					{
-						if (chunk->mpNextChunk.size() == 4)
-						{
-							playerPosition = world->GetPlayerPointer()->Move(input, grid, world->mpCurrentRegionChunk, chunk->mpNextChunk);
-						}
-					}
-				}
-			}
-		}			
-		else
-			std::cout << "THIS SHOULD NOT HAPPEN!\n";
+		if (world != NULL && chunk != NULL && grid != NULL && world->mp_currentRegionChunk != NULL && chunk->mp_nextChunk.size() == 4)
+			playerPosition = world->GetPlayerPointer()->Move(input, grid, world->mp_currentRegionChunk, chunk->mp_nextChunk);
 
 		
 		if (int2(-2, -2) == playerPosition)

@@ -1,70 +1,70 @@
 #include "WorldGeneration.h".
 
 WorldGeneration::WorldGeneration(bool debug)
-	: mInputFile("resources/World.txt"), mDebug(debug)
+	: m_inputFile("resources/World.txt"), m_debug(debug)
 {}
 
 std::shared_ptr<World> WorldGeneration::GenerateWorld()
 {
-    if (std::getline(mInputFile, mLine))
+    if (std::getline(m_inputFile, m_line))
 	{
         // Find the position of the stop characters ('-')
-        size_t pos = mLine.find('-');
+        size_t pos = m_line.find('-');
 
         // Extract the part before the stop characters (or the entire line if not found)
-        mPlayerSpawnRegion = mLine.substr(0, pos);
+        m_playerSpawnRegion = m_line.substr(0, pos);
 
         // Extract the part after the stop characters (if found)
-        std::string playerSpawnLocationString = (pos != std::string::npos) ? mLine.substr(pos + 1) : "";
+        std::string playerSpawnLocationString = (pos != std::string::npos) ? m_line.substr(pos + 1) : "";
         pos = playerSpawnLocationString.find(',');
-        mPlayerSpawnLocation = int2(std::stoi(playerSpawnLocationString.substr(0, pos)), std::stoi((pos != std::string::npos) ? playerSpawnLocationString.substr(pos + 1) : ""));
+        m_playerSpawnLocation = int2(std::stoi(playerSpawnLocationString.substr(0, pos)), std::stoi((pos != std::string::npos) ? playerSpawnLocationString.substr(pos + 1) : ""));
 
 
         // Print both parts
-		PrintIfDebug("Player spawn region: " + mPlayerSpawnRegion);
+		PrintIfDebug("Player spawn region: " + m_playerSpawnRegion);
 		//too lazy to add the operator for int2 class
-		if(mDebug)
-			std::cout << "Player spawn location: " << mPlayerSpawnLocation << std::endl;
+		if(m_debug)
+			std::cout << "Player spawn location: " << m_playerSpawnLocation << std::endl;
 		
     }
 
-	mWorld = std::make_shared<World>(mPlayerSpawnRegion, mPlayerSpawnLocation);
+	m_world = std::make_shared<World>(m_playerSpawnRegion, m_playerSpawnLocation);
 
     GenerateRegion();
 
-	mInputFile.close();
-	if (mDebug) 
+	m_inputFile.close();
+	if (m_debug) 
 	{
-		mWorld->DebugPrintAllRegions();
-		std::cin >> mLine;
+		m_world->DebugPrintAllRegions();
+		std::cin >> m_line;
 	}		
 
-	return mWorld;
+	return m_world;
 }
 
 void WorldGeneration::GenerateRegion()
 {
-	mCounter++;
+	m_counter++;
 	//some random bug where when I use the function the call gets eat letter by letter but only this string
-	if(mDebug)
-		std::cout << "Call of function: " << mCounter << "\n";
+	if(m_debug)
+		std::cout << "Call of function: " << m_counter << "\n";
 
-	if (!mInputFile.eof())
+	if (!m_inputFile.eof())
 	{
 		int x = 16, y = 16, chunkCounter = 0;
 		bool newChunk = true;
 		bool newRegion = true;
 
-		std::getline(mInputFile, mLine);
-		std::string regionName = mLine;
-		std::getline(mInputFile, mLine);
-		std::string regionSymbole = mLine;
-		std::getline(mInputFile, mLine);
+		std::getline(m_inputFile, m_line);
+		std::string regionName = m_line;
+		std::getline(m_inputFile, m_line);
+		std::string regionSymbole = m_line;
+		std::getline(m_inputFile, m_line);
 
-		double difficultyScale = std::stod(mLine);
+		double difficultyScale = std::stod(m_line);
 
-		std::getline(mInputFile, mLine);
-		std::string spawnChances = mLine;
+		std::getline(m_inputFile, m_line);
+		std::string spawnChances = m_line;
 
 		PrintIfDebug("Region name: " + regionName);
 		PrintIfDebug("Region spawn chances: " + spawnChances);
@@ -95,72 +95,72 @@ void WorldGeneration::GenerateRegion()
 		#pragma endregion
 		
 		int currentLine = 0;
-		while (std::getline(mInputFile, mLine))
+		while (std::getline(m_inputFile, m_line))
 		{
 			
-			PrintIfDebug("Line that gets proccessed: " + mLine);
+			PrintIfDebug("Line that gets proccessed: " + m_line);
 			if (newChunk)
 			{
 				newChunk = false;
 				currentLine = 0;
-				mGrid = std::make_shared<Grid>(x, y);
-				mChunk = std::make_shared<Chunk>();
+				m_grid = std::make_shared<Grid>(x, y);
+				m_chunk = std::make_shared<Chunk>();
 			}
 
-			if (mLine != "-")
+			if (m_line != "-")
 			{
-				if (mLine[0] == '@' || mLine[0] == '.')
+				if (m_line[0] == '@' || m_line[0] == '.')
 				{
-					for (size_t i = 0; i < mLine.length(); i++)
+					for (size_t i = 0; i < m_line.length(); i++)
 					{
 						
-						if (mLine[i] == '@')
-							mGrid->SetValueAtLocation(int2(i, y - 1 - currentLine), true);
-						else if (mLine[i] == '.')
-							mGrid->SetValueAtLocation(int2(i, y - 1 - currentLine), false);
+						if (m_line[i] == '@')
+							m_grid->SetValueAtLocation(int2(i, y - 1 - currentLine), true);
+						else if (m_line[i] == '.')
+							m_grid->SetValueAtLocation(int2(i, y - 1 - currentLine), false);
 
-						if (mDebug)
-							std::cout << "Current char processed: " << mLine[i] << " Value that was set: " << mGrid->GetValueAtLocation(int2(i, y - 1 - currentLine)) << std::endl;
+						if (m_debug)
+							std::cout << "Current char processed: " << m_line[i] << " Value that was set: " << m_grid->GetValueAtLocation(int2(i, y - 1 - currentLine)) << std::endl;
 
  					}
 				}
 				else
 				{
 					GenerateEnemiesForChunk(x, y, difficultyScale, region, regionSymbole+std::to_string(chunkCounter));
-					mChunk->SetGrid(mGrid);
+					m_chunk->SetGrid(m_grid);
 					for (int i = 0; i < 4; i++)
 					{						
 						// Find the position of the stop characters ('-')
-						size_t pos = mLine.find(',');
+						size_t pos = m_line.find(',');
 
 						// Extract the part before the stop characters (or the entire line if not found)
-						std::shared_ptr<std::string> nextRegion = std::make_shared<std::string>(mLine.substr(0, pos));
-						mChunk->mpNextChunk.push_back(nextRegion);
+						std::shared_ptr<std::string> nextRegion = std::make_shared<std::string>(m_line.substr(0, pos));
+						m_chunk->mp_nextChunk.push_back(nextRegion);
 
 						// Extract the part after the stop characters (if found)
-						mLine = (pos != std::string::npos) ? mLine.substr(pos + 1) : "";
+						m_line = (pos != std::string::npos) ? m_line.substr(pos + 1) : "";
 					}
 					PrintIfDebug("Chunk with enemies:");
-					if(mDebug)
-						mChunk->DebugPrintGrid();
-					region->AddChunk(mChunk);
+					if(m_debug)
+						m_chunk->DebugPrintGrid();
+					region->AddChunk(m_chunk);
 					chunkCounter++;
 					newChunk = true;
 				}
 			}
-			else if (mLine == "-")
+			else if (m_line == "-")
 			{
-				mWorld->AddRegion(region);
+				m_world->AddRegion(region);
 				PrintIfDebug("New Region");
 
 				GenerateRegion();
 			}			
 			
-			if (mInputFile.eof() != 0 && !mEndOfTextfile)
+			if (m_inputFile.eof() != 0 && !m_endOfTextfile)
 			{
-				mWorld->AddRegion(region);
+				m_world->AddRegion(region);
 				PrintIfDebug("End of file");
-				mEndOfTextfile = true;
+				m_endOfTextfile = true;
 				return;
 			}				
 
@@ -171,13 +171,13 @@ void WorldGeneration::GenerateRegion()
 
 void WorldGeneration::PrintIfDebug(std::string line)
 {
-	if (mDebug)
+	if (m_debug)
 		std::cout << line << "\n";
 }
 
 void WorldGeneration::PrintIfDebug(bool line)
 {
-	if (mDebug)
+	if (m_debug)
 		std::cout << line << "\n";
 }
 
@@ -206,19 +206,19 @@ void WorldGeneration::GenerateEnemiesForChunk(int x, int y, double difficultySca
 		{
 			position = int2(enemyPositionX(gen), enemyPositionY(gen));
 
-			if (mDebug)
-				std::cout << "Enemy spawn position: " << position << " Blocked: " << mGrid->GetValueAtLocation(position) << std::endl;
+			if (m_debug)
+				std::cout << "Enemy spawn position: " << position << " Blocked: " << m_grid->GetValueAtLocation(position) << std::endl;
 
-			if (currentRegionChunk == mPlayerSpawnRegion)
+			if (currentRegionChunk == m_playerSpawnRegion)
 			{
-				if (mGrid->GetValueAtLocation(position) || position == mPlayerSpawnLocation)
+				if (m_grid->GetValueAtLocation(position) || position == m_playerSpawnLocation)
 					continue;
 				else
-					movesAway = abs(position.x - mPlayerSpawnLocation.x) + abs(position.y - mPlayerSpawnLocation.y);
+					movesAway = abs(position.x - m_playerSpawnLocation.x) + abs(position.y - m_playerSpawnLocation.y);
 			}				
 			else
 			{
-				if (mGrid->GetValueAtLocation(position))
+				if (m_grid->GetValueAtLocation(position))
 					continue;
 				else
 					movesAway = 4;
@@ -266,16 +266,16 @@ void WorldGeneration::GenerateEnemiesForChunk(int x, int y, double difficultySca
 					enemy = new Enemy();
 				}
 				PrintIfDebug("New enemy added: " + enemy->GetName());
-				mChunk->AddEnemy(enemy);
+				m_chunk->AddEnemy(enemy);
 				break;
 			}
 			rnd -= region->GetChoiceWeightAtIndex(i);
 		}
 
-		PrintIfDebug(std::to_string(mChunk->GetEnemyVector().size()));
-		PrintIfDebug(mChunk->GetEnemyAtIndex(i)->GetName());
+		PrintIfDebug(std::to_string(m_chunk->GetEnemyVector().size()));
+		PrintIfDebug(m_chunk->GetEnemyAtIndex(i)->GetName());
 		
-		mGrid->SetCharacterAtLocation(mChunk->GetEnemyAtIndex(i));		
+		m_grid->SetCharacterAtLocation(m_chunk->GetEnemyAtIndex(i));		
 	}
 }
 
