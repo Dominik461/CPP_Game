@@ -112,12 +112,18 @@ void Player::LevelUp()
 {
 	ClearConsole();
 	std::cout << m_name << " leveled up!" << std::endl;
+	std::cout << "Hp increased from: " << m_maxHp << " to " << m_maxHp*1.2 << std::endl;
+	std::cout << "Damage increased from: " << m_dmg << " to " << std::round(m_dmg * 1.2) << std::endl;
+	std::cout << "Xp needed for next level: " << m_xpNeeded * 1.3 << std::endl;
+	std::cout << std::endl;
+	std::cout << "Press any button to continue..." << std::endl;
 	m_maxHp *= 1.2;
 	m_dmg *= 1.2;
 	m_curXp -= m_xpNeeded;
 	m_xpNeeded *= 1.3;
 	m_level++;
-	
+	EndOfCombat();
+	_getch();
 }
 
 int Player::GetLevel()

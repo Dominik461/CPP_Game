@@ -94,10 +94,12 @@ bool Combat(Player* player, Enemy* enemy)
 
 			if (player->LevelUpIsReady())
 				player->LevelUp();
-
-			std::cout << "Press any button to continue..." << std::endl;
-			player->EndOfCombat();
-			_getch();
+			else
+			{
+				std::cout << "Press any button to continue..." << std::endl;
+				player->EndOfCombat();
+				_getch();
+			}
 			return true;
 		}
 
